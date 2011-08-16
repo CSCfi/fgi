@@ -1,0 +1,46 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+CLUSTER_SETUP_DIR="`dirname $0?`/../../rootfs/"
+CLUSTER_CONF_DIR=$CURRDIR/../conf/
+echo "$SCRIPT: Creating cluster configuration under /etc/cluster"
+cp -r $CLUSTER_SETUP_DIR/etc/cluster /etc/
+if [ $? -ne 0 ] ; then
+ echo "Error copying the config files" >&2
+ exit 1
+fi
+
+echo "$SCRIPT: Copying over network infomation to cluster directory"
+cp $CLUSTER_CONF_DIR/installnodeip $CLUSTER_CONF_DIR/adminlnodeip $CLUSTER_CONF_DIR/gridnodeip $CLUSTER_CONF_DIR/loginnodeip $CLUSTER_CONF_DIR/subnet $CLUSTER_CONF_DIR/epel-repourl $CLUSTER_CONF_DIR/sl6-reopurl $CLUSTER_CONF_DIR/fgi-repourl $CLUSTER_CONF_DIR/default-packages /etc/cluster/conf
+
+echo "$SCRIPT: Copying util scripts to /usr/local/sbin" 
+cp $CLUSTER_SETUP_DIR/usr/local/sbin/* /usr/local/sbin
+if [ $? -ne 0 ] ; then
+ echo "Error copying the util scripts" >&2
+ exit 1
+fi
+
+echo "$SCRIPT: Copying required http files"
+cp $CLUSTER_SETUP_DIR/var/www/cgi-bin/* /var/www/cgi-bin
+if [ $? -ne 0 ] ; then
+ echo "Error copying bootup scripts" >&2
+ exit 1
+fi
+
+chown -R apache:apache /var/www/
+
+echo "$SCRIPT: Copying files to /etc/profile.d/"
+cp $CLUSTER_SETUP_DIR/etc/profile.d/* /etc/profile.d
+if [ $? -ne 0 ] ; then
+ echo "Error copying the files" >&2
+ exit 1
+fi
+
+echo "$SCRIPT: Copying iPXE boot file to tftp boot dir"
+cp $CLUSTER_SETUP_DIR/var/lib/tftpboot/undionly.kkpxe /var/lib/tftpboot
+if [ $? -ne 0 ] ; then
+ echo "Error copying the files" >&2
+ exit 1
+fi
+
+echo "$SCRIPT: Done" 

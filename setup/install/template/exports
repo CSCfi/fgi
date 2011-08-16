@@ -1,0 +1,1 @@
+/etc/cluster __SUBNET__.0/24(rw,no_root_squash)

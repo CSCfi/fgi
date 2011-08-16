@@ -1,0 +1,21 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+
+id slurm &>/dev/null
+if [ $? -ne 0 ] ; then
+ echo "$SCRIPT: Adding SLURM user"
+ adduser -Mr slurm
+fi
+
+if [ ! -e /var/log/slurm ] ; then
+ echo "$SCRIPT: Creating SLURM log dir"
+ mkdir /var/log/slurm
+ chown slurm:slurm /var/log/slurm
+fi
+
+if [ ! -e /etc/munge/munge.key ] ; then
+ echo "$SCRIPT: Creating munge key for SLURM"
+ create-munge-key
+ cp /etc/munge/munge.key /etc/cluster/conf
+fi
+
