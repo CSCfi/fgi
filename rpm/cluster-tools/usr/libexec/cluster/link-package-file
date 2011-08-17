@@ -1,0 +1,13 @@
+#!/bin/bash
+NODE_CONF_DIR=/etc/cluster/nodes
+
+if [ ! -e $NODE_CONF_DIR ] ; then
+ echo "Could not find node configuration directory under $NODE_CONF_DIR" >&2
+ exit 1
+fi
+
+for node in `ls $NODE_CONF_DIR` ; do
+ if [ ! -e $NODE_CONF_DIR/$node/packages ] ; then
+  ln -s /etc/cluster/conf/default-packages $NODE_CONF_DIR/$node/packages
+ fi
+done

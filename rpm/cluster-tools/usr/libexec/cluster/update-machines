@@ -1,0 +1,16 @@
+#!/bin/bash
+NODE_CONF_DIR=/etc/cluster/nodes
+MACHINES_FILE=/etc/machines
+
+if [ ! -e $NODE_CONF_DIR ] ; then
+ echo "Could not find node configuration directory under $NODE_CONF_DIR" >&2
+ exit 1
+fi
+
+if [ -e $MACHINES_FILE ] ; then
+ rm -f $MACHINES_FILE
+fi
+
+for node in `ls $NODE_CONF_DIR` ; do
+ echo "$node" >> $MACHINES_FILE
+done

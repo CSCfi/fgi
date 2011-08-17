@@ -1,0 +1,43 @@
+#!/bin/bash
+CLUSTER_VAR_DIR=/var/lib/cluster
+NODE_CONF_DIR=/etc/cluster/nodes
+
+if [ ! -e $CLUSTER_VAR_DIR ] ; then
+ mkdir -p $CLUSTER_VAR_DIR
+ if [ $? -ne 0 ] ; then
+  echo "$CLUSTER_VAR_DIR does not exist, and creation of it failed" >&2
+  exit 1
+ fi
+fi
+
+if [ ! -e $NODE_CONF_DIR ] ; then
+ echo "Could not find node configuration directory under $NODE_CONF_DIR" >&2
+ exit 1
+fi
+
+if [ -e $CLUSTER_VAR_DIR/dhcpd.include ] ; then
+ rm -f $CLUSTER_VAR_DIR/dhcpd.include &>/dev/null
+ if [ $? -ne 0 ] ; then
+  echo "Failed to remove the old config file at $CLUSTER_VAR_DIR/dhcpd.include" >&2
+  exit 1
+ fi
+fi
+
+for node in `ls $NODE_CONF_DIR` ; do
+ if [ ! -f $NODE_CONF_DIR/$node/eth0-ip ] || [ ! -f $NODE_CONF_DIR/$node/eth0-mac ] ; then
+  echo "Required files $NODE_CONF_DIR/$node/eth0-ip and/or $NODE_CONF_DIR/$node/eth0-mac not found"
+  exit 1
+ fi
+ IP=`cat $NODE_CONF_DIR/$node/eth0-ip`
+ MAC=`cat $NODE_CONF_DIR/$node/eth0-mac`
+ NAME=$node
+ cat >> $CLUSTER_VAR_DIR/dhcpd.include << EOF
+   host $NAME {
+      hardware ethernet $MAC;
+      fixed-address $IP;
+      send host-name "$NAME";
+   }
+EOF
+done
+
+/sbin/service dhcpd restart

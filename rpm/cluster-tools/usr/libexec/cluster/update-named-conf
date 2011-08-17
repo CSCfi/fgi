@@ -1,0 +1,86 @@
+#!/bin/bash                                                                
+NAMED_CONF_DIR=/var/named                                                  
+NODE_CONF_DIR=/etc/cluster/nodes                                           
+myhost=`echo $HOSTNAME |sed "s/\([^.]*\)\..*/\1/"`                         
+
+if [ ! -e /etc/cluster/conf/cluster.conf ] ; then
+ echo "Could not find node ip information under /etc/cluster/conf/cluster.conf"
+ exit 1
+else
+ source /etc/cluster/conf/cluster.conf
+ mysubnet=`echo $SUBNET | sed -e "s/\.[0-9]*$//"`
+ myreversesubnet=`echo $mysubnet | sed "s/^\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)/\3.\2.\1/" `
+fi
+
+if [ ! -e $NAMED_CONF_DIR ] ; then
+ echo "The $NAMED_CONF_DIR directory does not exist" >&2
+ exit 1                                   
+fi                                        
+
+if [ ! -e $NODE_CONF_DIR ] ; then
+ echo "Could not find node configuration directory $NODE_CONF_DIR" >&2
+ exit 1                                                                     
+fi                                                                          
+
+serial=`date +%Y%m%d%H%M`                                                  
+
+cat > $NAMED_CONF_DIR/local << EOF
+\$ORIGIN local.
+\$TTL 1D
+@     IN SOA $INSTALLNODEIP hostmaster (
+                        $serial ; serial
+                        8H        ; refresh
+                        4H        ; retry
+                        4W        ; expire
+                        1D )      ; minimum
+
+                NS      $CLUSTERNAME-install
+
+$CLUSTERNAME        A       $LOGINNODEIP
+$CLUSTERNAME-install        A       $INSTALLNODEIP
+$CLUSTERNAME-admin        A       $ADMINNODEIP
+$CLUSTERNAME-grid        A       $GRIDNODEIP
+$CLUSTERNAME-nfs        A       $DISKNODEIP
+EOF
+
+cat > $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa << EOF
+\$ORIGIN $myreversesubnet.in-addr.arpa.
+\$TTL 1D
+@     IN SOA  $CLUSTERNAME-install.local. hostmaster.local. (
+              $serial  ; serial
+              28800      ; refresh (8 hours)
+              14400      ; retry (4 hours)
+              2419200    ; expire (4 weeks)
+              86400      ; minimum (1 day)
+              )
+
+              NS      $CLUSTERNAME-install.local.
+
+EOF
+
+#For the frontend machines, add the ip and a name
+echo -n "$LOGINNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo "             PTR     $CLUSTERNAME.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo -n "$INSTALLNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo "             PTR     $CLUSTERNAME-install.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo -n "$ADMINNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo "             PTR     $CLUSTERNAME-admin.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo -n "$GRIDNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo "             PTR     $CLUSTERNAME-grid.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo -n "$DISKNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+echo "             PTR     $CLUSTERNAME-nfs.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+
+for node in `ls $NODE_CONF_DIR` ; do
+ if [ ! -f $NODE_CONF_DIR/$node/eth0-ip ] ; then
+  echo "Required files $NODE_CONF_DIR/$node/eth0-ip not found"
+  exit 1
+ fi
+ #get the last number
+ IP=`cat $NODE_CONF_DIR/$node/eth0-ip`
+ IP_END=`cat $NODE_CONF_DIR/$node/eth0-ip | grep -o "[0-9]*$`
+ NAME=$node
+ echo  "$NAME          A        $IP" >> $NAMED_CONF_DIR/local
+ echo  "$IP_END          PTR        $NAME.local." >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+done
+
+service named restart
