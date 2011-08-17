@@ -1,13 +1,13 @@
 [sl-local]
 name=Scientific Linux 6rolling - $basearch
-baseurl=__SL_REPOURL__
+baseurl=__OS_REPOURL__
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-sl file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dawson
 
 [sl-security-local]
 name=Scientific Linux 6rolling - $basearch - security updates
-baseurl=__SL_SECURITY_REPOURL__
+baseurl=__OS_SECURITY_REPOURL__
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-sl file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dawson

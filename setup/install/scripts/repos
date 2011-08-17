@@ -1,11 +1,12 @@
 #!/bin/bash
 SCRIPT=`basename $0`
 CURRDIR=`dirname $0`
+source $CURRDIR/../conf/cluster.conf
 echo "$SCRIPT: Copying yum repos"
 $CURRDIR/replace_cp $CURRDIR/../template/sl-local.repo /etc/cluster/repos/sl-local.repo
 $CURRDIR/replace_cp $CURRDIR/../template/epel.repo /etc/cluster/repos/epel.repo
 $CURRDIR/replace_cp $CURRDIR/../template/fgi.repo /etc/cluster/repos/fgi.repo
-if [ -f $CURRDIR/../template/local.repo ] ; then
+if [ x"$LOCAL_REPOURL" != "x" ] ; then
  $CURRDIR/replace_cp $CURRDIR/../template/local.repo /etc/cluster/repos/local.repo
 fi
 echo "$SCRIPT: Done" 

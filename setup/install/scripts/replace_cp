@@ -1,20 +1,10 @@
 #!/bin/bash
 if [ x"$1" != "x" ] && [ x"$2" != "x" ] ; then 
  CURRDIR=`dirname $0`
- SUBNET=`cat $CURRDIR/../conf/subnet | sed -e "s/\.[0-9]*$//"` 
+ source $CURRDIR/../conf/cluster.conf
+ SUBNET=`echo $SUBNET | sed -e "s/\.[0-9]*$//"` 
  REVERSESUBNET=`echo $SUBNET | sed "s/^\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)/\3.\2.\1/" `
- GATEWAY=`cat $CURRDIR/../conf/loginnodeip`
- INSTALLNODE=`cat $CURRDIR/../conf/installnodeip`
- CLUSTERNAME=`cat $CURRDIR/../conf/clustername`
- SL_REPOURL=`cat $CURRDIR/../conf/sl-repourl`
- SL_SECURITY_REPOURL=`cat $CURRDIR/../conf/sl-security-repourl`
- FGI_REPOURL=`cat $CURRDIR/../conf/fgi-repourl`
- EPEL_REPOURL=`cat $CURRDIR/../conf/epel-repourl`
- if [ -f $CURRDIR/../conf/local-repourl ] ; then
-  LOCAL_REPOURL=`cat $CURRDIR/../conf/local-repourl`
- else
-  LOCAL_REPOURL=""
- fi
+ GATEWAY=$LOGINNODEIP
 
- cat $1 |sed -e "s/__SUBNET__/$SUBNET/g" -e "s/__REVERSESUBNET__/$REVERSESUBNET/g" -e "s/__GATEWAY__/$GATEWAY/g" -e "s/__INSTALLNODE__/$INSTALLNODE/g" -e "s/__CLUSTERNAME__/$CLUSTERNAME/g" -e "s/__SL_REPOURL__/$SL_REPOURL" -e "s/__SL_SECURITY_REPOURL__/$SL_SECURITY_REPOURL" -e "s/__FGI_REPOURL__/$FGI_REPOURL" -e "s/__EPEL_REPOURL__/$EPEL_REPOURL" -e "s/__LOCAL_REPOURL__/$LOCAL_REPOURL/" > $2
+ cat $1 |sed -e "s/__SUBNET__/$SUBNET/g" -e "s/__REVERSESUBNET__/$REVERSESUBNET/g" -e "s/__GATEWAY__/$GATEWAY/g" -e "s/__INSTALLNODE__/$INSTALLNODEIP/g" -e "s/__CLUSTERNAME__/$CLUSTERNAME/g" -e "s/__OS_REPOURL__/$OS_REPOURL" -e "s/__OS_SECURITY_REPOURL__/$OS_SECURITY_REPOURL" -e "s/__FGI_REPOURL__/$FGI_REPOURL" -e "s/__EPEL_REPOURL__/$EPEL_REPOURL" -e "s/__LOCAL_REPOURL__/$LOCAL_REPOURL/" > $2
 fi
