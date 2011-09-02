@@ -3,4 +3,4 @@ name=FGI
 baseurl=__FGI_REPOURL__
 enabled=1
 gpgcheck=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-sl file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dawson
+proxy=http://__GATEWAY__:8080/

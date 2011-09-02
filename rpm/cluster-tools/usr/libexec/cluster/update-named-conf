@@ -8,8 +8,12 @@ if [ ! -e /etc/cluster/conf/cluster.conf ] ; then
  exit 1
 else
  source /etc/cluster/conf/cluster.conf
- mysubnet=`echo $SUBNET | sed -e "s/\.[0-9]*$//"`
- myreversesubnet=`echo $mysubnet | sed "s/^\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)/\3.\2.\1/" `
+ mysubnet=`echo $SUBNET | sed -e "s/\.[0-9]*.[0-9]*$//"`
+ myreversesubnet=`echo $mysubnet | sed "s/^\([0-9]*\)\.\([0-9]*\)/\2.\1/" `
+ my_ib_subnet=`echo $IB_SUBNET | sed -e "s/\.[0-9]*.[0-9]*$//"`
+ my_ib_reversesubnet=`echo $my_ib_subnet | sed "s/^\([0-9]*\)\.\([0-9]*\)/\2.\1/" `
+ my_ilo_subnet=`echo $ILO_SUBNET | sed -e "s/\.[0-9]*.[0-9]*$//"`
+ my_ilo_reversesubnet=`echo $my_ilo_subnet | sed "s/^\([0-9]*\)\.\([0-9]*\)/\2.\1/" `
 fi
 
 if [ ! -e $NAMED_CONF_DIR ] ; then
@@ -24,6 +28,7 @@ fi
 
 serial=`date +%Y%m%d%H%M`                                                  
 
+#write basic entries
 cat > $NAMED_CONF_DIR/local << EOF
 \$ORIGIN local.
 \$TTL 1D
@@ -34,13 +39,7 @@ cat > $NAMED_CONF_DIR/local << EOF
                         4W        ; expire
                         1D )      ; minimum
 
-                NS      $CLUSTERNAME-install
-
-$CLUSTERNAME        A       $LOGINNODEIP
-$CLUSTERNAME-install        A       $INSTALLNODEIP
-$CLUSTERNAME-admin        A       $ADMINNODEIP
-$CLUSTERNAME-grid        A       $GRIDNODEIP
-$CLUSTERNAME-nfs        A       $DISKNODEIP
+                NS      $CLUSTERNAME-install-eth.local.
 EOF
 
 cat > $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa << EOF
@@ -54,22 +53,173 @@ cat > $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa << EOF
               86400      ; minimum (1 day)
               )
 
-              NS      $CLUSTERNAME-install.local.
+              NS      $CLUSTERNAME-install-eth.local.
 
 EOF
 
-#For the frontend machines, add the ip and a name
-echo -n "$LOGINNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo "             PTR     $CLUSTERNAME.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo -n "$INSTALLNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo "             PTR     $CLUSTERNAME-install.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo -n "$ADMINNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo "             PTR     $CLUSTERNAME-admin.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo -n "$GRIDNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo "             PTR     $CLUSTERNAME-grid.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo -n "$DISKNODEIP" |grep -o "[0-9]*$" >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
-echo "             PTR     $CLUSTERNAME-nfs.local." >>  $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+cat > $NAMED_CONF_DIR/ib << EOF
+\$ORIGIN ib.
+\$TTL 1D
+@     IN SOA $INSTALLNODEIP hostmaster (
+                        $serial ; serial
+                        8H        ; refresh
+                        4H        ; retry
+                        4W        ; expire
+                        1D )      ; minimum
 
+                NS      $CLUSTERNAME-install-eth.local.
+EOF
+
+cat > $NAMED_CONF_DIR/$my_ib_reversesubnet.in-addr.arpa << EOF
+\$ORIGIN $my_ib_reversesubnet.in-addr.arpa.
+\$TTL 1D
+@     IN SOA  $CLUSTERNAME-install.local. hostmaster.local. (
+              $serial  ; serial
+              28800      ; refresh (8 hours)
+              14400      ; retry (4 hours)
+              2419200    ; expire (4 weeks)
+              86400      ; minimum (1 day)
+              )
+
+              NS      $CLUSTERNAME-install-eth.local.
+
+EOF
+
+cat > $NAMED_CONF_DIR/ilo << EOF
+\$ORIGIN ilo.
+\$TTL 1D
+@     IN SOA $INSTALLNODEIP hostmaster (
+                        $serial ; serial
+                        8H        ; refresh
+                        4H        ; retry
+                        4W        ; expire
+                        1D )      ; minimum
+
+                NS      $CLUSTERNAME-install-eth.local.
+EOF
+
+cat > $NAMED_CONF_DIR/$my_ilo_reversesubnet.in-addr.arpa << EOF
+\$ORIGIN $my_ilo_reversesubnet.in-addr.arpa.
+\$TTL 1D
+@     IN SOA  $CLUSTERNAME-install.local. hostmaster.local. (
+              $serial  ; serial
+              28800      ; refresh (8 hours)
+              14400      ; retry (4 hours)
+              2419200    ; expire (4 weeks)
+              86400      ; minimum (1 day)
+              )
+
+              NS      $CLUSTERNAME-install-eth.local.
+
+EOF
+
+#Functions for writing the actual entries into the files. Default entries are automatically written based on the config files
+# function call looks like "write_eth hostname ip [default]"
+# if default is "yes", both nodename-eth and nodename will point to the ethernet interface,
+# if default is "no", only nodename-eth will point to the ethernet interface regardless of the global setting
+write_eth () {
+ NAME=$1
+ IP=$2
+ IP_REV_END=`echo $IP | sed -e "s/[0-9]*\.[0-9]*\.\([0-9]*\).\([0-9]*\).*/\2.\1/"`
+ echo  "$NAME-eth          A        $IP" >> $NAMED_CONF_DIR/local
+ if [ "x$DEFAULT_NET" == "xeth" ] || [ "x$3" == "xyes" ] && [ "x$3" != "xno" ] ; then
+  echo  "$NAME          CNAME        $NAME-eth" >> $NAMED_CONF_DIR/local
+  echo  "$IP_REV_END          PTR        $NAME.local." >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+ else
+  echo  "$IP_REV_END          PTR        $NAME-eth.local." >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+ fi
+}
+
+# function call looks like "write_ib hostname ip [default]"
+# if default is "yes", both nodename-ib and nodename will point to the infiniband interface
+# if default is "no", only nodename-ib will point to the ethernet interface regardless of the global setting
+write_ib () {
+ NAME=$1
+ IP=$2
+ IP_REV_END=`echo $IP | sed -e "s/[0-9]*\.[0-9]*\.\([0-9]*\).\([0-9]*\).*/\2.\1/"`
+ echo  "$NAME-ib          A        $IP" >> $NAMED_CONF_DIR/ib
+ if [ "x$DEFAULT_NET" == "xib" ] || [ "x$3" == "xyes" ] && [ "x$3" != "xno" ] ; then
+  echo  "$NAME          CNAME        $NAME-ib" >> $NAMED_CONF_DIR/ib
+  echo  "$IP_REV_END          PTR        $NAME.ib." >> $NAMED_CONF_DIR/$my_ib_reversesubnet.in-addr.arpa
+ else
+  echo  "$IP_REV_END          PTR        $NAME-ib.ib." >> $NAMED_CONF_DIR/$my_ib_reversesubnet.in-addr.arpa
+ fi
+}
+
+write_ilo () {
+ NAME=$1
+ IP=$2
+ IP_REV_END=`echo $IP | sed -e "s/[0-9]*\.[0-9]*\.\([0-9]*\).\([0-9]*\).*/\2.\1/"`
+ echo  "$NAME-ilo          A        $IP" >> $NAMED_CONF_DIR/ilo
+ echo  "$IP_REV_END          PTR        $NAME-ilo.ilo." >> $NAMED_CONF_DIR/$my_ilo_reversesubnet.in-addr.arpa
+}
+
+#check which frontends should have ETH as default interface
+echo $NO_IB_FRONTENDS |grep "LOGIN" >/dev/null
+if [ $? -eq 0 ] ; then
+ LOGIN_ETH_ARGUMENT="yes"
+ LOGIN_IB_ARGUMENT="no"
+fi
+
+echo $NO_IB_FRONTENDS |grep "INSTALL" >/dev/null
+if [ $? -eq 0 ] ; then
+ INSTALL_ETH_ARGUMENT="yes"
+ INSTALL_IB_ARGUMENT="no"
+fi
+
+echo $NO_IB_FRONTENDS |grep "ADMIN" >/dev/null
+if [ $? -eq 0 ] ; then
+ ADMIN_ETH_ARGUMENT="yes"
+ ADMIN_IB_ARGUMENT="no"
+fi
+
+echo $NO_IB_FRONTENDS |grep "GRID" >/dev/null
+if [ $? -eq 0 ] ; then
+ GRID_ETH_ARGUMENT="yes"
+ GRID_IB_ARGUMENT="no"
+fi
+
+echo $NO_IB_FRONTENDS |grep "DISK" >/dev/null
+if [ $? -eq 0 ] ; then
+ DISK_ETH_ARGUMENT="yes"
+ DISK_IB_ARGUMENT="no"
+fi
+
+
+#Write frotend node entries for eth and possibly IB and ILO
+write_eth $CLUSTERNAME $LOGINNODEIP $LOGIN_ETH_ARGUMENT
+write_eth $CLUSTERNAME-install $INSTALLNODEIP $INSTALL_ETH_ARGUMENT
+write_eth $CLUSTERNAME-admin $ADMINNODEIP $ADMIN_ETH_ARGUMENT
+write_eth $CLUSTERNAME-grid $GRIDNODEIP $GRID_ETH_ARGUMENT
+write_eth $CLUSTERNAME-nfs $DISKNODEIP $DISK_ETH_ARGUMENT
+
+if [ "x$USE_IB" == "xyes" ] ; then
+ LOGIN_IB=$my_ib_subnet`echo $LOGINNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ INSTALL_IB=$my_ib_subnet`echo $INSTALLNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ ADMIN_IB=$my_ib_subnet`echo $ADMINNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ GRID_IB=$my_ib_subnet`echo $GRIDNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ DISK_IB=$my_ib_subnet`echo $DISKNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ write_ib $CLUSTERNAME $LOGIN_IB $LOGIN_IB_ARGUMENT
+ write_ib $CLUSTERNAME-install $INSTALL_IB $INSTALL_IB_ARGUMENT
+ write_ib $CLUSTERNAME-admin $ADMIN_IB $ADMIN_IB_ARGUMENT
+ write_ib $CLUSTERNAME-grid $GRID_IB $GRID_IB_ARGUMENT
+ write_ib $CLUSTERNAME-nfs $DISK_IB $NFS_IB_ARGUMENT
+fi
+
+if [ "x$USE_ILO" == "xyes" ] ; then
+ LOGIN_ILO=$my_ilo_subnet`echo $LOGINNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ INSTALL_ILO=$my_ilo_subnet`echo $INSTALLNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ ADMIN_ILO=$my_ilo_subnet`echo $ADMINNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ GRID_ILO=$my_ilo_subnet`echo $GRIDNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ DISK_ILO=$my_ilo_subnet`echo $DISKNODEIP |grep -o ".[0-9]*.[0-9]$"`
+ write_ilo $CLUSTERNAME $LOGIN_ILO
+ write_ilo $CLUSTERNAME-install $INSTALL_ILO
+ write_ilo $CLUSTERNAME-admin $ADMIN_ILO
+ write_ilo $CLUSTERNAME-grid $GRID_ILO
+ write_ilo $CLUSTERNAME-nfs $DISK_ILO
+fi
+ 
+#For each node, write the entries
 for node in `ls $NODE_CONF_DIR` ; do
  if [ ! -f $NODE_CONF_DIR/$node/eth0-ip ] ; then
   echo "Required files $NODE_CONF_DIR/$node/eth0-ip not found"
@@ -77,10 +227,37 @@ for node in `ls $NODE_CONF_DIR` ; do
  fi
  #get the last number
  IP=`cat $NODE_CONF_DIR/$node/eth0-ip`
- IP_END=`cat $NODE_CONF_DIR/$node/eth0-ip | grep -o "[0-9]*$`
+ IP_END=`cat $NODE_CONF_DIR/$node/eth0-ip | grep -o ".[0-9].[0-9]*$"`
  NAME=$node
- echo  "$NAME          A        $IP" >> $NAMED_CONF_DIR/local
- echo  "$IP_END          PTR        $NAME.local." >> $NAMED_CONF_DIR/$myreversesubnet.in-addr.arpa
+ write_eth $NAME $IP
+ if [ "x$USE_IB" = "xyes" ] ; then
+  write_ib $NAME $my_ib_subnet$IP_END
+ fi 
+ if [ "x$USE_ILO" = "xyes" ] ; then
+  write_ilo $NAME $my_ilo_subnet$IP_END
+ fi 
+done
+
+#for any extra hosts, write the entries
+i=1
+NEWHOST=EXTRA_HOST$i
+eval CHECK="\$$NEWHOST"
+while [ $CHECK != "\$" ] ; do
+ NAME=`echo $CHECK | cut -f 1 -d ":"`
+ ETHIP=`echo $CHECK | cut -f 2 -d ":"`
+ IBIP=`echo $CHECK | cut -f 3 -d ":"`
+ if [ "x$IBIP" != "x" ] ; then
+  write_eth $NAME $ETHIP
+  if [ "x$USE_IB" == "xyes" ] ; then
+   write_ib $NAME $IBIP 
+  fi
+ else
+  write_eth $NAME $ETHIP yes
+ fi
+ 
+ let i=i+1
+ NEWHOST=EXTRA_HOST$i
+ eval CHECK="\$$NEWHOST"
 done
 
 service named restart

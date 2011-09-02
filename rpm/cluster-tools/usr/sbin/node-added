@@ -10,6 +10,11 @@ for node in `ls $NODE_CONF_DIR` ; do
    exit 1
   fi
  done
+ # Make new nodes reinstall (identify new nodes by not having premade ssh keys)
+ if [ ! -d $NODE_CONF_DIR/$node/ssh ] ; then
+  touch $NODE_CONF_DIR/$node/reinstall
+ fi
+
 done
 
 $clustertooldir/check-ssh-keys
@@ -17,6 +22,7 @@ $clustertooldir/update-dhcpd-conf
 $clustertooldir/update-named-conf
 $clustertooldir/update-machines
 $clustertooldir/link-package-file
+$clustertooldir/distribute-files
 
 echo "Node added and services restarted"
 

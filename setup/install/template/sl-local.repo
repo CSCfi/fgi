@@ -4,6 +4,7 @@ baseurl=__OS_REPOURL__
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-sl file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dawson
+proxy=http://__GATEWAY__:8080/
 
 [sl-security-local]
 name=Scientific Linux 6rolling - $basearch - security updates
@@ -11,4 +12,4 @@ baseurl=__OS_SECURITY_REPOURL__
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-sl file:///etc/pki/rpm-gpg/RPM-GPG-KEY-dawson
-
+proxy=http://__GATEWAY__:8080/

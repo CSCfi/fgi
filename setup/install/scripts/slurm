@@ -4,7 +4,7 @@ SCRIPT=`basename $0`
 id slurm &>/dev/null
 if [ $? -ne 0 ] ; then
  echo "$SCRIPT: Adding SLURM user"
- adduser -Mr slurm
+ adduser -M slurm
 fi
 
 if [ ! -e /var/log/slurm ] ; then

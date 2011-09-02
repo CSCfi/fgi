@@ -14,6 +14,7 @@ securityurl = ""
 fgiurl = ""
 epelurl = ""
 localurl = ""
+disk-config = ""
 
 
 try:
@@ -26,18 +27,28 @@ try:
  installnode = clustersettings["INSTALLNODEIP"]
  clustername = clustersettings["CLUSTERNAME"]
  installurl = "url --url %s" % clustersettings["OS_REPOURL"]
- securityurl = 'repo --name="Scientific Linux 6 - Security updates" --baseurl=%s' % clustersettings["OS_SECURITY_REPOURL"]
- fgiurl = 'repo --name="FGI" --baseurl=%s' % clustersettings["FGI_REPOURL"]
- epelurl = 'repo --name="epel" --baseurl=%s' % clustersettings["FGI_REPOURL"]
+ proxy = clustersettings["LOGINNODEIP"]
+ securityurl = 'repo --name="Scientific Linux 6 - Security updates" --baseurl=%s --proxy=http://%s:8080/' % (clustersettings["OS_SECURITY_REPOURL"], proxy)
+ fgiurl = 'repo --name="FGI" --baseurl=%s --proxy=http://%s:8080/' % (clustersettings["FGI_REPOURL"], proxy)
+ epelurl = 'repo --name="epel" --baseurl=%s --proxy=http://%s:8080/' % (clustersettings["FGI_REPOURL"], proxy)
  if "LOCAL_REPOURL" in clustersettings and len(clustersettings["LOCAL_REPOURL"]) > 0 :
-  localurl = 'repo --name="local" --baseurl=%s' % clustersettings["LOCAL_REPOURL"]
+  localurl = 'repo --name="local" --baseurl=%s --proxy=http://%s:8080/' % (clustersettings["LOCAL_REPOURL"], proxy)
  hostname = socket.gethostbyaddr(os.environ["REMOTE_ADDR"])[0].split(".")[0]
  f = open("/etc/cluster/nodes/" + hostname + "/packages")
  extra_packages = f.read()
  f.close()
+ try:
+  f = open("/etc/cluster/nodes/" + hostname + "/disk-config")
+  disk-config = f.read()
+  f.close()
+ except:
+  disk-config = '''bootloader --location=mbr --driveorder=cciss/c0d0
+clearpart --all --drives=cciss/c0d0
+part /boot    --fstype ext3 --size 1000     --asprimary     --ondrive=cciss/c0d0
+part /    --fstype ext4 --size 1 --grow                 --ondrive=cciss/c0d0'''
+  
 except:
   pass
-
 
 print '''
 install
@@ -61,10 +72,7 @@ timezone --utc Europe/Helsinki
 services --enabled ypbind,slurm,munge,nscd,ntpd,gmond
 
 zerombr
-bootloader --location=mbr --driveorder=cciss/c0d0
-clearpart --all --drives=cciss/c0d0
-part /boot    --fstype ext3 --size 1000     --asprimary     --ondrive=cciss/c0d0
-part /    --fstype ext4 --size 1 --grow                 --ondrive=cciss/c0d0
+%s
 
 %post
 modprobe nfs
@@ -86,5 +94,5 @@ nscd
 pdsh
 ganglia-gmond
 openmpi
-'''  % (installurl, securityurl, fgiurl, epelurl, localurl, installnode, clustername, installnode)
+'''  % (installurl, securityurl, fgiurl, epelurl, localurl, installnode, clustername, disk-config, installnode)
 print extra_packages
