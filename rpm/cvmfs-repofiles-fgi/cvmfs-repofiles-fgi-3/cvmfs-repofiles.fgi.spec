@@ -58,8 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc
 
 %post
-/usr/bin/cvmfs_config
-/etc/init.d/autofs restart
+/usr/bin/cvmfs_config setup
+#/etc/init.d/autofs restart
 
 
 
