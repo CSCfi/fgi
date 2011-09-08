@@ -1,6 +1,6 @@
 Name:		fgi-release6
 Version:	1	
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Release files for FGI repository
 
 Group:		Applications/Communication
