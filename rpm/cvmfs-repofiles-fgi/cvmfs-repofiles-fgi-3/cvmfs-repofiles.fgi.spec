@@ -14,7 +14,10 @@ BuildArch: 	noarch
 Requires:	cvmfs,cvmfs-keys, autofs
 
 %description
-Hippos! Magical amounts of hippos!
+Package containing the config files to enable the
+fgi.csc.fi CVMFS repository, enabling its use by only
+installing this package.
+
 
 %prep
 %setup -q

@@ -1,6 +1,6 @@
 Name:		cvmfs-release
 Version:	1
-Release:	1%{?dist}
+Release:	2
 Summary:	CVMFS repository release files (FGI)
 
 Group:		none	
@@ -14,7 +14,9 @@ BuildArch: 	noarch
 Requires:	yum
 
 %description
-Hippos! Magical amounts of hippos! With whipped cream!
+Non-CERN package containing the yum .repo file for the official 
+CVMFS repository in addition to the GPG RPM signing key for that repo.
+Released by CSC for easy use by the FGI/NGI_FI grid.
 
 %prep
 %setup -q
