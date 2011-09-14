@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.1
+Version: 0.3
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -39,3 +39,5 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Aug 17 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.1-1
  - First release of the cluster tools
+* Wed Sep 14 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.3-1
+ - Bugfixes and improvements

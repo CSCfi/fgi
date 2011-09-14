@@ -1,6 +1,0 @@
-[local]
-name=__CLUSTERNAME__ repository
-baseurl=__LOCAL_REPOURL__
-enabled=1
-gpgcheck=0
-proxy=http://__GATEWAY__:8080/

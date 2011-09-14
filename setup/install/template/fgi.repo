@@ -1,6 +1,0 @@
-[fgi]
-name=FGI
-baseurl=__FGI_REPOURL__
-enabled=1
-gpgcheck=0
-proxy=http://__GATEWAY__:8080/

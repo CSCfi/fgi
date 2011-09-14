@@ -6,5 +6,6 @@ if [ ! -f /etc/exports.fgibak ] ; then
  cp /etc/exports /etc/exports.fgibak
 fi
 $CURRDIR/replace_cp $CURRDIR/../template/exports /etc/exports
+exportfs -a
 
 echo "$SCRIPT: Done" 

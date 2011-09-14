@@ -7,5 +7,5 @@ if [ -e "$name-$version" ] ; then
 fi
 mkdir "$name-$version"
 cp -r usr/ var/ etc/ $name.spec "$name-$version"
-tar -cvzf "$name-$version.tar.gz" "$name-$version"
+tar --exclude-vcs -cvzf "$name-$version.tar.gz" "$name-$version"
 rm -rf "$name-$version"
