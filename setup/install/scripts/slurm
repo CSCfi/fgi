@@ -1,5 +1,6 @@
 #!/bin/bash
 SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
 
 id slurm &>/dev/null
 if [ $? -ne 0 ] ; then
@@ -19,3 +20,8 @@ if [ ! -e /etc/munge/munge.key ] ; then
  cp /etc/munge/munge.key /etc/cluster/conf
 fi
 
+if [ ! -e /etc/slurm/slurm.conf.tmpl ] ; then
+ echo "$SCRIPT: Copying SLURM configuration template"
+ cp $CURRDIR/../template/slurm.conf.tmpl /etc/slurm
+fi
+ 

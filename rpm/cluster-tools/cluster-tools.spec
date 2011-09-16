@@ -29,6 +29,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+%config(noreplace) %{_sysconfdir}/cluster/mounts.sh
 %{_sysconfdir}/cluster
 %{_sbindir}/*
 %{_libexecdir}/cluster
@@ -37,7 +38,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Aug 17 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.1-1
- - First release of the cluster tools
 * Wed Sep 14 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.3-1
  - Bugfixes and improvements
+* Wed Aug 17 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.1-1
+ - First release of the cluster tools

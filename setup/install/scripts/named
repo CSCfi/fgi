@@ -6,4 +6,7 @@ if [ ! -f /etc/named.conf.fgibak ] ; then
  cp /etc/named.conf /etc/named.conf.fgibak
 fi
 $CURRDIR/replace_cp $CURRDIR/../template/named.conf /etc/named.conf
+
+/usr/libexec/cluster/update-named-conf
+service named restart
 echo "$SCRIPT: Done" 

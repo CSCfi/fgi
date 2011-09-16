@@ -23,4 +23,6 @@ echo "$SCRIPT: Running ypinit to initialize NIS"
 echo "" > /tmp/yptmp
 /usr/lib64/yp/ypinit -m  < /tmp/yptmp
 
+service ypserv restart
+
 echo "$SCRIPT: Done"

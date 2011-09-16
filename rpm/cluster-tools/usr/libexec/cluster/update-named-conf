@@ -242,7 +242,7 @@ done
 i=1
 NEWHOST=EXTRA_HOST$i
 eval CHECK="\$$NEWHOST"
-while [ $CHECK != "\$" ] ; do
+while [ "x$CHECK" != "x" ] ; do
  NAME=`echo $CHECK | cut -f 1 -d ":"`
  ETHIP=`echo $CHECK | cut -f 2 -d ":"`
  IBIP=`echo $CHECK | cut -f 3 -d ":"`
