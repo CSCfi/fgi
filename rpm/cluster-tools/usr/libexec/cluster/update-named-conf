@@ -227,7 +227,7 @@ for node in `ls $NODE_CONF_DIR` ; do
  fi
  #get the last number
  IP=`cat $NODE_CONF_DIR/$node/eth0-ip`
- IP_END=`cat $NODE_CONF_DIR/$node/eth0-ip | grep -o ".[0-9].[0-9]*$"`
+ IP_END=`cat $NODE_CONF_DIR/$node/eth0-ip | grep -o ".[0-9]*.[0-9]*$"`
  NAME=$node
  write_eth $NAME $IP
  if [ "x$USE_IB" = "xyes" ] ; then

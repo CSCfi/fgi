@@ -1,0 +1,10 @@
+#!/bin/bash
+#ext_int=br2
+#comp_int=br1
+
+# This is a default value so that you are not locked out of your own cluster
+# Please comment out this line and add new lines below
+iptables -A INPUT -i $ext_int -p tcp --dport ssh -j ACCEPT
+
+#This shold be more limited than the login/install node ssh blocks
+#iptables -A INPUT -i $ext_int -s MY_UNIVESRSITY_ADMIN_HOSTS -p tcp --dport ssh -j ACCEPT

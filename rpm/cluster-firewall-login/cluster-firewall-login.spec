@@ -30,7 +30,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/sysconfig/fgi-firewall-local
-%{_sysconfdir}/sysconfig/fgi-firewall
+%attr(0744, root, root) %{_sysconfdir}/sysconfig/fgi-firewall
 
 %changelog
 * Wed Sep 15 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.1-1

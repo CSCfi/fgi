@@ -112,7 +112,7 @@ nscd
 pdsh
 ganglia-gmond
 openmpi
-fgi-release
+fgi-release6
 cvmfs-release
 cvmfs-repofiles-fgi
 epel-release

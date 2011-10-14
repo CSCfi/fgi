@@ -1,8 +1,8 @@
-Name: cluster-firewall-install
+Name: cluster-firewall-admin
 Version: 0.1
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
-Summary: Firewall rules for FGI install nodes
+Summary: Firewall rules for FGI admin nodes
 Group: System Environment/Base	
 License: GPL
 BuildArch: noarch
@@ -13,7 +13,7 @@ Requires: iptables
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 
 %description
-This package contains default firewall settings for the FGI installation node
+This package contains default firewall settings for the FGI admin node
 
 %prep
 %setup -q

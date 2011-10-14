@@ -3,8 +3,8 @@ NODE_CONF_DIR=/etc/cluster/nodes
 
 source /etc/cluster/conf/cluster.conf
 
-scp -o PasswordAuthentication=no /etc/ssh/ssh_known_hosts $CLUSTERNAME:/etc/ssh/
-scp -o PasswordAuthentication=no /etc/ssh/ssh_known_hosts $CLUSTERNAME-grid:/etc/ssh/
+scp -o PasswordAuthentication=no /etc/ssh/ssh_known_hosts $CLUSTERNAME.local:/etc/ssh/
+#scp -o PasswordAuthentication=no /etc/ssh/ssh_known_hosts $CLUSTERNAME-grid:/etc/ssh/
 
-scp -o PasswordAuthentication=no /etc/machines $CLUSTERNAME:/etc/
-scp -o PasswordAuthentication=no /etc/machines $CLUSTERNAME-grid:/etc/
+scp -o PasswordAuthentication=no /etc/machines $CLUSTERNAME.local:/etc/
+#scp -o PasswordAuthentication=no /etc/machines $CLUSTERNAME-grid:/etc/

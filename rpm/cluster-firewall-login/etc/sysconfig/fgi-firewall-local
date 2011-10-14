@@ -10,4 +10,5 @@
 # Please comment out this line and add new lines below
 iptables -A INPUT -i $ext_int -p tcp --dport ssh -j ACCEPT
 
+# This should be an IP range from where your users are allowed to log in
 #iptables -A INPUT -i $ext_int -s MY_UNIVESRSITY_IP_RANGE -p tcp --dport ssh -j ACCEPT
