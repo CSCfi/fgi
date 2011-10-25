@@ -20,8 +20,9 @@ if [ ! -e /etc/munge/munge.key ] ; then
  cp /etc/munge/munge.key /etc/cluster/conf
 fi
 
-if [ ! -e /etc/slurm/slurm.conf.tmpl ] ; then
+if [ ! -e /etc/cluster/conf/slurm.conf ] ; then
  echo "$SCRIPT: Copying SLURM configuration template"
- cp $CURRDIR/../template/slurm.conf.tmpl /etc/slurm
+ cp $CURRDIR/../template/slurm.conf.tmpl /etc/cluster/conf
+ ln -s /etc/cluster/conf/slurm.conf /etc/slurm/slurm.conf
 fi
  

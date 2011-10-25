@@ -80,6 +80,8 @@ iptables -A OUTPUT -o $ext_int -p udp -m udp --sport bootps -j LOG_AND_DROP
 
 # Outgoing connections (with state) valid
 iptables -A INPUT -i $ext_int -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -i $comp_int -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -i $ib_int -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # Allow incoming ping from the whole world (with a rate limit to block ping floods)
 iptables -A INPUT -p icmp --icmp-type ping -j ACCEPT -m limit --limit 10/second    

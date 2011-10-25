@@ -13,7 +13,7 @@ CacheGroups=1
 CryptoType=crypto/munge                                                                                   
 #DisableRootJobs=NO                                                                                       
 #EnforcePartLimits=NO                                                                                     
-Epilog=/export/software/scripts/epilog.sh                                                                 
+#Epilog=/export/software/scripts/epilog.sh                                                                 
 #PrologSlurmctld=                                                                                         
 #FirstJobId=1                                                                                             
 #GresTypes=                                                                                               
@@ -57,7 +57,7 @@ SwitchType=switch/none
 #TaskEpilog=                                                                                              
 TaskPlugin=task/none                                                                                      
 #TaskPluginParam=                                                                                         
-TaskProlog=/export/software/scripts/prolog.sh                                                             
+#TaskProlog=/export/software/scripts/prolog.sh                                                             
 #TopologyPlugin=topology/tree                                                                             
 #TmpFs=/tmp                                                                                               
 #TrackWCKey=no                                                                                            
@@ -132,7 +132,7 @@ JobAcctGatherFrequency=30
 JobAcctGatherType=jobacct_gather/linux
 SlurmctldDebug=3
 #SlurmctldLogFile=
-SlurmdDebug=6
+#SlurmdDebug=6
 #SlurmdLogFile=
 #SlurmSchedLogFile=
 #SlurmSchedLogLevel=
@@ -152,12 +152,12 @@ SlurmdDebug=6
 #
 # COMPUTE NODES
 #Some examples of node configurations. 4 chassis of basic compute nodes, 2 chassis of large mem nodes, and one chassis of gpu nodes
-#NodeName=c-[1-4]-[1-8] Procs=12 RealMemory=23000 Sockets=2 CoresPerSocket=6 ThreadsPerCore=1 State=UNKNOWN
-#NodeName=c-[5-6]-[1-8] Procs=12 RealMemory=47000 Sockets=2 CoresPerSocket=6 ThreadsPerCore=1 State=UNKNOWN
-#NodeName=c-7-[1-4] Procs=12 RealMemory=47000 Sockets=2 CoresPerSocket=6 ThreadsPerCore=1 State=UNKNOWN
+#NodeName=c[1-4]-[1-8] Procs=12 RealMemory=23000 Sockets=2 CoresPerSocket=6 ThreadsPerCore=1 State=UNKNOWN
+#NodeName=c[5-6]-[1-8] Procs=12 RealMemory=47000 Sockets=2 CoresPerSocket=6 ThreadsPerCore=1 State=UNKNOWN
+#NodeName=c7-[1-4] Procs=12 RealMemory=47000 Sockets=2 CoresPerSocket=6 ThreadsPerCore=1 State=UNKNOWN
 
 #Queues, for example, one largemem queue, one normal queue, and one gpu queue
 #PartitionName=normal Nodes=c[1-4]-[1-8] Default=YES MaxTime=INFINITE State=UP
 #PartitionName=largemem Nodes=c[5-6]-[1-8] Default=NO MaxTime=INFINITE State=UP
-#PartitionName=gpu Nodes=c-7-[1-4] Default=NO MaxTime=INFINITE State=UP
+#PartitionName=gpu Nodes=c7-[1-4] Default=NO MaxTime=INFINITE State=UP
 

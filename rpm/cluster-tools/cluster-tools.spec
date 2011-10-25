@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.3
+Version: 0.4
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -29,7 +29,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/cluster/mounts.sh
+%config(noreplace) %{_sysconfdir}/cluster/scripts/mounts.sh
 %{_sysconfdir}/cluster
 %{_sbindir}/*
 %{_libexecdir}/cluster

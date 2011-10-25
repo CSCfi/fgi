@@ -112,6 +112,12 @@ nscd
 pdsh
 ganglia-gmond
 openmpi
+hponcfg
+glibc.i686
+zlib.i686
+libxml2.i686
+libgcc.i686
+libstdc++.i686
 fgi-release6
 cvmfs-release
 cvmfs-repofiles-fgi
