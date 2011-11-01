@@ -7,6 +7,7 @@ print "Content-Type: text/plain"
 print
 
 extra_packages = ""
+fgi_packages = ""
 installnode = "10.1.1.1"
 clustername = "fgi"
 installurl = ""
@@ -46,6 +47,10 @@ try:
  f = open("/etc/cluster/nodes/" + hostname + "/packages")
  extra_packages = f.read()
  f.close()
+ try:
+  f = open("/etc/cluster/conf/fgi-default-packages")
+  fgi_packages = f.read()
+  f.close()
  try:
   f = open("/etc/cluster/nodes/" + hostname + "/disk-config")
   diskconfig = f.read()
@@ -112,6 +117,7 @@ nscd
 pdsh
 ganglia-gmond
 openmpi
+mpitests-openmpi
 hponcfg
 glibc.i686
 zlib.i686
@@ -124,3 +130,4 @@ cvmfs-repofiles-fgi
 epel-release
 '''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, installnode, clustername, diskconfig, installnode)
 print extra_packages
+print fgi_packages
