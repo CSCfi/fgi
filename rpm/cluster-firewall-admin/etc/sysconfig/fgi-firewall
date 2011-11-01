@@ -28,7 +28,8 @@ csc_test_net=193.166.3.0/24
 csc_wlan_net=193.166.6.0/24         
 csc_meta_net=193.166.7.0/24         
 csc_giis=193.166.0.138                 
-csc_admin_host=193.166.1.98
+csc_admin_host1=193.166.1.98
+csc_admin_host2=193.166.1.112
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
@@ -48,7 +49,7 @@ iptables -P OUTPUT ACCEPT
 log_rate="-m limit --limit 1/second --limit-burst 10"               
 reject_rate="-m limit --limit 10/second --limit-burst 100"          
 iptables -N LOG_AND_DROP                                            
-iptables -A LOG_AND_DROP -j LOG ${log_rate} --log-prefix="DROP "    
+#iptables -A LOG_AND_DROP -j LOG ${log_rate} --log-prefix="DROP "    
 iptables -A LOG_AND_DROP -p tcp -m tcp -j REJECT ${reject_rate} --reject-with tcp-reset
 iptables -A LOG_AND_DROP -p \! tcp -j REJECT ${reject_rate}                            
 iptables -A LOG_AND_DROP -j DROP                                                       
@@ -87,7 +88,8 @@ iptables -A INPUT -i $ib_int -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p icmp --icmp-type ping -j ACCEPT -m limit --limit 10/second    
 
 # Allow ssh from CSC admin host
-iptables -A INPUT -i $ext_int -s ${csc_admin_host} -p tcp -m tcp --dport ssh -j ACCEPT
+iptables -A INPUT -i $ext_int -s ${csc_admin_host1} -p tcp -m tcp --dport ssh -j ACCEPT
+iptables -A INPUT -i $ext_int -s ${csc_admin_host2} -p tcp -m tcp --dport ssh -j ACCEPT
 
 # Silently drop packets without logging for some often crowded (e.g. Windows 
 # related) ports, bootp and dhcp requests and multicast addresses            

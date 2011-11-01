@@ -47,7 +47,7 @@ iptables -P OUTPUT ACCEPT
 log_rate="-m limit --limit 1/second --limit-burst 10"               
 reject_rate="-m limit --limit 10/second --limit-burst 100"          
 iptables -N LOG_AND_DROP                                            
-iptables -A LOG_AND_DROP -j LOG ${log_rate} --log-prefix="DROP "    
+#iptables -A LOG_AND_DROP -j LOG ${log_rate} --log-prefix="DROP "    
 iptables -A LOG_AND_DROP -p tcp -m tcp -j REJECT ${reject_rate} --reject-with tcp-reset
 iptables -A LOG_AND_DROP \! -p tcp -j REJECT ${reject_rate}                            
 iptables -A LOG_AND_DROP -j DROP                                                       
