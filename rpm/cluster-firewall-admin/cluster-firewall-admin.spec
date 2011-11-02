@@ -1,5 +1,5 @@
 Name: cluster-firewall-admin
-Version: 0.1
+Version: 0.2
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Firewall rules for FGI admin nodes
@@ -33,5 +33,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0744, root, root) %{_sysconfdir}/sysconfig/fgi-firewall
 
 %changelog
+* Tue Nov 1 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.2-1
+ - Reduced logging and added a CSC admin host
+
 * Wed Sep 15 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.1-1
  - First release of the firewall scripts

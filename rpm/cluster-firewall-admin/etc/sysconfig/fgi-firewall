@@ -123,6 +123,10 @@ iptables -A INPUT -i $ext_int -p udp --dport 1434 -j DROP
 iptables -A INPUT -i $ext_int -d 224.0.0.0/4 -j DROP
 iptables -A INPUT -i $ext_int -d 240.0.0.0/4 -j DROP
 
+# Forward relevant virtual machine traffic
+iptables -A FORWARD -o $ext_int -j ACCEPT
+iptables -A FORWARD -i $ext_int -m state --state ESTABLISHED,RELATED -j ACCEPT
+
 # Everything else is rejected and logged
 iptables -A INPUT -j LOG_AND_DROP
 iptables -A FORWARD -j LOG_AND_DROP
