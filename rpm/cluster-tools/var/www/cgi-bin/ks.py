@@ -51,6 +51,8 @@ try:
   f = open("/etc/cluster/conf/fgi-default-packages")
   fgi_packages = f.read()
   f.close()
+ except:
+  pass
  try:
   f = open("/etc/cluster/nodes/" + hostname + "/disk-config")
   diskconfig = f.read()

@@ -35,7 +35,7 @@ if [ $? -ne 0 ] ; then
  exit 1
 fi
 
-echo "grant all privileges on slurm.* to \"slurm\"@\"localhost\" identified by \'$StoreagePass\'" | mysql -uroot
+echo 'grant all privileges on slurm.* to "slurm"@"localhost" identified by ' \'"$StoragePass"\' | mysql -uroot
 
 if [ $? -ne 0 ] ; then
  echo "Whoops! The darnest thig happened. The slurm user could not be added to MySQL. The (most likely) friendly (if they had their morning coffee) tech support at CSC could probably help you. If you are a clever one, look into this file and see you you can find the problem." >&2
@@ -53,7 +53,7 @@ fi
 
 chkconfig slurmdbd on
 
-sacctmgr add cluster "$ClusterName"
+sacctmgr -i add cluster "$ClusterName"
 if [ $? -ne 0 ] ; then
  echo "Even though I tried my best, the sacctmgr command refused to cooperate. Contact CSC and see if they would have the right sledgehammer to convince sacctmgr to work." >&2
 fi
