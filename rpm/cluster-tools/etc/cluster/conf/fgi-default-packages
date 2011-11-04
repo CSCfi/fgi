@@ -1,0 +1,9 @@
+libgfortran 
+mvapich2 
+mvapich 
+blas 
+fftw 
+fftw2 
+netcdf 
+gromacs-openmpi 
+hdf5-openmpi
