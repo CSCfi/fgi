@@ -7,3 +7,7 @@ fftw2
 netcdf 
 gromacs-openmpi 
 hdf5-openmpi
+iperf
+bonnie++
+memtester
+mpitests-openmpi
