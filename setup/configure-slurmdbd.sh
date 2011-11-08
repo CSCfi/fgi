@@ -23,6 +23,11 @@ if [ "$ControlMachine" == "clustername-install" ] ; then
  exit 1
 fi
 
+if [ "$AccountingStorageHost" == "clustername-install" ] ; then
+ echo "Please set the AccountingStorageHost  variable in /etc/slurm/slurm.conf before running this script" >&2
+ exit 1
+fi
+
 if [ "$ClusterName" == "clustername" ] ; then
  echo "Please set the ClusterName variable in /etc/slurm/slurm.conf before running this script" >&2
  exit 1
