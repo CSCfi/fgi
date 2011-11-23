@@ -28,8 +28,8 @@ fi
 while read node ; do 
  nodenum=`echo $node |cut -f 1 -d " " | cut -b 3-10`
  nodemac=`echo $node |cut -f 2 -d " "`
- mkdir -p /tmp/cluster/conf/nodes/$nodestart$nodenum
- $ipstart.100.$nodenum > /tmp/cluster/nodes/$nodestart$nodenum/eth0-ip
+ mkdir -p /tmp/cluster/nodes/$nodestart$nodenum
+ echo $ipstart.100.$nodenum > /tmp/cluster/nodes/$nodestart$nodenum/eth0-ip
  echo $nodemac > /tmp/cluster/nodes/$nodestart$nodenum/eth0-mac
 done < macs
 

@@ -41,6 +41,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 echo 'grant all privileges on slurm.* to "slurm"@"localhost" identified by ' \'"$StoragePass"\' | mysql -uroot
+echo "grant all privileges on slurm.* to "slurm"@"$ClusterName-install.local" identified by " \'"$StoragePass"\' | mysql -uroot
 
 if [ $? -ne 0 ] ; then
  echo "Whoops! The darnest thig happened. The slurm user could not be added to MySQL. The (most likely) friendly (if they had their morning coffee) tech support at CSC could probably help you. If you are a clever one, look into this file and see you you can find the problem." >&2
