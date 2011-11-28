@@ -13,7 +13,7 @@
 #                                                                                                                                   
 # 2011-09-15 First version based on the old M-grid firewall scripts                                                                 
 
-ext_int="bd2"
+ext_int="br2"
 comp_int="br1"
 ib_int="ib0"
 
