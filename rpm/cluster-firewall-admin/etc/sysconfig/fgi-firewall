@@ -29,7 +29,7 @@ csc_wlan_net=193.166.6.0/24
 csc_meta_net=193.166.7.0/24         
 csc_giis=193.166.0.138                 
 csc_admin_host1=193.166.1.98
-csc_admin_host2=193.166.1.112
+csc_admin_host2=193.166.1.72
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
