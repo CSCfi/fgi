@@ -19,8 +19,17 @@ Requires:	yum
 #Requires: 	kernel(x86-64) = kernel-2.6.32-131.21.1.el6
 Requires: 	kernel(x86-64) = kernel-%{Kernelversion}
 
+%package kmod-nvidia-%{Kernelversion}
+Requires: 	kernel(x86-64) = kernel-%{Kernelversion}
+Requires:	nvidia-cuda
+Summary: 	Kernel module for CUDA
+
 %description
 NVIDIA binary modules
+
+
+%description kmod-nvidia-%{Kernelversion}
+NVIDIA binary module for %{Kernelversion}
 
 
 %define debug_package %{nil}
@@ -46,7 +55,8 @@ mkdir -p $RPM_BUILD_ROOT/usr/lib/tls
 mkdir -p $RPM_BUILD_ROOT/usr/bin
 mkdir -p $RPM_BUILD_ROOT/etc/modprobe.d
 mkdir -p $RPM_BUILD_ROOT/etc/init.d
-mkdir -p $RPM_BUILD_ROOT/lib/modules/%{Kernelversion}/kernel/drivers/video
+mkdir -p $RPM_BUILD_ROOT/lib/modules/%{Kernelversion}.x86_64/kernel/drivers/video
+
 
 cp unpack/libGL.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/libGL.so.%{CUDAVersion}
 cp unpack/libglx.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/xorg/modules/extensions/libglx.so.%{CUDAVersion}
@@ -88,15 +98,12 @@ cp nvidia-kmod $RPM_BUILD_ROOT/etc/init.d
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%package kmod-nvidia-%{Kernelversion}
-Requires: 	kernel(x86-64) = kernel-%{Kernelversion}
-Requires:	nvidia-cuda
 
 %post 
 chkconfig --install nvidia-kmod
 chkconfig nvidia-kmod on
 
-%files 
+%files  kmod-nvidia-%{Kernelversion}
 %defattr(-,root,root,-)
 /lib/modules/%{Kernelversion}.x86_64/kernel/drivers/video/nvidia.ko
 
@@ -135,6 +142,7 @@ chkconfig nvidia-kmod on
 /usr/bin/nvidia-xconfig
 /usr/bin/nvidia-settings
 /etc/modprobe.d/nvidia-installer-disable-nouveau.conf 
+/etc/init.d/nvidia-kmod
 
 %changelog
 * Mon Nov 28 2011 Ulf Tigerstedt <tigerste@csc.fi> 1
