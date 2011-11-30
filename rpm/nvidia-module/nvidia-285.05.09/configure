@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./NVIDIA-Linux-x86_64-285.05.09.run -x -a --target unpack 
+
+cd unpack/kernel
+make module 

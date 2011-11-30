@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# nfs           This shell script takes care of loading the nvidia kernel
+#		module and creating the device files. 
+#
+# chkconfig: - 30 60
+# description: This module is needed for CUDA to work.
+
+### BEGIN INIT INFO
+# Provides: nvidia-kmod
+# Required-Start: $local_fs 
+# Required-Stop: $local_fs 
+# Default-Stop: 0 1 6
+# Short-Description: Load NVIDIA kernel module and create character device files
+# Description: Load NVIDIA kernel module and create character device files
+#              
+### END INIT INFO
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+RETVAL=0
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check that networking is up.
+	echo -n $"Loading NVIDIA kernel module: "
+	#daemon rpc.mountd $RPCMOUNTDOPTS
+	/sbin/modprobe nvidia
+	RETVAL=$?
+	echo
+	mknod -m 0666 /dev/nvidiactl c 195 255 
+	mknod -m 0666 /dev/nvidia0 c 195 0
+	mknod -m 0666 /dev/nvidia1 c 195 1 
+	;;
+  stop)
+	rmmod nvidia
+	;;
+  status)
+	echo Status unknown
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  *)
+	echo $"Usage: nvidia-kmod {start|stop|status|restart}"
+	RETVAL=2
+	;;
+esac
+
+exit $RETVAL
