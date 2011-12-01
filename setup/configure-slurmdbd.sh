@@ -33,7 +33,7 @@ if [ "$ClusterName" == "clustername" ] ; then
  exit 1
 fi
 
-echo "create database slurm" | mysql -uroot 
+echo "create database slurm_acct_db" | mysql -uroot 
 
 if [ $? -ne 0 ] ; then
  echo "Oh no! It seems that the MySQL database could not be created. Please contact tech support at your nearest CSC. Or look into this script file and try to seen what happened." >&2
@@ -59,7 +59,7 @@ fi
 
 chkconfig slurmdbd on
 
-sacctmgr -i add cluster "$ClusterName"
+sacctmgr -i add cluster "$CLUSTERNAME"
 if [ $? -ne 0 ] ; then
  echo "Even though I tried my best, the sacctmgr command refused to cooperate. Contact CSC and see if they would have the right sledgehammer to convince sacctmgr to work." >&2
 fi
