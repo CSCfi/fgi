@@ -31,9 +31,13 @@ for node in `ls $NODE_CONF_DIR` ; do
  if [ -f $NODE_CONF_DIR/$node/ssh/ssh_host_rsa_key.pub ] ; then
   #Check if ssh host key is in the global known hosts file
   pubkey=`cat $NODE_CONF_DIR/$node/ssh/ssh_host_rsa_key.pub |cut -f1-2 -d " "`
-  grep "$pubkey" /etc/ssh/ssh_known_hosts &>/dev/null
+  grep "$node $pubkey" /etc/ssh/ssh_known_hosts &>/dev/null
   if [ $? -ne 0 ] ; then
    echo "$node $pubkey" >> /etc/ssh/ssh_known_hosts
+  fi
+  grep "$nodei-ib $pubkey" /etc/ssh/ssh_known_hosts &>/dev/null
+  if [ $? -ne 0 ] ; then
+   echo "$node-ib $pubkey" >> /etc/ssh/ssh_known_hosts
   fi
  fi
 
