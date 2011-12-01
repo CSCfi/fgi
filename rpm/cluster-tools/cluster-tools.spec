@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.8
+Version: 0.9
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -38,6 +38,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 1 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.9-1
+ - node-added also adds ssh key to known hosts for ib interfaces
 * Tue Nov 8 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.8-1
  - Added idmapd config to node mount scripts
 * Tue Nov 8 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.7-1
