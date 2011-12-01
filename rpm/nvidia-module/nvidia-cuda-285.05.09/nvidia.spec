@@ -100,8 +100,22 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %post 
-chkconfig --install nvidia-kmod
+chkconfig --add nvidia-kmod
 chkconfig nvidia-kmod on
+service nvidia-kmod start
+ldconfig
+
+%preun 
+chconfig --del nvidia-kmod
+
+%postun
+ldconfig
+
+%post kmod-nvidia-%{Kernelversion}
+depmod -a
+
+%postun kmod-nvidia-%{Kernelversion}
+depmod -a
 
 %files  kmod-nvidia-%{Kernelversion}
 %defattr(-,root,root,-)
