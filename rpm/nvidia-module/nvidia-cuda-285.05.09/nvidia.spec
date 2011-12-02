@@ -17,10 +17,10 @@ BuildArch:	x86_64
 #BuildRequires:	
 Requires:	yum
 #Requires: 	kernel(x86-64) = kernel-2.6.32-131.21.1.el6
-Requires: 	kernel(x86-64) = kernel-%{Kernelversion}
+Requires: 	kernel(x86-64) = %{Kernelversion}
 
 %package kmod-nvidia-%{Kernelversion}
-Requires: 	kernel(x86-64) = kernel-%{Kernelversion}
+Requires: 	kernel(x86-64) = %{Kernelversion}
 Requires:	nvidia-cuda
 Summary: 	Kernel module for CUDA
 
@@ -66,6 +66,7 @@ cp unpack/nvidia_drv.so $RPM_BUILD_ROOT/usr/lib64/xorg/modules/drivers/nvidia_dr
 cp unpack/libnvidia-wfb.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/xorg/modules/libnvidia-wfb.so.%{CUDAVersion}
 cp unpack/libXvMCNVIDIA.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/libXvMCNVIDIA.so.%{CUDAVersion}
 cp unpack/libnvidia-ml.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/libnvidia-ml.so.%{CUDAVersion}
+cp unpack/libnvidia-glcore.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/libnvidia-glcore.so.%{CUDAVersion}
 cp unpack/libnvidia-cfg.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/libnvidia-cfg.so.%{CUDAVersion}
 cp unpack/libcuda.so.%{CUDAVersion} $RPM_BUILD_ROOT/usr/lib64/libcuda.so.%{CUDAVersion}
 cp unpack/libOpenCL.so.1.0.0 $RPM_BUILD_ROOT/usr/lib64/libOpenCL.so.1.0.0
@@ -100,22 +101,22 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %post 
-chkconfig --add nvidia-kmod
-chkconfig nvidia-kmod on
-service nvidia-kmod start
-ldconfig
+/sbin/chkconfig --add nvidia-kmod
+/sbin/chkconfig nvidia-kmod on
+/sbin/service nvidia-kmod start
+/sbin/ldconfig
 
 %preun 
-chconfig --del nvidia-kmod
+/sbin/chkconfig --del nvidia-kmod
 
 %postun
-ldconfig
+/sbin/ldconfig
 
 %post kmod-nvidia-%{Kernelversion}
-depmod -a
+/sbin/depmod -a
 
 %postun kmod-nvidia-%{Kernelversion}
-depmod -a
+/sbin/depmod -a
 
 %files  kmod-nvidia-%{Kernelversion}
 %defattr(-,root,root,-)
@@ -132,6 +133,7 @@ depmod -a
 /usr/lib64/xorg/modules/libnvidia-wfb.so.%{CUDAVersion}
 /usr/lib64/libXvMCNVIDIA.so.%{CUDAVersion}
 /usr/lib64/libnvidia-ml.so.%{CUDAVersion}
+/usr/lib64/libnvidia-glcore.so.%{CUDAVersion}
 /usr/lib64/libnvidia-cfg.so.%{CUDAVersion}
 /usr/lib64/libcuda.so.%{CUDAVersion}
 /usr/lib64/libOpenCL.so.1.0.0
