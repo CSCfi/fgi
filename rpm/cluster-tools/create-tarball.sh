@@ -1,6 +1,6 @@
 #!/bin/bash
-name=`grep Name *.spec | sed -e "s/^Name:\ //"`
-version=`grep Version *.spec | sed -e "s/^Version:\ //"`
+name=`grep ^Name *.spec | sed -e "s/^Name:\ //"`
+version=`grep ^Version *.spec | sed -e "s/^Version:\ //"`
 
 if [ -e "$name-$version" ] ; then
  echo rm -rf "$name-$version"

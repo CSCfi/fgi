@@ -260,4 +260,4 @@ while [ "x$CHECK" != "x" ] ; do
  eval CHECK="\$$NEWHOST"
 done
 
-service named restart
+service named reload
