@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.9
+Version: 0.10
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -38,6 +38,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Dec 7 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.10-1
+ - netboot.py blacklists the nouveau driver, which caused problems with the M2090 cards
 * Mon Dec 1 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.9-1
  - node-added also adds ssh key to known hosts for ib interfaces
 * Tue Nov 8 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.8-1

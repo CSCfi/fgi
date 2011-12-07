@@ -27,7 +27,7 @@ try:
   os.stat("/etc/cluster/nodes/" + hostname + "/reinstall")
   #boot from network to reinstall
   print "#!ipxe"
-  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=link"
+  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=link blacklist=nouveau"
   print "initrd " + repourl + "/isolinux/initrd.img"
   print "boot"
 except:
