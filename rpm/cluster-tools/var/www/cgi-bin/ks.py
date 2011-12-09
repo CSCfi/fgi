@@ -11,6 +11,7 @@ fgi_packages = ""
 installnode = "10.1.1.1"
 clustername = "fgi"
 installurl = ""
+elrepourl = ""
 securityurl = ""
 fgiurl = ""
 epelurl = ""
@@ -37,6 +38,7 @@ try:
  securityurl = 'repo --name="Scientific Linux 6 - Security updates" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["OS_SECURITY_REPOURL"], proxy)
  fgiurl = 'repo --name="FGI" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["FGI_REPOURL"], proxy)
  epelurl = 'repo --name="epel" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["EPEL_REPOURL"], proxy)
+ elrepourl = 'repo --name="elrepo" --baseurl=http://elrepo.org/linux/elrepo/el6/x86_64/ --proxy=http://%s:3128/' % (proxy)
  if "LOCAL_REPOURL" in clustersettings and len(clustersettings["LOCAL_REPOURL"]) > 0 :
   localurl = 'repo --name="local" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["LOCAL_REPOURL"], proxy)
  cvmfsurl = 'repo --name=CVMFS_CERN --proxy=http://%s:3128/ --baseurl=http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs/x86_64/' % (proxy)
@@ -62,8 +64,8 @@ try:
 clearpart --all --drives=sda,sdb
 part raid.01 --size=100 --ondisk=sda
 part raid.02 --size=100 --ondisk=sdb
-part swap --size=10000 --ondisk=sda
-part swap --size=10000 --ondisk=sdb
+part swap --size=20000 --ondisk=sda
+part swap --size=20000 --ondisk=sdb
 part raid.11 --size=1 --grow --ondisk=sda
 part raid.12 --size=1 --grow --ondisk=sdb
 raid /boot --level=1 --fstype=ext4 --device=md0 raid.01 raid.02
@@ -75,6 +77,7 @@ except:
 
 print '''
 install
+%s
 %s
 %s
 %s
@@ -99,6 +102,10 @@ services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma
 zerombr
 %s
 
+%%pre
+rdate -s pulse.fgi.csc.fi
+hwclock -w
+
 %%post
 modprobe nfs
 mount -tnfs %s:/etc/cluster /mnt
@@ -118,6 +125,7 @@ slurm
 nscd
 pdsh
 ganglia-gmond
+ganglia-gmond-python
 openmpi
 hponcfg
 glibc.i686
@@ -129,6 +137,6 @@ fgi-release6
 cvmfs-release
 cvmfs-repofiles-fgi
 epel-release
-'''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, installnode, clustername, diskconfig, installnode)
+'''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, installnode, clustername, diskconfig, installnode)
 print extra_packages
 print fgi_packages

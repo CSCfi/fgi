@@ -11,3 +11,7 @@ iperf
 bonnie++
 memtester
 mpitests-openmpi
+gcc
+gcc-c++
+gcc-gfortran
+subversion
