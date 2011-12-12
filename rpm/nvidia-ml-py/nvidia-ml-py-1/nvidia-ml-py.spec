@@ -8,6 +8,7 @@ License:	BSD
 URL:		http://pypi.python.org/pypi/nvidia-ml-py/
 Source0:	nvidia-ml-py-1.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+BuildArch:	noarch
 
 BuildRequires:	python
 Requires:	python, kmod-nvidia
