@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.12
+Version: 0.13
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -38,6 +38,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 12 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.13-1
+ - Fixed gpxe support for fat nodes
+ - Small ntp fix 
 * Mon Dec 12 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.12-1
  - Fixed GPGPU problems
  - Added NTP configuration

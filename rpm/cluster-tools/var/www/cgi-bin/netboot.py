@@ -26,12 +26,18 @@ try:
    hostname = hostname.rsplit("-", 1)[0]
   os.stat("/etc/cluster/nodes/" + hostname + "/reinstall")
   #boot from network to reinstall
-  print "#!ipxe"
-  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=link blacklist=nouveau"
+  if "gPXE" in os.environ["HTTP_USER_AGENT"]:
+   print "#!gpxe"
+  else:
+   print "#!ipxe"
+  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=link blacklist=nouveau edd=off"
   print "initrd " + repourl + "/isolinux/initrd.img"
   print "boot"
 except:
-  # Boot fron hd if we can't find the hostname or if we cen't find a reinstall file for the host
-  print "#!ipxe"
-  print "sanboot --no-describe --drive 0x80"
-
+   # Boot fron hd if we can't find the hostname or if we can't find a reinstall file for the host
+  if "gPXE" in os.environ["HTTP_USER_AGENT"]:
+   print "#!gpxe"
+   print "exit"
+  else:
+   print "#!ipxe"
+   print "sanboot --no-describe --drive 0x80"
