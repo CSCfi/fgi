@@ -137,6 +137,8 @@ fgi-release6
 cvmfs-release
 cvmfs-repofiles-fgi
 epel-release
+elrepo-release
+yum-plugin-fastestmirror
 '''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, installnode, clustername, diskconfig, installnode)
 print extra_packages
 print fgi_packages

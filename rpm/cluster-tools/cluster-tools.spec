@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.10
+Version: 0.12
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -38,6 +38,17 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 12 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.12-1
+ - Fixed GPGPU problems
+ - Added NTP configuration
+ - Addes some packages
+ - Added cpuspeed fix to GOVERNOR="performance"
+* Fri Dec 9 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.11-1
+ - Now GPGPU nodes get cuda driver on install
+ - Ganglia conifguration fixed
+ - Preboot hwclock setting
+ - Added packages
+ - User defined root keys on nodes enabled
 * Wed Dec 7 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.10-1
  - netboot.py blacklists the nouveau driver, which caused problems with the M2090 cards.
  - Named now reloads on change instead of restarts
