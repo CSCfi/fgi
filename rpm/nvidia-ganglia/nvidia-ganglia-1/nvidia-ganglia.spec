@@ -71,4 +71,5 @@ rm -rf $RPM_BUILD_ROOT
 /etc/ganglia/conf.d/nvidia-lite.pyconf
 
 %changelog
-
+* Mon Dec 12 2011 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 1
+- First release. 

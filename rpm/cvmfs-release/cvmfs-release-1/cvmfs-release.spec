@@ -52,5 +52,5 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Sep 08 2011 Ulf Tigerstetdt <ulf.tigerstedt@csc.fi> - 1
+* Thu Sep 08 2011 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 1
 - First version of the package

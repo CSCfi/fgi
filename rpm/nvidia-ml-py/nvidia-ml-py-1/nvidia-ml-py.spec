@@ -53,3 +53,5 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 12 2011 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 1
+- First release.
