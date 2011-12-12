@@ -8,12 +8,27 @@ License:	GPL
 URL:		http://csc.fi/fgi
 Source0:	nvidia-ganglia-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+BuildArch:      noarch
 
 BuildRequires: python
 Requires:	ganglia-gmond-python, nvidia-ml-py
 
+%package lite
+Group:          Applications
+License:        GPL
+URL:            http://csc.fi/fgi
+BuildRequires: python
+Requires:       ganglia-gmond-python, nvidia-ml-py
+Summary:	Ganglia monitoring for GT520 cards
+BuildArch:      noarch
+
+
+
 %description
 Packages to monitor CUDA cards with Ganglia 3.x
+
+%description lite
+Packages to monitor GT520 cards with Ganglia 3.x
 
 
 %prep
@@ -23,7 +38,6 @@ Packages to monitor CUDA cards with Ganglia 3.x
 %build
 %configure
 #make %{?_smp_mflags}
-tar zxf nvidia-ml-py-1.0.tar.gz
 python makecompile.py
 
 
@@ -32,7 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 #make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/etc/ganglia/conf.d
 mkdir -p $RPM_BUILD_ROOT/usr/lib64/ganglia/python_modules/
-mkdir -p $RPM_BUILD_ROOT/usr/lib/python2.6/site-packages/
+cp nvidia-lite.py  nvidia-lite.pyc $RPM_BUILD_ROOT/usr/lib64/ganglia/python_modules/
+cp nvidia.py nvidia.pyc $RPM_BUILD_ROOT/usr/lib64/ganglia/python_modules/
+cp *pyconf $RPM_BUILD_ROOT/etc/ganglia/conf.d/
 
 
 %clean
@@ -41,9 +57,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+/usr/lib64/ganglia/python_modules/nvidia.py  
+/usr/lib64/ganglia/python_modules/nvidia.pyc
+/usr/lib64/ganglia/python_modules/nvidia.pyo
+/etc/ganglia/conf.d/nvidia.pyconf
 %doc
 
-
+%files lite
+%defattr(-,root,root,-)
+/usr/lib64/ganglia/python_modules/nvidia-lite.py  
+/usr/lib64/ganglia/python_modules/nvidia-lite.pyc 
+/usr/lib64/ganglia/python_modules/nvidia-lite.pyo
+/etc/ganglia/conf.d/nvidia-lite.pyconf
 
 %changelog
 

@@ -1,6 +1,6 @@
 modules {
   module {
-    name = "nvidia-stub"
+    name = "nvidia-lite"
     language = "python"
   }
 }
