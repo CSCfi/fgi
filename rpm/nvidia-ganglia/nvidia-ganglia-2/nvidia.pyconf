@@ -31,13 +31,6 @@ collection_group {
   }
 
   metric {
-    name_match = "([\\S]+)_temp"
-    name = "\\1_temp"
-    title = "\\1 Temperature"
-    value_threshold = 1.0
-  }
-
-  metric {
     name_match = "([\\S]+)_util"
     name = "\\1_util"
     title= "\\1 GPU Utilization"
@@ -55,20 +48,6 @@ collection_group {
     name_match = "([\\S]+)_mem_used"
     name = "\\1_mem_used"
     title= "\\1 Memory Used"
-    value_threshold = 1.0
-  }
-
-  metric {
-    name_match = "([\\S]+)_fan"
-    name = "\\1_fan"
-    title= "\\1 Fan Speed"
-    value_threshold = 1.0
-  }
-
-  metric {
-    name_match = "([\\S]+)_power_usage"
-    name = "\\1_power_usage"
-    title= "\\1 Power Usage"
     value_threshold = 1.0
   }
 

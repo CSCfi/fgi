@@ -112,8 +112,6 @@ def gpu_device_handler(name):
         return nvmlDeviceGetClockInfo(gpu_device, NVML_CLOCK_SM)
     elif (metric == 'mem_speed'):
         return nvmlDeviceGetClockInfo(gpu_device, NVML_CLOCK_MEM)
-    elif (metric == 'power_usage'):
-        return nvmlDeviceGetPowerUsage(gpu_device)
     else:
         print "Handler for %s not implemented, please fix in gpu_device_handler()" % metric
         os._exit(1)
@@ -140,15 +138,12 @@ def metric_init(params):
         build_descriptor('gpu%s_mem_speed' % i, gpu_device_handler, default_time_max, 'uint', 'MHz', 'both', '%u', 'GPU%s Memory Speed' % i, 'gpu')
         build_descriptor('gpu%s_uuid' % i, gpu_device_handler, default_time_max, 'string', '', 'zero', '%s', 'GPU%s UUID' % i, 'gpu')
         build_descriptor('gpu%s_pci_id' % i, gpu_device_handler, default_time_max, 'string', '', 'zero', '%s', 'GPU%s PCI ID' % i, 'gpu')
-        build_descriptor('gpu%s_temp' % i, gpu_device_handler, default_time_max, 'uint', 'C', 'both', '%u', 'Temperature of GPU %s' % i, 'gpu,temp')
         build_descriptor('gpu%s_mem_total' % i, gpu_device_handler, default_time_max, 'uint', 'KB', 'zero', '%u', 'GPU%s Total Memory' %i, 'gpu')
         build_descriptor('gpu%s_mem_used' % i, gpu_device_handler, default_time_max, 'uint', 'KB', 'both', '%u', 'GPU%s Used Memory' %i, 'gpu')
         build_descriptor('gpu%s_ecc_mode' % i, gpu_device_handler, default_time_max, 'string', '', 'zero', '%s', 'GPU%s ECC Mode' %i, 'gpu')
         build_descriptor('gpu%s_power_state' % i, gpu_device_handler, default_time_max, 'string', '', 'zero', '%s', 'GPU%s Power State' %i, 'gpu')
         build_descriptor('gpu%s_util' % i, gpu_device_handler, default_time_max, 'uint', '%', 'both', '%u', 'GPU%s Utilization' %i, 'gpu')
         build_descriptor('gpu%s_mem_util' % i, gpu_device_handler, default_time_max, 'uint', '%', 'both', '%u', 'GPU%s Memory Utilization' %i, 'gpu')
-        build_descriptor('gpu%s_fan' % i, gpu_device_handler, default_time_max, 'uint', '%', 'both', '%u', 'GPU%s Fan Speed' %i, 'gpu')
-        build_descriptor('gpu%s_power_usage' % i, gpu_device_handler, default_time_max, 'uint', 'watts', 'both', '%u', 'GPU%s Power Usage' % i, 'gpu')
 
     return descriptors
 

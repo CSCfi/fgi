@@ -1,6 +1,6 @@
 Name:		nvidia-ganglia
 Version:	2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Packages for monitoring CUDA cards with Ganglia 3.x+
 
 Group:		Applications
