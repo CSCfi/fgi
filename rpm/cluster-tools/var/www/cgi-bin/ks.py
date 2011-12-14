@@ -97,7 +97,7 @@ rootpw --iscrypted $6$BsW1hOkk$WN9RjeVuYVH4FLI8YfW0EtnR4C0pTAxQSTreE8G0/AyXxCe9u
 authconfig --enablenis --nisserver %s --nisdomain %s
 timezone --utc Europe/Helsinki
 
-services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma
+services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd
 
 zerombr
 %s
@@ -124,6 +124,7 @@ slurm-munge
 slurm
 nscd
 pdsh
+mcelog
 ganglia-gmond
 ganglia-gmond-python
 openmpi
