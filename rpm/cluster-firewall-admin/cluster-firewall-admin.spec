@@ -1,5 +1,5 @@
 Name: cluster-firewall-admin
-Version: 0.3
+Version: 0.4
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Firewall rules for FGI admin nodes
@@ -33,6 +33,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0744, root, root) %{_sysconfdir}/sysconfig/fgi-firewall
 
 %changelog
+* Wed Dec 14 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.4-1
+ - Allow ntp in
+
 * Mon Nov 28 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.3-1
  - Typo fixes, more CSC admin hosts
 
