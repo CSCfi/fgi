@@ -27,6 +27,7 @@ csc_test_net=193.166.3.0/24
 csc_wlan_net=193.166.6.0/24         
 csc_meta_net=193.166.7.0/24         
 csc_giis=193.166.0.138                 
+csc_ganglia=193.166.0.200
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
@@ -94,6 +95,9 @@ iptables -A INPUT -i $ext_int -s ${csc_workstation_net_1} -p tcp -m tcp --dport 
 iptables -A INPUT -i $ext_int -s ${csc_workstation_net_2} -p tcp -m tcp --dport www -j ACCEPT
 iptables -A INPUT -i $ext_int -s ${csc_workstation_net_1} -p tcp -m tcp --dport https -j ACCEPT
 iptables -A INPUT -i $ext_int -s ${csc_workstation_net_2} -p tcp -m tcp --dport https -j ACCEPT
+
+# Allow gangliga access from CSC ganglia host
+iptables -A INPUT -i $ext_int -s ${csc_ganglia} -p tcp -m tcp --dport 8649 -j ACCEPT
 
 # Silently drop packets without logging for some often crowded (e.g. Windows 
 # related) ports, bootp and dhcp requests and multicast addresses            
