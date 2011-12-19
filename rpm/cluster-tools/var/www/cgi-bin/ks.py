@@ -90,14 +90,14 @@ lang en_US.UTF-8
 keyboard fi
 vnc
 
-network --device eth1 --bootproto dhcp
+network --bootproto dhcp
 firewall --disabled
 selinux --disabled
 rootpw --iscrypted $6$BsW1hOkk$WN9RjeVuYVH4FLI8YfW0EtnR4C0pTAxQSTreE8G0/AyXxCe9uYPvHcY9ExxZLY/D1zxVnkYMOCx.h/aUioRyO0
 authconfig --enablenis --nisserver %s --nisdomain %s
 timezone --utc Europe/Helsinki
 
-services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd
+services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd,hp-health
 
 zerombr
 %s
@@ -129,6 +129,7 @@ ganglia-gmond
 ganglia-gmond-python
 openmpi
 hponcfg
+hp-health
 glibc.i686
 zlib.i686
 libxml2.i686

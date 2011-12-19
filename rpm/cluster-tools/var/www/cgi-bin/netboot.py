@@ -30,7 +30,7 @@ try:
    print "#!gpxe"
   else:
    print "#!ipxe"
-  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=link blacklist=nouveau edd=off"
+  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=bootif BOOTIF=01-${net0/mac} blacklist=nouveau edd=off"
   print "initrd " + repourl + "/isolinux/initrd.img"
   print "boot"
 except:

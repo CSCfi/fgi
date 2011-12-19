@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.14
+Version: 0.15
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -38,6 +38,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec 19 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.15-1
+ - Added hp-health by default
+ - Improved booting scripts. They should be less picky about interfaces.
 * Wed Dec 14 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.14-1
  - Fixed cuda installation
  - Small ntp fix 
