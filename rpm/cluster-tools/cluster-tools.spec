@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.15
+Version: 0.16
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -38,6 +38,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jan 19 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.16-1
+ - Made a fix in the kernel scirpt sed lines.
 * Mon Dec 19 2011 Kalle Happonen <kalle.happonen at, csc.fi> 0.15-1
  - Added hp-health by default
  - Improved booting scripts. They should be less picky about interfaces.
