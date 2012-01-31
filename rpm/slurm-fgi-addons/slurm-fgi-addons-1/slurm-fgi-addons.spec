@@ -6,7 +6,7 @@ Summary:	Scripts for SLURM, needed by the FGI clusters
 Group:		Some/Group
 License:	GPL
 URL:		http://pulse.fgi.csc.fi/
-Source0:	slurm-addons-fgi-%{version}.tar.gz
+Source0:	slurm-fgi-addons-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	bash
@@ -39,9 +39,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+/usr/bin/healthcheck
+/usr/bin/healthcheck-nfs
+/usr/bin/healthcheck-df.pl
 %doc
 
 
 
 %changelog
+* Wed Feb 01 2012 Ulf Tigerstedt <tigerste@csc.fi> 1
+- First version without prolog/epilog
 
