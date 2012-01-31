@@ -141,6 +141,9 @@ cvmfs-repofiles-fgi
 epel-release
 elrepo-release
 yum-plugin-fastestmirror
+subversion
+java-1.6.0-openjdk
+perl-Filesys-Df
 '''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, installnode, clustername, diskconfig, installnode)
 print extra_packages
 print fgi_packages
