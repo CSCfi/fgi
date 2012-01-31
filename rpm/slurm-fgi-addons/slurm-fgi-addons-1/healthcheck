@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# SLURM health check program
+# ulf.tigerstedt@csc.fi 2012
+
+FAILED=0
+HOSTNAME=`hostname -s`
+
+STATELINE=`scontrol -o show node $HOSTNAME`
+# Check if this is a SLURM worker node at all
+if [ $? = 1 ] ; then
+	#echo Not a slurm node
+	exit
+fi
+
+# Mangle the scontrol output into $LABEL=$PARAMETER values
+# Available parameters:
+# NodeName=ae5 Arch=x86_64 CoresPerSocket=6 CPUAlloc=0 CPUErr=0 CPUTot=12 Features=(null) Gres=(null) OS=Linux RealMemory=23000 Sockets=2 State=IDLE ThreadsPerCore=1 TmpDisk=0 Weight=1 BootTime=2012-01-31T17:10:45 SlurmdStartTime=2012-01-31T17:11:23 Reason=(null)
+
+for a in $STATELINE; do
+	LABEL=`echo $a | cut -d = -f 1`
+	PARAMETER=`echo $a | cut -d = -f 2`
+	
+	if [ $LABEL = "Reason" ]; then 
+		REASON=$PARAMETER
+	fi
+	if [ $LABEL = "State" ]; then 
+		STATE=$PARAMETER
+	fi
+done
+
+if [ "$REASON" = "rebooting" -a "$STATE" = "DOWN+DRAIN" ]; then
+	scontrol update NodeName=$HOSTNAME state=IDLE
+fi
+if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
+	scontrol update NodeName=$HOSTNAME state=DOWN reason=rebooting
+	# stop slurm just in case
+	service slurm stop
+	/sbin/reboot 
+fi
+
+
+
+
+# Check if /home is readable by using a helper program
+
+if ps -C healthcheck-nfs > /dev/null; then 
+	FAILED=$((FAILED+1)) 
+else 
+	/usr/bin/healthcheck-nfs /home & 
+	sleep 2
+	if ps -C healthcheck-nfs > /dev/null ; then
+		FAILED=$((FAILED+1))
+	fi
+fi 
+
+# Check if /tmp has over 200 megabytes free
+
+if /usr/bin/healthcheck-df.pl; then 
+	#echo DF is ok
+	/bin/true
+else 
+	FAILED=$((FAILED+1))
+fi
+
+#if [ $FAILED != 0 ] ; then 
+#	echo Test failed
+#fi
+
+if [ $FAILED -gt 0 ]; then 
+	echo scontrol update NodeName=$HOSTNAME state=DRAIN reason=healthcheck_failed
+fi
+
+#exit 0
+
+
