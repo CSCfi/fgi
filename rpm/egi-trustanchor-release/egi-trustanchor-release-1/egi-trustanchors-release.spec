@@ -10,7 +10,7 @@ Source0:	egi-trustanchors-release-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	
-Requires:	yum
+Requires:	yum, fetch-crl
 
 %description
 Yum repo file for EGI Trustanchors repository of 
@@ -34,6 +34,8 @@ mkdir -p $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 cp egi-trustanchors.repo $RPM_BUILD_ROOT/etc/yum.repos.d
 cp GPG-KEY-EUGridPMA-RPM-3 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 
+#%post
+#rpm --import /etc/pki/rpm-gpg/GPG-KEY-EUGridPMA-RPM-3
 
 %clean
 rm -rf $RPM_BUILD_ROOT
