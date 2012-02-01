@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -e "/tmp/slurm-$SLURM_JOBID" ] ; then
+if [ -d "/tmp/slurm-$SLURM_JOBID" ] ; then
  rm -rf /tmp/slurm-$SLURM_JOBID
 fi
 

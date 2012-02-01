@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ ! -e "/tmp/slurm-$SLURM_JOBID" ] ; then
+if [ ! -d "/tmp/slurm-$SLURM_JOBID" ] ; then
  mkdir /tmp/slurm-$SLURM_JOBID
  if [ $? -ne 0 ] ; then
   echo "export TMPDIR=/tmp/"
