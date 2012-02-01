@@ -52,5 +52,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Wed Feb 01 2012 Ulf Tigerstedt <tigerste@csc.fi> 1
-- First version without prolog/epilog
+- First version, complete with healthcheck, taskprolog and epilog
 
