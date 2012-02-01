@@ -18,6 +18,7 @@ epelurl = ""
 localurl = ""
 cvmfsurl = ""
 diskconfig = ""
+egitrustanchorsrepourl = ""
 
 
 try:
@@ -39,6 +40,7 @@ try:
  fgiurl = 'repo --name="FGI" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["FGI_REPOURL"], proxy)
  epelurl = 'repo --name="epel" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["EPEL_REPOURL"], proxy)
  elrepourl = 'repo --name="elrepo" --baseurl=http://elrepo.org/linux/elrepo/el6/x86_64/ --proxy=http://%s:3128/' % (proxy)
+ egitrustanchorsrepourl = 'repo --name="egi-trustanchors" --baseurl=http://repository.egi.eu/sw/production/cas/1/current/ --proxy=http://%s:3128/' % (proxy)
  if "LOCAL_REPOURL" in clustersettings and len(clustersettings["LOCAL_REPOURL"]) > 0 :
   localurl = 'repo --name="local" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["LOCAL_REPOURL"], proxy)
  cvmfsurl = 'repo --name=CVMFS_CERN --proxy=http://%s:3128/ --baseurl=http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs/x86_64/' % (proxy)
@@ -84,6 +86,7 @@ install
 %s
 %s
 %s
+%s
 reboot
 
 lang en_US.UTF-8
@@ -97,7 +100,7 @@ rootpw --iscrypted $6$BsW1hOkk$WN9RjeVuYVH4FLI8YfW0EtnR4C0pTAxQSTreE8G0/AyXxCe9u
 authconfig --enablenis --nisserver %s --nisdomain %s
 timezone --utc Europe/Helsinki
 
-services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd,hp-health
+services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd,hp-health,fetch-crl-cron,fetch-crl-boot
 
 zerombr
 %s
@@ -144,6 +147,8 @@ yum-plugin-fastestmirror
 subversion
 java-1.6.0-openjdk
 perl-Filesys-Df
-'''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, installnode, clustername, diskconfig, installnode)
+egi-trustanchors-release
+ca-policy-egi-core
+'''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, egitrustanchorsrepourl, installnode, clustername, diskconfig, installnode)
 print extra_packages
 print fgi_packages
