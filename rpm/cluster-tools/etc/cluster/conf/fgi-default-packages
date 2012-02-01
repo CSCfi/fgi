@@ -16,3 +16,11 @@ gcc-c++
 gcc-gfortran
 subversion
 infiniband-diags
+subversion
+java-1.6.0-openjdk
+perl-Filesys-Df
+egi-trustanchors-release
+ca-policy-egi-core
+slurm-fgi-addons
+
+
