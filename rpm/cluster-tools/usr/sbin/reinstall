@@ -3,14 +3,18 @@ NODEDIR=/etc/cluster/nodes/
 
 HELP=0
 RESTART=1
+QUICK=0
 NODELIST=""
+MISSINGNODES=""
 
 usage () {
   echo "" 
-  echo "reinstall [-n] [-h] <nodenames>"
+  echo "reinstall [-n] [-q] [-h] <nodenames>"
   echo "The reinstall command reinstalls one or several compute nodes."
+  echo "By default this command drains the node in SLURM, and it's reinstalled when drained."
   echo "Nodenames can be either a nodename, e.g. c1, several nodenames, e.g."
   echo "c1 c3 c5, or a range (uses slurm & pdsh notation), e.g. c[1-5] or c[1-5,7] or c[1-2]-[1-3]" 
+  echo "   -q      Do a quick reinstall, e.g. reboot the nodes immideately"
   echo "   -n      Do not reinstall now, just mark reinstall for next boot"  
   echo "   -h      Show this help"                                           
   echo ""                                                                    
@@ -29,13 +33,22 @@ add_node () {
    return 0                                       
   fi                                              
  fi                                               
+
+ echo $MISSINGNODES | grep "\b$1\b" &>/dev/null     
+ if [ $? -ne 0 ] ; then                         
+  MISSINGNODES="$MISSINGNODES $i"
+ fi                                             
  return 1                                         
 }                                                 
 
 reinstall_node () {
  touch $NODEDIR/$1/reinstall
  if [ $RESTART -eq 1 ] ; then
-  ssh $1 reboot              
+  if [ $QUICK -eq 1 ] ; then
+   ssh $1 reboot
+  else
+   scontrol update Nodename="$1" state=Draining reason="reboot"
+  fi 
  fi                          
 }                            
 
@@ -45,6 +58,7 @@ do
   case $opt in         
     h ) HELP=1 ;;      
     n ) RESTART=0 ;;   
+    q ) QUICK=1 ;;   
   esac                 
 done                   
 shift $(($OPTIND - 1)) 
@@ -134,18 +148,19 @@ done
 #add nodes to templist
 for node in $addlist ; do
   add_node $node
-  if [ $? -ne 0 ] ; then
-   echo "Error, could not add \"$node\" for reinstallation, node not found" >&2
-   exit
-  fi
 done
 
+if [ "x$MISSINGNODES" != "x" ] ; then
+ echo "The following nodes were not found and will be ignored"
+ echo "$MISSINGNODES"
+fi
+
 if [ "x$NODELIST" == "x" ] ; then
- usage
+ echo "No reinstallable nodes found"
  exit
 fi
 
-if [ $RESTART -eq 1 ] ; then
+if [ $QUICK -eq 1 ] && [ $RENSTART -eq 1]  ; then
  echo "The following nodes will be reinstalled immideately."
  echo "$NODELIST"
  echo -n "Are you sure you want to proceed? [y/N] "
