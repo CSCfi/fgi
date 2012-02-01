@@ -64,8 +64,8 @@ try:
  except:
   diskconfig = '''bootloader --location=mbr --driveorder=sda,sdb
 clearpart --all --drives=sda,sdb
-part raid.01 --size=100 --ondisk=sda
-part raid.02 --size=100 --ondisk=sdb
+part raid.01 --size=500 --ondisk=sda
+part raid.02 --size=500 --ondisk=sdb
 part swap --size=20000 --ondisk=sda
 part swap --size=20000 --ondisk=sdb
 part raid.11 --size=1 --grow --ondisk=sda
