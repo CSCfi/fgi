@@ -1,5 +1,5 @@
 #!/bin/bash
-for a in egi-trustanchor-release*; do
+for a in egi-trustanchors-release*; do
 	if [ -d $a ]; then 
 		echo tarring $a
 		tar --exclude-from=../excludes -zcf $a.tar.gz  $a

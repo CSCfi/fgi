@@ -9,7 +9,8 @@ URL:		http://pulse.fgi.csc.fi/
 Source0:	egi-trustanchors-release-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires:	
+BuildArch:	noarch
+#BuildRequires:	
 Requires:	yum, fetch-crl
 
 %description
