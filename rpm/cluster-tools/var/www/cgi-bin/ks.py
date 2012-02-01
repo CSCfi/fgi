@@ -112,7 +112,7 @@ hwclock -w
 %%post
 modprobe nfs
 mount -tnfs %s:/etc/cluster /mnt
-for script in /mnt/scripts/* ; do
+for script in /mnt/scripts/*.sh ; do
  "$script"
 done
 umount /mnt
