@@ -32,7 +32,7 @@ scripts
 rm -rf $RPM_BUILD_ROOT
 #make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin
-cp healthcheck healthcheck-df.pl healthcheck-nfs $RPM_BUILD_ROOT/usr/bin 
+cp healthcheck healthcheck-df.pl healthcheck-nfs taskprolog epilog $RPM_BUILD_ROOT/usr/bin 
 
 
 %clean
@@ -44,6 +44,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/healthcheck
 /usr/bin/healthcheck-nfs
 /usr/bin/healthcheck-df.pl
+/usr/bin/taskprolog
+/usr/bin/epilog
 %doc
 
 
