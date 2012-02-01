@@ -63,6 +63,15 @@ else
 	FAILED=$((FAILED+1))
 fi
 
+# If there is supposed to be CVMFS mounted, check it.
+if [ -d /etc/cvmfs ]; then
+	if [ ! -f /cvmfs/fgi.csc.fi/tools/file_for_testing ]; then
+		FAILED=$((FAILED+1))
+	fi
+fi
+
+
+
 #if [ $FAILED != 0 ] ; then 
 #	echo Test failed
 #fi

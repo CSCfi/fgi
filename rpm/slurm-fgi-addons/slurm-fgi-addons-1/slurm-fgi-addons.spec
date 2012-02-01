@@ -9,6 +9,8 @@ URL:		http://pulse.fgi.csc.fi/
 Source0:	slurm-fgi-addons-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
+BuildArch:	noarch
+
 BuildRequires:	bash
 Requires:	bash, perl-Filesys-Df, slurm
 
