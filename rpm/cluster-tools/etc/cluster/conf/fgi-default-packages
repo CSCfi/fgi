@@ -22,5 +22,4 @@ perl-Filesys-Df
 egi-trustanchors-release
 ca-policy-egi-core
 slurm-fgi-addons
-
-
+cluster-profile

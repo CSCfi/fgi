@@ -36,7 +36,7 @@ add_node () {
 
  echo $MISSINGNODES | grep "\b$1\b" &>/dev/null     
  if [ $? -ne 0 ] ; then                         
-  MISSINGNODES="$MISSINGNODES $i"
+  MISSINGNODES="$MISSINGNODES $1"
  fi                                             
  return 1                                         
 }                                                 
@@ -44,16 +44,16 @@ add_node () {
 reinstall_node () {
  touch $NODEDIR/$1/reinstall
  if [ $RESTART -eq 1 ] ; then
-  if [ $QUICK -eq 1 ] ; then
+  if [ $QUICK -eq 1 ] ; then
    ssh $1 reboot
   else
-   scontrol update Nodename="$1" state=Draining reason="reboot"
+   scontrol update Nodename="$1" state=Drain reason="reboot"
   fi 
  fi                          
 }                            
 
 
-while getopts ":nh" opt
+while getopts ":nhq" opt
 do                     
   case $opt in         
     h ) HELP=1 ;;      
@@ -160,7 +160,7 @@ if [ "x$NODELIST" == "x" ] ; then
  exit
 fi
 
-if [ $QUICK -eq 1 ] && [ $RENSTART -eq 1]  ; then
+if [ $QUICK -eq 1 ] && [ $RESTART -eq 1 ]  ; then
  echo "The following nodes will be reinstalled immideately."
  echo "$NODELIST"
  echo -n "Are you sure you want to proceed? [y/N] "

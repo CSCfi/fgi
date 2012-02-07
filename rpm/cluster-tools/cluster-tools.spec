@@ -44,6 +44,7 @@ rm -rf $RPM_BUILD_ROOT
  - Changed the kickstart file to only run files which end in .sh endings in /etc/cluster/scripts
  - Increased boot size partition size on nodes
  - Added default mount options in mounts.sh
+ - Added hdparm.sh script to turn on write caching on default node disk setups
  - Changed reinstall command. Now it doesn't die on nonexisting nodes. By default it also now reboots nodes, by setting them in a draining state with "reboot" as a message
 * Thu Jan 19 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.16-1
  - Made a fix in the kernel scirpt sed lines.
