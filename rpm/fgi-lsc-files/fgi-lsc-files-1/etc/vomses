@@ -1,0 +1,9 @@
+"dteam" "voms.hellasgrid.gr" "15004" "/C=GR/O=HellasGrid/OU=hellasgrid.gr/CN=voms.hellasgrid.gr" "dteam"
+"dteam" "voms2.hellasgrid.gr" "15004" "/C=GR/O=HellasGrid/OU=hellasgrid.gr/CN=voms2.hellasgrid.gr" "dteam"
+"ops.ndgf.org" "voms.ndgf.org" "15010" "/O=Grid/O=NorduGrid/CN=host/voms.ndgf.org" "ops.ndgf.org" 
+"csctraining" "voms.fgi.csc.fi" "15001" "/O=Grid/O=NorduGrid/CN=host/voms.fgi.csc.fi" "csctraining"
+"cscstaff" "voms.fgi.csc.fi" "15000" "/O=Grid/O=NorduGrid/CN=host/voms.fgi.csc.fi" "cscstaff"
+"ops" "lcg-voms.cern.ch" "15009" "/DC=ch/DC=cern/OU=computers/CN=lcg-voms.cern.ch" "ops" 
+"ops2" "voms.cern.ch" "15004" "/DC=ch/DC=cern/OU=computers/CN=voms.cern.ch" "ops" 
+"fgi.csc.fi" "voms.fgi.csc.fi" "15003" "/O=Grid/O=NorduGrid/CN=host/voms.fgi.csc.fi" "fgi.csc.fi"
+
