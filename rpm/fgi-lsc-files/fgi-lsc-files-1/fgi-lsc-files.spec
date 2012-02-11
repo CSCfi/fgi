@@ -51,4 +51,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Sat Feb 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-1
-- First version
+- First version. Supported VOs are alice,atlas,bio.ndgf.org,
+  cms,cscstaff,csctraining,customer.csc.fi,dteam,fgi.csc.fi,
+  ops,ops.ndgf.org
