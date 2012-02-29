@@ -1,6 +1,6 @@
-Name: cluster-profile		
-Version: 0.1
-Release:	1%{?dist}
+Name: cluster-profile
+Version: 0.2
+Release: 1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: profile.d scripts for FGI	
 Group: System Environment/Base	
@@ -30,4 +30,6 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-
+* Wed Feb 29 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.2-1
+ - Added files for module files under CVMFS
+ 
