@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -51,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Feb 01 2012 Ulf Tigerstedt <tigerste@csc.fi> 1
+* Wed Mar 09 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-2
+- Forgot an echo in the script, so it did nothing.
+
+* Wed Feb 01 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-1
 - First version, complete with healthcheck, taskprolog and epilog
 

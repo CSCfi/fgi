@@ -77,7 +77,7 @@ fi
 #fi
 
 if [ $FAILED -gt 0 ]; then 
-	echo scontrol update NodeName=$HOSTNAME state=DRAIN reason=healthcheck_failed
+	scontrol update NodeName=$HOSTNAME state=DRAIN reason=healthcheck_failed
 fi
 
 #exit 0
