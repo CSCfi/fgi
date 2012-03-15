@@ -24,13 +24,18 @@ try:
   hostname = socket.gethostbyaddr(os.environ["REMOTE_ADDR"])[0].split(".")[0]
   if hostname.endswith("-eth") or hostname.endswith("-ib"):                                                                                                 
    hostname = hostname.rsplit("-", 1)[0]
+
+  f = open("/etc/cluster/nodes/" + hostname + "/eth0-mac")
+  macaddr = f.readline().strip()
+  f.close()
+
   os.stat("/etc/cluster/nodes/" + hostname + "/reinstall")
   #boot from network to reinstall
   if "gPXE" in os.environ["HTTP_USER_AGENT"]:
    print "#!gpxe"
   else:
    print "#!ipxe"
-  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=bootif BOOTIF=01-${net0/mac} blacklist=nouveau edd=off"
+  print "kernel " + repourl + "/isolinux/vmlinuz ks=http://" + address + "/cgi-bin/ks.py ksdevice=" + macaddr + " blacklist=nouveau edd=off"
   print "initrd " + repourl + "/isolinux/initrd.img"
   print "boot"
 except:
