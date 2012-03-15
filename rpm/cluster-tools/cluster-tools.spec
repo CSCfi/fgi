@@ -1,6 +1,6 @@
 Name: cluster-tools
-Version: 0.17
-Release:	2%{?dist}
+Version: 0.18
+Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -38,6 +38,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 15 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.18-1
+ - Added folder for health check script
+ - Added script for copying them to the compute node
+
 * Thu Feb 1 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.17-2
  - Added PAM setting to the slurm config script
 * Thu Feb 1 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.17-1
