@@ -35,6 +35,7 @@ if [ "$REASON" = "rebooting" -a "$STATE" = "DOWN+DRAIN" ]; then
 fi
 if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	scontrol update NodeName=$HOSTNAME state=DOWN reason=rebooting
+	sleep 2
 	# stop slurm just in case
 	service slurm stop
 	/sbin/reboot 
@@ -51,7 +52,7 @@ if ps -C healthcheck-nfs > /dev/null; then
 	ERROR="NFSHOME"
 else 
 	/usr/bin/healthcheck-nfs /home & 
-	sleep 2
+	sleep 10
 	if ps -C healthcheck-nfs > /dev/null ; then
 		FAILED=$((FAILED+1))
 		ERROR="NFSHOME"

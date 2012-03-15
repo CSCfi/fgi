@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -51,6 +51,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 15 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-2
+- Added a 2 second sleep before reboot, to make sure the message
+  is sent to the control daemon
+- Increased timeout for NFS /home to 10 seconds.
+- Fixed taskprolog to set TMP, TEMP and TEMPDIR also.
+
 * Wed Mar 14 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-1 
 - Added verbose error reporting
 
