@@ -1,6 +1,6 @@
 Name: cluster-tools
 Version: 0.18
-Release:	1%{?dist}
+Release:	2%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -30,6 +30,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/cluster/scripts/mounts.sh
+%config(noreplace) %{_sysconfdir}/cluster/scripts/ib.sh
 %{_sysconfdir}/cluster
 %{_sbindir}/*
 %{_libexecdir}/cluster
@@ -38,6 +39,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Mar 16 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.18-2
+  - Changed ib.sh to be a noreplace-file.
+  - Select boot interface by back address in netboot.py
+
 * Thu Mar 15 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.18-1
  - Added folder for health check script
  - Added script for copying them to the compute node
