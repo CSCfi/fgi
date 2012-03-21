@@ -1,0 +1,12 @@
+#
+# @(#)$Id: 1f0e8352.info,v 1.6 2006/05/12 05:03:33 pmacvsdg Exp $
+# Information for CA NorduGrid
+#   obtained from 1f0e8352 in NorduGrid/
+alias = CSCTRAINING
+ca_url = http://pulse.fgi.csc.fi/csctraining/ca.crt
+url = http://www.csc.fi/
+email = grid-support@csc.fi
+crl_url = http://pulse.fgi.csc.fi/cacrl.crl
+status = 
+version = 1.0
+sha1fp.0 = 2E:0F:65:1F:53:AD:6C:B6:FD:3B:47:C4:29:C6:04:B0:6B:7C:47:2D
