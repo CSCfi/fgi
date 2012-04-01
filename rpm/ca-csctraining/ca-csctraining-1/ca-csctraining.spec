@@ -1,6 +1,6 @@
 Name:		ca-csctraining
 Version:	1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Certificate Authority files for the CSC Training CA
 
 Group:		Other
@@ -55,6 +55,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Apr 1 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-3
+ - Updated to faked CA-version of 1.46
+
 * Thu Mar 22 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-2
  - Alias was incorrect
 
