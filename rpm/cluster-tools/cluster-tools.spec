@@ -1,6 +1,6 @@
 Name: cluster-tools
-Version: 0.18
-Release:	2%{?dist}
+Version: 0.19
+Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -31,6 +31,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/cluster/scripts/mounts.sh
 %config(noreplace) %{_sysconfdir}/cluster/scripts/ib.sh
+%config(noreplace) %{_sysconfdir}/cluster/scripts/mail.sh
 %{_sysconfdir}/cluster
 %{_sbindir}/*
 %{_libexecdir}/cluster
@@ -39,9 +40,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 10 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.19-1
+  - Added mail configuration for nodes
+  - Added fgi-hw-check as a default package on the node
+
 * Fri Mar 16 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.18-2
   - Changed ib.sh to be a noreplace-file.
-  - Select boot interface by back address in netboot.py
+  - Select boot interface by mac address in netboot.py
 
 * Thu Mar 15 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.18-1
  - Added folder for health check script
