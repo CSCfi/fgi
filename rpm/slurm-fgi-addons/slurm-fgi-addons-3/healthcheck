@@ -30,9 +30,13 @@ for a in $STATELINE; do
 	fi
 done
 
-if [ "$REASON" = "rebooting" -a "$STATE" = "DOWN+DRAIN" ]; then
-	scontrol update NodeName=$HOSTNAME state=IDLE
+if [ "$REASON" = "rebooting" ]; then
+	if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
+		scontrol update NodeName=$HOSTNAME state=RESUME
+	fi
 fi
+
+
 if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	scontrol update NodeName=$HOSTNAME state=DOWN reason=rebooting
 	sleep 2
