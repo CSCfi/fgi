@@ -33,7 +33,7 @@ for a in $STATELINE; do
 		STATE=$PARAMETER
 	fi
 done
-if [ -n $DEBUG ]; then echo STATE=$PARAMETER REASON=$PARAMETER; fi
+if [ -n $DEBUG ]; then echo Slurm thinks $HOSTNAME has STATE=$STATE and REASON=$PARAMETER; fi
 
 
 if [ "$REASON" = "rebooting" ]; then
@@ -57,6 +57,7 @@ if [ -n $DEBUG ]; then echo Starting health check; fi
 # Check if /home is readable by using a helper program
 
 
+if [ -n $DEBUG ]; then echo NFS /home test starts; fi
 if ps -C healthcheck-nfs > /dev/null; then 
 	FAILED=$((FAILED+1)) 
 	ERROR="NFSHOME"
@@ -68,9 +69,10 @@ else
 		ERROR="NFSHOME"
 	fi
 fi 
-
+if [ -n $DEBUG ]; then echo NFS /home test ends; fi
 # Check if /tmp has over 200 megabytes free
 
+if [ -n $DEBUG ]; then echo Testing disk free on /tmp; fi
 if /usr/bin/healthcheck-df.pl; then 
 	#echo DF is ok
 	/bin/true
@@ -80,6 +82,7 @@ else
 fi
 
 # If there is supposed to be CVMFS mounted, check it.
+if [ -n $DEBUG ]; then echo Testing CVMFS; fi
 if [ -d /etc/cvmfs ]; then
 	if [ ! -f /cvmfs/fgi.csc.fi/tools/file_for_testing ]; then
 		FAILED=$((FAILED+1))
