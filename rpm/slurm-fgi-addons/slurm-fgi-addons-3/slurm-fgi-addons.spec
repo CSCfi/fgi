@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	3
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -51,10 +51,15 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-2
+- Made the autohealing actually work, by fixing the regexp.
+- Increased the NFS timeout to 60 seconds
+
 * Fri Mar 30 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-1
 - Added autohealing to the health script so that it returns the machine
   to service if the health check script succeeds.
 - Updated NFS /home check timeout to 30 seconds.
+- Added Ivans patch to make the script work on Triton
 
 * Thu Mar 15 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-2
 - Added a 2 second sleep before reboot, to make sure the message

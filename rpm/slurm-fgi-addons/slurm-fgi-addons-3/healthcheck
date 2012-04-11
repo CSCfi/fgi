@@ -56,7 +56,7 @@ if ps -C healthcheck-nfs > /dev/null; then
 	ERROR="NFSHOME"
 else 
 	/usr/bin/healthcheck-nfs /home & 
-	sleep 30
+	sleep 60
 	if ps -C healthcheck-nfs > /dev/null ; then
 		FAILED=$((FAILED+1))
 		ERROR="NFSHOME"
@@ -92,9 +92,12 @@ if [ $FAILED -gt 0 ]; then
 	scontrol update NodeName=$HOSTNAME state=DRAIN reason="healthcheck_failed $ERROR"
 fi
 # Return a node to service if it has recovered
-if [ $FAILED -eq 0 -a "$STATE" = "IDLE+DRAIN" ]; then
-	if [[ "$REASON"  =~  ^health_check_failed.* ]]; then 
-		scontrol update NodeName=$HOSTNAME state=RESUME 
+
+if [ $FAILED -eq 0 ]; then 
+       if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
+               if [[ "$REASON"  =~  ^healthcheck_failed.* ]]; then 
+                       scontrol update NodeName=$HOSTNAME state=RESUME 
+		fi
 	fi
 fi
 
