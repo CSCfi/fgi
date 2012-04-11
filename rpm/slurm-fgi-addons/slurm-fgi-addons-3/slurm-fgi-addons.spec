@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	3
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -51,6 +51,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-3
+- Added -d debug parameter to tell verbosely what the health check
+  is doing
+
 * Wed Apr 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-2
 - Made the autohealing actually work, by fixing the regexp.
 - Increased the NFS timeout to 60 seconds

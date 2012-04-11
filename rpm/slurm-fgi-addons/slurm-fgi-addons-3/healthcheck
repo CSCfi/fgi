@@ -6,12 +6,16 @@
 FAILED=0
 ERROR=""
 HOSTNAME=`hostname -s`
+DEBUG=""
 
 STATELINE=`scontrol -o show node $HOSTNAME`
 # Check if this is a SLURM worker node at all
 if [ $? = 1 ] ; then
 	#echo Not a slurm node
 	exit
+fi
+if [ "$1" = "-d" ]; then
+	DEBUG="1"
 fi
 
 # Mangle the scontrol output into $LABEL=$PARAMETER values
@@ -29,15 +33,19 @@ for a in $STATELINE; do
 		STATE=$PARAMETER
 	fi
 done
+if [ -z $DEBUG ]; then echo STATE=$PARAMETER REASON=$PARAMETER; fi
+
 
 if [ "$REASON" = "rebooting" ]; then
 	if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
+		if [ -z $DEBUG ]; then echo Resuming after reboot ; fi
 		scontrol update NodeName=$HOSTNAME state=RESUME
 	fi
 fi
 
 
 if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
+	if [ -z $DEBUG ]; then echo Rebooting ; fi
 	scontrol update NodeName=$HOSTNAME state=DOWN reason=rebooting
 	sleep 2
 	# stop slurm just in case
@@ -45,9 +53,7 @@ if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	/sbin/reboot 
 fi
 
-
-
-
+if [ -z $DEBUG ]; then echo Starting health check; fi
 # Check if /home is readable by using a helper program
 
 
@@ -81,26 +87,33 @@ if [ -d /etc/cvmfs ]; then
 	fi
 fi
 
+if [ -z $DEBUG ]; then echo Starting local health checks; fi
 if [ -d /etc/slurm/healthcheck ]; then 
 	for a in /etc/slurm/healthcheck/*.sh; do 
 		source $a
 	done 
 fi
 
+if [ -z $DEBUG ]; then 
+	echo Health checks done: $FAILED fails.	
+	echo Reason: $ERROR
+fi
 
 if [ $FAILED -gt 0 ]; then 
+	if [ -z $DEBUG ]; then echo Draining node; fi
 	scontrol update NodeName=$HOSTNAME state=DRAIN reason="healthcheck_failed $ERROR"
 fi
 # Return a node to service if it has recovered
 
 if [ $FAILED -eq 0 ]; then 
        if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
-               if [[ "$REASON"  =~  ^healthcheck_failed.* ]]; then 
-                       scontrol update NodeName=$HOSTNAME state=RESUME 
+		if [[ "$REASON"  =~  ^healthcheck_failed.* ]]; then 
+			if [ -z $DEBUG ]; then echo Node was drained but is now returning to operations ; fi
+			scontrol update NodeName=$HOSTNAME state=RESUME 
 		fi
 	fi
 fi
 
-#exit 0
 
+if [ -z $DEBUG ]; then echo Health check done; fi
 
