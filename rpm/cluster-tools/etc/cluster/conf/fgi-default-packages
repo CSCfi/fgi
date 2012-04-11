@@ -6,6 +6,7 @@ fftw
 fftw2 
 netcdf 
 gromacs-openmpi 
+gromacs
 hdf5-openmpi
 iperf
 bonnie++

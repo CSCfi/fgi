@@ -1,6 +1,6 @@
 Name: cluster-tools
 Version: 0.19
-Release:	1%{?dist}
+Release:	2%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -40,6 +40,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 11 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.19-2
+  - Added gromacs to default packages
+
 * Tue Apr 10 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.19-1
   - Added mail configuration for nodes
   - Added fgi-hw-check as a default package on the node
