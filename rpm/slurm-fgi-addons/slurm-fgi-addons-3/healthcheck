@@ -63,7 +63,7 @@ if ps -C healthcheck-nfs > /dev/null; then
 	ERROR="NFSHOME"
 else 
 	/usr/bin/healthcheck-nfs /home & 
-	sleep 60
+	sleep 40 
 	if ps -C healthcheck-nfs > /dev/null ; then
 		FAILED=$((FAILED+1))
 		ERROR="NFSHOME"

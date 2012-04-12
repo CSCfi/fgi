@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	3
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -51,6 +51,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Apr 12 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-4
+- Decreased nfs wait time to 40 seconds, as slurm has a limit on
+healthchecks on 60 seconds.
+
 * Wed Apr 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-3
 - Added -d debug parameter to tell verbosely what the health check
   is doing
