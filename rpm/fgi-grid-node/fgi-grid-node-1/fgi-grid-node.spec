@@ -10,7 +10,7 @@ Source0:	fgi-grid-node-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	bash
-Requires:	bash, cron, nordugrid-arc-arex, coreutils	
+Requires:	bash, /etc/cron.hourly, nordugrid-arc-arex, coreutils	
 
 BuildArch:	noarch
 
