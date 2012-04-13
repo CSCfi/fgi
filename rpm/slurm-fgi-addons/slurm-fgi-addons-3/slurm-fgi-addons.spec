@@ -32,7 +32,7 @@ scripts
 rm -rf $RPM_BUILD_ROOT
 #make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin
-cp healthcheck healthcheck-df.pl healthcheck-nfs taskprolog epilog $RPM_BUILD_ROOT/usr/bin 
+cp slurm healthcheck healthcheck-df.pl healthcheck-nfs taskprolog epilog $RPM_BUILD_ROOT/usr/bin 
 
 
 %clean
@@ -41,6 +41,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+/usr/bin/slurm
 /usr/bin/healthcheck
 /usr/bin/healthcheck-nfs
 /usr/bin/healthcheck-df.pl
@@ -51,6 +52,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Apr 13 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-5
+- Added "slurm" script, as provided by Aalto University, to prettyprint
+the slurm information.
+
+
 * Thu Apr 12 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-4
 - Decreased nfs wait time to 40 seconds, as slurm has a limit on
 healthchecks on 60 seconds.
