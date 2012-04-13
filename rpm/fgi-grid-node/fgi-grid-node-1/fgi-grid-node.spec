@@ -12,6 +12,8 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	bash
 Requires:	bash, cron, nordugrid-arc-arex, coreutils	
 
+BuildArch:	noarch
+
 %description
 Helper scripts and cronjobs to make it easier to run a FGI ARC grid 
 frontend
