@@ -1,6 +1,6 @@
 Name: cluster-tools
-Version: 0.19
-Release:	2%{?dist}
+Version: 0.20
+Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	

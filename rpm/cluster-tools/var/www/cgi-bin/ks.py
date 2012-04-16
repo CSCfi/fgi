@@ -144,6 +144,9 @@ cvmfs-repofiles-fgi
 epel-release
 elrepo-release
 yum-plugin-fastestmirror
+-redhat-lsb-graphics
+-phonon-nackend-gstreamer
+-qt-x11
 '''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, egitrustanchorsrepourl, installnode, clustername, diskconfig, installnode)
 print extra_packages
 print fgi_packages
