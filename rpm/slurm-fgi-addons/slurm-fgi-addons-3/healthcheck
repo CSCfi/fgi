@@ -33,19 +33,19 @@ for a in $STATELINE; do
 		STATE=$PARAMETER
 	fi
 done
-if [ -n $DEBUG ]; then echo Slurm thinks $HOSTNAME has STATE=$STATE and REASON=$PARAMETER; fi
+if [ -n "$DEBUG" ]; then echo Slurm thinks $HOSTNAME has STATE=$STATE and REASON=$PARAMETER; fi
 
 
 if [ "$REASON" = "rebooting" ]; then
 	if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
-		if [ -n $DEBUG ]; then echo Resuming after reboot ; fi
+		if [ -n "$DEBUG" ]; then echo Resuming after reboot ; fi
 		scontrol update NodeName=$HOSTNAME state=RESUME
 	fi
 fi
 
 
 if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
-	if [ -n $DEBUG ]; then echo Rebooting ; fi
+	if [ -n "$DEBUG" ]; then echo Rebooting ; fi
 	scontrol update NodeName=$HOSTNAME state=DOWN reason=rebooting
 	sleep 2
 	# stop slurm just in case
@@ -53,11 +53,11 @@ if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	/sbin/reboot 
 fi
 
-if [ -n $DEBUG ]; then echo Starting health check; fi
+if [ -n "$DEBUG" ]; then echo Starting health check; fi
 # Check if /home is readable by using a helper program
 
 
-if [ -n $DEBUG ]; then echo NFS /home test starts; fi
+if [ -n "$DEBUG" ]; then echo NFS /home test starts; fi
 if ps -C healthcheck-nfs > /dev/null; then 
 	FAILED=$((FAILED+1)) 
 	ERROR="NFSHOME"
@@ -69,10 +69,10 @@ else
 		ERROR="NFSHOME"
 	fi
 fi 
-if [ -n $DEBUG ]; then echo NFS /home test ends; fi
+if [ -n "$DEBUG" ]; then echo NFS /home test ends; fi
 # Check if /tmp has over 200 megabytes free
 
-if [ -n $DEBUG ]; then echo Testing disk free on /tmp; fi
+if [ -n "$DEBUG" ]; then echo Testing disk free on /tmp; fi
 if /usr/bin/healthcheck-df.pl; then 
 	#echo DF is ok
 	/bin/true
@@ -82,7 +82,7 @@ else
 fi
 
 # If there is supposed to be CVMFS mounted, check it.
-if [ -n $DEBUG ]; then echo Testing CVMFS; fi
+if [ -n "$DEBUG" ]; then echo Testing CVMFS; fi
 if [ -d /etc/cvmfs ]; then
 	if [ ! -f /cvmfs/fgi.csc.fi/tools/file_for_testing ]; then
 		FAILED=$((FAILED+1))
@@ -90,20 +90,20 @@ if [ -d /etc/cvmfs ]; then
 	fi
 fi
 
-if [ -n $DEBUG ]; then echo Starting local health checks; fi
+if [ -n "$DEBUG" ]; then echo Starting local health checks; fi
 if [ -d /etc/slurm/healthcheck ]; then 
 	for a in /etc/slurm/healthcheck/*.sh; do 
 		source $a
 	done 
 fi
 
-if [ -n $DEBUG ]; then 
+if [ -n "$DEBUG" ]; then 
 	echo Health checks done: $FAILED fails.	
 	echo Reason: $ERROR
 fi
 
 if [ $FAILED -gt 0 ]; then 
-	if [ -n $DEBUG ]; then echo Draining node; fi
+	if [ -n "$DEBUG" ]; then echo Draining node; fi
 	scontrol update NodeName=$HOSTNAME state=DRAIN reason="healthcheck_failed $ERROR"
 fi
 # Return a node to service if it has recovered
@@ -111,12 +111,12 @@ fi
 if [ $FAILED -eq 0 ]; then 
        if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
 		if [[ "$REASON"  =~  ^healthcheck_failed.* ]]; then 
-			if [ -n $DEBUG ]; then echo Node was drained but is now returning to operations ; fi
+			if [ -n "$DEBUG" ]; then echo Node was drained but is now returning to operations ; fi
 			scontrol update NodeName=$HOSTNAME state=RESUME 
 		fi
 	fi
 fi
 
 
-if [ -n $DEBUG ]; then echo Health check done; fi
+if [ -n "$DEBUG" ]; then echo Health check done; fi
 

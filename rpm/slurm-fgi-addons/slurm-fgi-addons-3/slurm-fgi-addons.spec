@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	3
-Release:	4%{?dist}
+Release:	6%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -52,10 +52,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 17 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-6
+- Fixed the debug option to actually not print debug output all the time.
+
 * Fri Apr 13 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-5
 - Added "slurm" script, as provided by Aalto University, to prettyprint
 the slurm information.
-
 
 * Thu Apr 12 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-4
 - Decreased nfs wait time to 40 seconds, as slurm has a limit on
