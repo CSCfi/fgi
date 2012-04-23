@@ -1,7 +1,4 @@
 #
-# @(#)$Id: 1f0e8352.info,v 1.6 2006/05/12 05:03:33 pmacvsdg Exp $
-# Information for CA NorduGrid
-#   obtained from 1f0e8352 in NorduGrid/
 alias = CSC_Training_CA
 ca_url = http://pulse.fgi.csc.fi/csctraining/ca.crt
 url = http://www.csc.fi/
