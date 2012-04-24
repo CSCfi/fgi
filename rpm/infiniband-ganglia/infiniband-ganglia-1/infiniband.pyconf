@@ -1,0 +1,39 @@
+modules {
+  module {
+    name = "infiniband"
+    language = "python"
+    # The following params are examples only
+    #  They are not actually used by the temp module
+  }
+}
+
+collection_group {
+  collect_every = 30
+  time_threshold = 50
+  metric {
+    name = "port_rcv_data"
+    value_threshold = 1
+  }
+  metric {
+    name = "port_rcv_packets"
+    value_threshold = 1
+  }
+  metric {
+    name = "port_rcv_errors"
+    value_threshold = 1
+  }
+  metric {
+    name = "port_xmit_data"
+    value_threshold = 1
+  }
+  metric {
+    name = "port_xmit_packets"
+    value_threshold = 1
+  }
+  metric {
+    name = "port_xmit_errors"
+    value_threshold = 1
+  }
+
+}
+
