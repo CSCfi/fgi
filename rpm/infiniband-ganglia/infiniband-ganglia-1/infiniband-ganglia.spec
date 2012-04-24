@@ -46,5 +46,5 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Tue 24 Apr 2012 <ulf.tigerstedt@csc.fi> 1-1
+* Tue Apr 24 2012 <ulf.tigerstedt@csc.fi> 1-1
 - First version
