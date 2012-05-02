@@ -50,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 
+* Wed May  2 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 2-2
+- Increased random sleep for the arc-ur-register cronjob.
 * Fri Apr 13 2012 Kalle Happonen <kalle.happonen@csc.fi> 2-1
 - Added runtime environmnent sync script
 * Fri Apr 13 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-1
