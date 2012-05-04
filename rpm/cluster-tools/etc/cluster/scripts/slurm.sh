@@ -4,6 +4,11 @@ chown munge:munge /etc/munge/munge.key
 
 cp /mnt/conf/slurm.conf /etc/slurm/
 
+# Copy optional topology.conf file
+if [ -f /mnt/conf/topology.conf ] ; then
+ cp /mnt/conf/topology.conf /etc/slurm/
+fi
+
 chkconfig slurm on
 
 cat << EOF > /etc/pam.d/slurm
