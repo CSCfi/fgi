@@ -52,6 +52,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu May 10 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-7
+- Fixed the debug option to print the reason correctly.
+
 * Tue Apr 17 2012 Ulf Tigerstedt <tigerste@csc.fi> 3-6
 - Fixed the debug option to actually not print debug output all the time.
 

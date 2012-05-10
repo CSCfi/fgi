@@ -33,7 +33,7 @@ for a in $STATELINE; do
 		STATE=$PARAMETER
 	fi
 done
-if [ -n "$DEBUG" ]; then echo Slurm thinks $HOSTNAME has STATE=$STATE and REASON=$PARAMETER; fi
+if [ -n "$DEBUG" ]; then echo Slurm thinks $HOSTNAME has STATE=$STATE and REASON=$REASON; fi
 
 
 if [ "$REASON" = "rebooting" ]; then
