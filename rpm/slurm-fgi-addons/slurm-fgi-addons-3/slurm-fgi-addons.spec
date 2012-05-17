@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	3
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
