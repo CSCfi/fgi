@@ -1,5 +1,5 @@
 Name: cluster-profile
-Version: 0.2
+Version: 0.3
 Release: 1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: profile.d scripts for FGI	
@@ -30,6 +30,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed May 23 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.3-1
+ - Modified module files to use the /sl6/ subdirectory.
+ - Added module files to explicitly set path
+
 * Wed Feb 29 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.2-1
  - Added files for module files under CVMFS
  
