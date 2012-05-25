@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.21
+Version: 0.22
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -40,6 +40,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri May 25 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.22-1
+  - Added script to stop the fetch-crl mails on reinstall
+
 * Fri May 04 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.21-1
   - Minor modifications to slurm and ssh scripts
 

@@ -28,3 +28,4 @@ subversion
 git
 cvs
 fgi-hw-check
+numpy
