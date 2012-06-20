@@ -52,6 +52,13 @@ if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	service slurm stop
 	/sbin/reboot 
 fi
+if [ -n "$DEBUG" ]; then echo Checking for RTC; fi
+if [ ! -c /dev/rtc0 ]; then
+	scontrol update NodeName=$HOSTNAME state=DOWN reason=no_rtc_present
+	sleep 2 
+	service slurm stop
+fi
+
 
 if [ -n "$DEBUG" ]; then echo Starting health check; fi
 # Check if /home is readable by using a helper program
@@ -102,9 +109,9 @@ if [ -n "$DEBUG" ]; then
 	echo Reason: $ERROR
 fi
 
-if [ $FAILED -gt 0 ]; then 
+if [ $FAILED -gt 0 -a "$REASON" = "(null)" ]; then 
 	if [ -n "$DEBUG" ]; then echo Draining node; fi
-	scontrol update NodeName=$HOSTNAME state=DRAIN reason="healthcheck_failed $ERROR"
+		scontrol update NodeName=$HOSTNAME state=DRAIN reason="healthcheck_failed $ERROR"
 fi
 # Return a node to service if it has recovered
 
