@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -52,6 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 20 2012 Ulf Tigerstedt <tigerste@csc.fi> 4-2
+- Healthcheck now check for RTC and disables slurm if it is not present
+- Healthcheck now refuses to drain an already draining node.
+
 * Fri May 25 2012 Kalle Happonen <kalle.happonen@csc.fi> 4-1
 - Fixed the job $TMPDIR handling. Now addition and removal should work properly on multi-node jobs
 
