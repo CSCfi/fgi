@@ -1,5 +1,6 @@
+import os, os.path
 
-sysdir='/sys/class/infiniband/mlx4_0/ports/1/counters/'
+urdir='/var/spool/nordugrid/usagerecords/urs'
 
 def counter_data_handler(name):
 	# print sysdir + '/' + name
@@ -15,17 +16,19 @@ def counter_data_handler(name):
 	return int(line[0])
 
 def ur_count(name):
-	return 10
+	return len([name for name in os.listdir(urdir) if os.path.isfile(name)])
 
 def sesdir_count(name):
-	return 10
+	return len([name for name in os.listdir(urdir) if os.path.isdir(name)])
 
 
 def metric_init(params):
     global descriptors, sysdir
 
-    if 'sysdir' in params:
-        sysdir = params['sysdir']
+    if 'urdir' in params:
+        urdir = params['urdir']
+    if 'sessiondir' in params:
+	sessiondir = params['sessiondir']
 
     ur = {'name': 'ur_count',
         'call_back': ur_count,

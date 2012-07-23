@@ -11,16 +11,16 @@ collection_group {
   collect_every = 30
   time_threshold = 50
   metric {
-    name = "ur-records"
+    name = "ur_count"
     value_threshold = 1
   }
   metric {
-    name = "sessiondirs"
+    name = "sessiondir_count"
     value_threshold = 1
   }
-  metric {
-    name = "jobstatusfiles"
-    value_threshold = 1
-  }
+  #metric {
+  #  name = "jobstatusfiles"
+  #  value_threshold = 1
+  #}
 }
 
