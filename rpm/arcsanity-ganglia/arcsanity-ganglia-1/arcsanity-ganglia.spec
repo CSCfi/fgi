@@ -8,6 +8,7 @@ License:	GPL
 URL:		http://pulse.fgi.csc.fi/
 Source0:	arcsanity-ganglia-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+BuildArch:	noarch
 
 BuildRequires:	python
 Requires:	ganglia-gmond-python
