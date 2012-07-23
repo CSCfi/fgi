@@ -4,7 +4,7 @@ modules {
     language = "python"
     # The following params are examples only
     #  They are not actually used by the temp module
-    parameter sessiondir {
+    param sessiondir {
       value = '/export/home/sessiondir'
     }
   }
