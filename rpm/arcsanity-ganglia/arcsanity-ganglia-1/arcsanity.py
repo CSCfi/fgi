@@ -1,25 +1,13 @@
 import os, os.path
 
 urdir='/var/spool/nordugrid/usagerecords/urs'
-
-def counter_data_handler(name):
-	# print sysdir + '/' + name
-	try: 
-		f = open(sysdir + '/' + name )
-	except IOError:
-		return 0
-
-	for l in f:
-		line = l.split()
-
-	f.close()
-	return int(line[0])
+sessiondir='/export/home/sessiondir'
 
 def ur_count(name):
-	return len([name for name in os.listdir(urdir) if os.path.isfile(name)])
+	return len([name for name in os.listdir(urdir) if os.path.isfile(urdir + '/' + name)])
 
 def sesdir_count(name):
-	return len([name for name in os.listdir(urdir) if os.path.isdir(name)])
+	return len([name for name in os.listdir(sessiondir) if os.path.isdir(sessiondir + '/' + name)])
 
 
 def metric_init(params):
