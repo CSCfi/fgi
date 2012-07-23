@@ -1,6 +1,6 @@
 Name:		arcsanity-ganglia
 Version:	1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Ganglia python scripts to do sanity checking on ARC CEs
 
 Group:		Network
@@ -41,12 +41,15 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/etc/ganglia/conf.d/*
 /usr/lib64/ganglia/python_modules/*
-%doc
+%config
+/etc/ganglia/conf.d/*
 
 
 
 %changelog
+* Tue Jul 24 2012 <ulf.tigerstedt@csc.fi> 1-2
+- Minor fixes
+
 * Mon Jul 23 2012 <ulf.tigerstedt@csc.fi> 1-1
 - First version
