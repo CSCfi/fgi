@@ -100,7 +100,7 @@ rootpw --iscrypted $6$BsW1hOkk$WN9RjeVuYVH4FLI8YfW0EtnR4C0pTAxQSTreE8G0/AyXxCe9u
 authconfig --enablenis --nisserver %s --nisdomain %s
 timezone --utc Europe/Helsinki
 
-services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd,hp-health,fetch-crl-cron,fetch-crl-boot
+services --enabled ypbind,slurm,munge,nscd,ntpd,gmond,rdma,mcelogd,hp-health,fetch-crl-cron,fetch-crl-boot,cgconfig
 
 zerombr
 %s
@@ -144,6 +144,7 @@ cvmfs-repofiles-fgi
 epel-release
 elrepo-release
 yum-plugin-fastestmirror
+libcgroup
 -redhat-lsb-graphics
 -phonon-nackend-gstreamer
 -qt-x11

@@ -1,6 +1,6 @@
 Name:		fgi-grid-node
 Version:	2	
-Release:	1%{?dist}
+Release:	3%{?dist}
 Summary:	Helper scripts needed on FGI grid nodes
 
 Group:		Other	
@@ -49,7 +49,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-
+* Thu Aug 23 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 2-3
+- Bugfix for sync-rte: It did not update RTEs that got updated in cvmfs.
 * Wed May  2 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 2-2
 - Increased random sleep for the arc-ur-register cronjob.
 * Fri Apr 13 2012 Kalle Happonen <kalle.happonen@csc.fi> 2-1

@@ -17,13 +17,18 @@ fi
 cd $cvmfsdir/current
 
 for f in `find . -type f` ; do 
+ d=`dirname $f`
  if [ ! -e "$rtedir/$f" ] ; then
-  d=`dirname $f`
   if [ ! -d "$rtedir"/"$d" ] ; then
    mkdir -p  "$rtedir/$d" 
   fi
   cp "$f" "$rtedir/$d"
  fi
+ # Bugfix: update RTE if a newer one has been published in cvmfs.
+ if [ "$f" -nt "$rtedir/$d" ]; then
+	cp "$f" "$rtedir/$d"
+ fi
+
 done
 
 

@@ -8,6 +8,9 @@ cp /mnt/conf/slurm.conf /etc/slurm/
 if [ -f /mnt/conf/topology.conf ] ; then
  cp /mnt/conf/topology.conf /etc/slurm/
 fi
+if [ -f /mnt/conf/cgroup.conf ] ; then
+ cp /mnt/conf/cgroup.conf /etc/slurm/
+fi
 
 chkconfig slurm on
 
