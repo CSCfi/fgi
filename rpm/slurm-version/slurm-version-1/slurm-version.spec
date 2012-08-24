@@ -27,6 +27,7 @@ Selects the correct SLURM version
 Summary: Selects SLURM 2.3.x
 Requires: slurm >= 2.3 
 Requires: slurm < 2.4
+Conflicts: slurm-version-fgislurm24
 
 %description fgislurm23
 Selects SLURM 2.3.x
@@ -36,6 +37,7 @@ Selects SLURM 2.3.x
 Summary: Selects SLURM 2.4.x
 Requires: slurm >= 2.4 
 Requires: slurm < 2.5
+Conflicts: slurm-version-fgislurm23
 
 %description fgislurm24
 Selects SLURM 2.4.x
@@ -45,17 +47,24 @@ Selects SLURM 2.4.x
 
 %install
 rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
-
+#make install DESTDIR=%{buildroot}
+mkdir -p  %{buildroot}/etc/cluster/conf
+cp slurm23 %{buildroot}/etc/cluster/conf/
+cp slurm24 %{buildroot}/etc/cluster/conf/
 
 %clean
 rm -rf %{buildroot}
 
 
-%files
+%files fgislurm23
 %defattr(-,root,root,-)
+/etc/cluster/conf/slurm23
 %doc
 
+%files fgislurm24
+%defattr(-,root,root,-)
+/etc/cluster/conf/slurm24
+%doc
 
 
 %changelog
