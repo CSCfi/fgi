@@ -2,3 +2,5 @@ slurm-munge
 slurm-perlapi
 slurm-plugins
 slurm-lua
+slurm
+slurm-version-fgislurm24

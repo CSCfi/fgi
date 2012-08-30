@@ -11,6 +11,7 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	bash	
 Requires:	bash
+BuildArch:	noarch
 
 %description
 Selects the correct SLURM version
@@ -27,6 +28,9 @@ Selects the correct SLURM version
 Summary: Selects SLURM 2.3.x
 Requires: slurm >= 2.3 
 Requires: slurm < 2.4
+Requires: slurm-munge >= 2.3 
+Requires: slurm-munge < 2.4
+
 Conflicts: slurm-version-fgislurm24
 
 %description fgislurm23
@@ -37,20 +41,40 @@ Selects SLURM 2.3.x
 Summary: Selects SLURM 2.4.x
 Requires: slurm >= 2.4 
 Requires: slurm < 2.5
+Requires: slurm-munge >= 2.4 
+Requires: slurm-munge < 2.5
+Requires: slurm-lua >= 2.4 
+Requires: slurm-lua < 2.5
 Conflicts: slurm-version-fgislurm23
 
 %description fgislurm24
 Selects SLURM 2.4.x
 
+%post fgislurm23
+if [ -d /etc/cluster ]; then
+	cp /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
+fi
 
+%post fgislurm24
+if [ -d /etc/cluster ]; then
+	cp /usr/lib/slurm-version/slurm24 /etc/cluster/conf/slurmversion
+fi
+
+%preun fgislurm23
+rm /etc/cluster/conf/slurmversion
+
+
+%preun fgislurm24
+rm /etc/cluster/conf/slurmversion
 
 
 %install
 rm -rf %{buildroot}
 #make install DESTDIR=%{buildroot}
-mkdir -p  %{buildroot}/etc/cluster/conf
-cp slurm23 %{buildroot}/etc/cluster/conf/
-cp slurm24 %{buildroot}/etc/cluster/conf/
+#mkdir -p  %{buildroot}/etc/cluster/conf
+mkdir -p %{buildroot}/usr/lib/slurm-version/
+cp slurm23 %{buildroot}/usr/lib/slurm-version/
+cp slurm24 %{buildroot}/usr/lib/slurm-version/
 
 %clean
 rm -rf %{buildroot}
@@ -58,13 +82,14 @@ rm -rf %{buildroot}
 
 %files fgislurm23
 %defattr(-,root,root,-)
-/etc/cluster/conf/slurm23
+/usr//lib/slurm-version/slurm23
 %doc
 
 %files fgislurm24
 %defattr(-,root,root,-)
-/etc/cluster/conf/slurm24
+/usr//lib/slurm-version/slurm24
 %doc
+
 
 
 %changelog
