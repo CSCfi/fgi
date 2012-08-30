@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.22
+Version: 0.23
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -40,6 +40,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 20 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.23-1
+  - Added the atlas package to the install
+  - Added unlimited stack to the limits.sh file
+
 * Fri May 25 2012 Kalle Happonen <kalle.happonen at, csc.fi> 0.22-1
   - Added script to stop the fetch-crl mails on reinstall
 
