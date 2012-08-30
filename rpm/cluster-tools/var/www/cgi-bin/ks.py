@@ -156,7 +156,7 @@ elrepo-release
 yum-plugin-fastestmirror
 libcgroup
 -redhat-lsb-graphics
--phonon-nackend-gstreamer
+-phonon-backend-gstreamer
 -qt-x11
 '''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, egitrustanchorsrepourl, installnode, clustername, diskconfig, installnode)
 print extra_packages
