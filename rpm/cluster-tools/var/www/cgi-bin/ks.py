@@ -7,6 +7,7 @@ print "Content-Type: text/plain"
 print
 
 extra_packages = ""
+slurm_packages = "slurm\nslurm-munge"
 fgi_packages = ""
 installnode = "10.1.1.1"
 clustername = "fgi"
@@ -48,12 +49,21 @@ try:
  hostname = socket.gethostbyaddr(os.environ["REMOTE_ADDR"])[0].split(".")[0]
  if hostname.endswith("-eth") or hostname.endswith("-ib"):
   hostname = hostname.rsplit("-", 1)[0]
- f = open("/etc/cluster/nodes/" + hostname + "/packages")
- extra_packages = f.read()
- f.close()
+ try:
+  f = open("/etc/cluster/nodes/" + hostname + "/packages")
+  extra_packages = f.read()
+  f.close()
+ except:
+  pass
  try:
   f = open("/etc/cluster/conf/fgi-default-packages")
   fgi_packages = f.read()
+  f.close()
+ except:
+  pass
+ try:
+  f = open("/etc/cluster/conf/slurm")
+  slurm_packages = f.read()
   f.close()
  except:
   pass
@@ -123,8 +133,8 @@ openssh-server
 ypbind
 nfs-utils
 munge
-slurm-munge
-slurm
+#slurm-munge
+#slurm
 nscd
 pdsh
 mcelog
