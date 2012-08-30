@@ -1,6 +1,6 @@
 Name: cluster-tools
-Version: 0.23
-Release:	1%{?dist}
+Version: 0.24
+Release:	0%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -32,6 +32,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/cluster/scripts/mounts.sh
 %config(noreplace) %{_sysconfdir}/cluster/scripts/ib.sh
 %config(noreplace) %{_sysconfdir}/cluster/scripts/mail.sh
+%config(noreplace) %{_sysconfdir}/cluster/conf/cgroup.conf
 %{_sysconfdir}/cluster
 %{_sbindir}/*
 %{_libexecdir}/cluster
@@ -40,6 +41,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 29 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-0
+  - Added support for selecting slurm version with the slurm-version
+    packages
+  - Added support for cgroups. New nodes automatically install the libcgroups
+    package and enable it on boot. There is also a script to copy a slurm cgroup.conf 
+    config file to each node if it is present.
+
 * Wed Jun 20 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.23-1
   - Added the atlas package to the install
   - Added unlimited stack to the limits.sh file
