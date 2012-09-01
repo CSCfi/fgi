@@ -133,8 +133,6 @@ openssh-server
 ypbind
 nfs-utils
 munge
-#slurm-munge
-#slurm
 nscd
 pdsh
 mcelog
@@ -155,9 +153,13 @@ epel-release
 elrepo-release
 yum-plugin-fastestmirror
 libcgroup
+atlas
+compat-openmpi
+lapack
 -redhat-lsb-graphics
 -phonon-backend-gstreamer
 -qt-x11
 '''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, egitrustanchorsrepourl, installnode, clustername, diskconfig, installnode)
+print slurm_packages
 print extra_packages
 print fgi_packages

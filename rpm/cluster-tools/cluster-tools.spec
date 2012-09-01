@@ -43,10 +43,10 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Aug 29 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-0
   - Added support for selecting slurm version with the slurm-version
-    packages
+    packages.
   - Added support for cgroups. New nodes automatically install the libcgroups
     package and enable it on boot. There is also a script to copy a slurm cgroup.conf 
-    config file to each node if it is present.
+    config file to the node if it is present.
 
 * Wed Jun 20 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.23-1
   - Added the atlas package to the install
