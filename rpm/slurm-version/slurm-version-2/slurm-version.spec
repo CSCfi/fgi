@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	0%{?dist}
+Release:	1%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -58,7 +58,7 @@ fi
 
 %post fgislurm24
 if [ -d /etc/cluster ]; then
-	cp /usr/lib/slurm-version/slurminstallurl23 /etc/cluster/conf/slurminstallurl
+	cp /usr/lib/slurm-version/slurminstallurl24 /etc/cluster/conf/slurminstallurl
 	cp /usr/lib/slurm-version/slurm24 /etc/cluster/conf/slurmversion
 fi
 
@@ -108,9 +108,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Sep 05 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-1
+- Minor fixes
+
 * Wed Sep 05 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-0
 - Changed to a yum repo based model
-
 
 * Sat Sep 01 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 1-2
 - Added more conflicts
