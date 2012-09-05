@@ -18,6 +18,7 @@ fgiurl = ""
 epelurl = ""
 localurl = ""
 cvmfsurl = ""
+slurmurl = ""
 diskconfig = ""
 egitrustanchorsrepourl = ""
 
@@ -45,6 +46,20 @@ try:
  if "LOCAL_REPOURL" in clustersettings and len(clustersettings["LOCAL_REPOURL"]) > 0 :
   localurl = 'repo --name="local" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["LOCAL_REPOURL"], proxy)
  cvmfsurl = 'repo --name=CVMFS_CERN --proxy=http://%s:3128/ --baseurl=http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs/x86_64/' % (proxy)
+ try:
+  f = open("/etc/cluster/conf/slurmversion")
+  slurm_packages = f.read()
+  f.close()
+ except:
+  pass
+ try:
+  f = open("/etc/cluster/conf/slurminstallurl")
+  slurm_url_raw = f.read()
+  slurm_url_raw = slurm_url_raw.strip(' \n')
+  slurmurl = 'repo --name="FGI slurm" --baseurl=%s --proxy=http://%s:3128/' % (slurm_url_raw,proxy)
+  f.close()
+ except:
+  pass
 # from the name, e.g. c1-3.local take c1-3, also support hostnames like c1-3-eth.local. if the hostname ends in -eth or -ib, remove those
  hostname = socket.gethostbyaddr(os.environ["REMOTE_ADDR"])[0].split(".")[0]
  if hostname.endswith("-eth") or hostname.endswith("-ib"):
@@ -61,12 +76,7 @@ try:
   f.close()
  except:
   pass
- try:
-  f = open("/etc/cluster/conf/slurm")
-  slurm_packages = f.read()
-  f.close()
- except:
-  pass
+  
  try:
   f = open("/etc/cluster/nodes/" + hostname + "/disk-config")
   diskconfig = f.read()
@@ -89,6 +99,7 @@ except:
 
 print '''
 install
+%s
 %s
 %s
 %s
@@ -159,7 +170,7 @@ lapack
 -redhat-lsb-graphics
 -phonon-backend-gstreamer
 -qt-x11
-'''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, egitrustanchorsrepourl, installnode, clustername, diskconfig, installnode)
+'''  % (installurl, securityurl, fgiurl, epelurl, localurl, cvmfsurl, elrepourl, egitrustanchorsrepourl, slurmurl, installnode, clustername, diskconfig, installnode)
 print slurm_packages
 print extra_packages
 print fgi_packages

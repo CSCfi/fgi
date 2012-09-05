@@ -1,6 +1,6 @@
 Name: cluster-tools
 Version: 0.24
-Release:	0%{?dist}
+Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -41,6 +41,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 05 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-1
+  - Fixed ks.py to actually work like it was intended.
+  - Fully supports SL6.3, as it does a version specific fixup to not break
+    the nfs4 domainname.
+
 * Wed Aug 29 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-0
   - Added support for selecting slurm version with the slurm-version
     packages.

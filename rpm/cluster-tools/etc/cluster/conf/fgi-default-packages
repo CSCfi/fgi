@@ -29,3 +29,5 @@ git
 cvs
 fgi-hw-check
 numpy
+atlas
+lapack
