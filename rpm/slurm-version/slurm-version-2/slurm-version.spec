@@ -1,6 +1,6 @@
 Name:		slurm-version
-Version:	1
-Release:	4%{?dist}
+Version:	2
+Release:	0%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -83,6 +83,9 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/lib/slurm-version/
 cp slurm23 %{buildroot}/usr/lib/slurm-version/
 cp slurm24 %{buildroot}/usr/lib/slurm-version/
+mkdir -p %{buildroot}/etc/yum.repos.d/
+cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -90,17 +93,22 @@ rm -rf %{buildroot}
 
 %files fgislurm23
 %defattr(-,root,root,-)
-/usr//lib/slurm-version/slurm23
+/usr/lib/slurm-version/slurm23
+/etc/yum.repos.d/fgislurm23.repo
 %doc
 
 %files fgislurm24
 %defattr(-,root,root,-)
-/usr//lib/slurm-version/slurm24
+/usr/lib/slurm-version/slurm24
+/etc/yum.repos.d/fgislurm24.repo
 %doc
 
 
 
 %changelog
+* Wed Sep 05 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-0
+
+
 * Sat Sep 01 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 1-2
 - Added more conflicts
 
