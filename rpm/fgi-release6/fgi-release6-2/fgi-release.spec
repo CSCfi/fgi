@@ -1,6 +1,6 @@
 Name:		fgi-release6
 Version:	2	
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Release files for FGI repository
 
 Group:		Applications/Communication
@@ -47,6 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Sep  4 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-3
+- Noted that gpgcheck was gpgecheck, so it has probably never worked.
 * Wed Feb 29 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-1
 - Added early adopters repository
 * Thu Sep 08 2011 Ulf Tigerstedt <tigerste@csc.fi> 1-2
