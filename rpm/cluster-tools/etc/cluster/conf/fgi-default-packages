@@ -31,3 +31,4 @@ fgi-hw-check
 numpy
 atlas
 lapack
+python-sqlite2

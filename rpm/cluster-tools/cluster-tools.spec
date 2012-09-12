@@ -1,13 +1,13 @@
 Name: cluster-tools
 Version: 0.24
-Release:	1%{?dist}
+Release:	2%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
 License: GPL
 BuildArch: noarch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-Requires: pdsh,python,tftp-server,dhcp,bind-chroot,httpd
+Requires: pdsh,python,tftp-server,dhcp,bind-chroot,httpd,bash
 
 #Avoid compiling the http python modules to *.pyc and *.pyo files
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 12 2012 uLF tIGErstedt <ulf.tigerstedt at, csc.fi> 0.24-2
+  - Added python-sqlite2 to the fgi default packages list.
+  - Now requires bash
 * Wed Sep 05 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-1
   - Fixed ks.py to actually work like it was intended.
   - Fully supports SL6.3, as it does a version specific fixup to not break
