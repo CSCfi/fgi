@@ -44,6 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Sep 12 2012 uLF tIGErstedt <ulf.tigerstedt at, csc.fi> 0.24-2
   - Added python-sqlite2 to the fgi default packages list.
   - Now requires bash
+  - Added ARC client to fgi default packages list.
 * Wed Sep 05 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-1
   - Fixed ks.py to actually work like it was intended.
   - Fully supports SL6.3, as it does a version specific fixup to not break

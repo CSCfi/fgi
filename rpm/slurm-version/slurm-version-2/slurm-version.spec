@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -44,7 +44,7 @@ Requires: slurm >= 2.4
 Requires: slurm < 2.5
 Requires: slurm-munge >= 2.4 
 Requires: slurm-munge < 2.5
-Requires: slurm-plugins = 2.4
+Requires: slurm-plugins >= 2.4
 Requires: slurm-plugins < 2.5
 Requires: slurm-lua >= 2.4 
 Requires: slurm-lua < 2.5
@@ -111,6 +111,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Sep 14 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-3
+- Fixed slurm-plugins requirement
+
 * Wed Sep 11 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-1
 - Added slurm-plugins requirement
 

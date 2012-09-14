@@ -32,3 +32,5 @@ numpy
 atlas
 lapack
 python-sqlite2
+nordugrid-arc-client
+nordugrid-arc-plugins-globus
