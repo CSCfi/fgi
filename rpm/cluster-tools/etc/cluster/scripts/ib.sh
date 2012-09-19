@@ -14,3 +14,5 @@ PREFIX=16
 ONBOOT="yes"
 EOF
 
+cp /mnt/conf/90-rdma.rules /etc/udev/rules.d/
+

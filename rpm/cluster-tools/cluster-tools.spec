@@ -1,6 +1,6 @@
 Name: cluster-tools
-Version: 0.24
-Release:	2%{?dist}
+Version: 0.25
+Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -41,7 +41,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Sep 12 2012 uLF tIGErstedt <ulf.tigerstedt at, csc.fi> 0.24-2
+* Wed Sep 19 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.25-1
+  - Fixed infiniband udev rule file that was forgotten in RHEL6.3
+
+* Wed Sep 12 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.24-2
   - Added python-sqlite2 to the fgi default packages list.
   - Now requires bash
   - Added ARC client to fgi default packages list.
