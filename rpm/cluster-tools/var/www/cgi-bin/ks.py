@@ -45,7 +45,7 @@ try:
  egitrustanchorsrepourl = 'repo --name="egi-trustanchors" --baseurl=http://repository.egi.eu/sw/production/cas/1/current/ --proxy=http://%s:3128/' % (proxy)
  if "LOCAL_REPOURL" in clustersettings and len(clustersettings["LOCAL_REPOURL"]) > 0 :
   localurl = 'repo --name="local" --baseurl=%s --proxy=http://%s:3128/' % (clustersettings["LOCAL_REPOURL"], proxy)
- cvmfsurl = 'repo --name=CVMFS_CERN --proxy=http://%s:3128/ --baseurl=http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs/x86_64/' % (proxy)
+ cvmfsurl = 'repo --name=CVMFS_CERN --proxy=http://%s:3128/ --baseurl=http://cvmrepo.web.cern.ch/cvmrepo/yum/cvmfs/EL/6.3/x86_64/' % (proxy)
  try:
   f = open("/etc/cluster/conf/slurmversion")
   slurm_packages = f.read()
