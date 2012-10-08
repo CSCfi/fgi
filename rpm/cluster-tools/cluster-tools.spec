@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 8 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.25-3 
+  - Added xerces-c package
+
 * Wed Sep 28 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.25-2
   - CVMFS repo fixed in install.
 
