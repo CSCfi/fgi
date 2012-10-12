@@ -1,6 +1,6 @@
 Name: cluster-tools
-Version: 0.25
-Release:	2%{?dist}
+Version: 0.26
+Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
 Group: System Environment/Base	
@@ -21,7 +21,7 @@ This package contains tools and utilities for the FGI install node
 %install
 rm -rf $RPM_BUILD_ROOT/*
 cp -r etc usr var $RPM_BUILD_ROOT
-
+echo "%{name}-%{version}-%{release} installed me" > $RPM_BUILD_ROOT/%{_sysconfdir}/cluster/conf/cluster-tools-release
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct 11 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.26-1
+  - Added fgi-compute-node package
+
 * Wed Oct 8 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.25-3 
   - Added xerces-c package
 
