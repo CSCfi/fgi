@@ -51,6 +51,7 @@ if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	# stop slurm just in case
 	service slurm stop
 	/sbin/reboot 
+	exit
 fi
 if [ -n "$DEBUG" ]; then echo Checking for RTC; fi
 if [ ! -c /dev/rtc0 ]; then
