@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -53,6 +53,18 @@ Conflicts: slurm-version-fgislurm23
 %description fgislurm24
 Selects SLURM 2.4.x
 
+%package fgislurm25
+Summary: Selects SLURM 2.5.x
+Requires: slurm = 2.5 
+Requires: slurm-munge =  2.5
+Requires: slurm-plugins = 2.5
+Requires: slurm-lua = 2.5 
+Conflicts: slurm-version-fgislurm23
+Conflicts: slurm-version-fgislurm24
+
+%description fgislurm25
+Selects SLURM 2.5.x
+
 %post fgislurm23
 if [ -d /etc/cluster ]; then
 	cp /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
@@ -63,6 +75,12 @@ fi
 if [ -d /etc/cluster ]; then
 	cp /usr/lib/slurm-version/slurminstallurl24 /etc/cluster/conf/slurminstallurl
 	cp /usr/lib/slurm-version/slurm24 /etc/cluster/conf/slurmversion
+fi
+
+%post fgislurm25
+if [ -d /etc/cluster ]; then
+	cp /usr/lib/slurm-version/slurminstallurl25 /etc/cluster/conf/slurminstallurl
+	cp /usr/lib/slurm-version/slurm25 /etc/cluster/conf/slurmversion
 fi
 
 %preun fgislurm23
@@ -78,6 +96,12 @@ rm -f /etc/cluster/conf/slurmversion
 rm -f /etc/cluster/conf/slurminstallurl
 fi
 
+%preun fgislurm25
+if [ -f /etc/cluster/conf/slurmversion ]; then 
+rm -f /etc/cluster/conf/slurmversion
+rm -f /etc/cluster/conf/slurminstallurl
+fi
+
 
 %install
 rm -rf %{buildroot}
@@ -86,9 +110,11 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/lib/slurm-version/
 cp slurm23 slurminstallurl23 %{buildroot}/usr/lib/slurm-version/
 cp slurm24 slurminstallurl24 %{buildroot}/usr/lib/slurm-version/
+cp slurm25 slurminstallurl25 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm25.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -108,9 +134,20 @@ rm -rf %{buildroot}
 /etc/yum.repos.d/fgislurm24.repo
 %doc
 
+%files fgislurm25
+%defattr(-,root,root,-)
+/usr/lib/slurm-version/slurm25
+/usr/lib/slurm-version/slurminstallurl25
+/etc/yum.repos.d/fgislurm25.repo
+%doc
+
 
 
 %changelog
+* Mon Dec 17 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-4
+- Added repo for slurm 2.5
+
+
 * Fri Sep 14 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-3
 - Fixed slurm-plugins requirement
 
