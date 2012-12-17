@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	4%{?dist}
+Release:	6%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -26,12 +26,6 @@ Selects the correct SLURM version
 
 %package fgislurm23
 Summary: Selects SLURM 2.3.x
-Requires: slurm >= 2.3 
-Requires: slurm < 2.4
-Requires: slurm-munge >= 2.3 
-Requires: slurm-plugins >= 2.3 
-Requires: slurm-munge < 2.4
-
 Conflicts: slurm-version-fgislurm24
 
 %description fgislurm23
@@ -40,14 +34,6 @@ Selects SLURM 2.3.x
 
 %package fgislurm24
 Summary: Selects SLURM 2.4.x
-Requires: slurm >= 2.4 
-Requires: slurm < 2.5
-Requires: slurm-munge >= 2.4 
-Requires: slurm-munge < 2.5
-Requires: slurm-plugins >= 2.4
-Requires: slurm-plugins < 2.5
-Requires: slurm-lua >= 2.4 
-Requires: slurm-lua < 2.5
 Conflicts: slurm-version-fgislurm23
 
 %description fgislurm24
@@ -55,10 +41,6 @@ Selects SLURM 2.4.x
 
 %package fgislurm25
 Summary: Selects SLURM 2.5.x
-Requires: slurm = 2.5 
-Requires: slurm-munge =  2.5
-Requires: slurm-plugins = 2.5
-Requires: slurm-lua = 2.5 
 Conflicts: slurm-version-fgislurm23
 Conflicts: slurm-version-fgislurm24
 
@@ -84,20 +66,20 @@ if [ -d /etc/cluster ]; then
 fi
 
 %preun fgislurm23
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+if [ -f /etc/cluster/conf/slurmversion ]; then 
 rm -f /etc/cluster/conf/slurmversion
 rm -f /etc/cluster/conf/slurminstallurl
 fi
 
 
 %preun fgislurm24
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+if [ -f /etc/cluster/conf/slurmversion ]; then 
 rm -f /etc/cluster/conf/slurmversion
 rm -f /etc/cluster/conf/slurminstallurl
 fi
 
 %preun fgislurm25
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+if [ -f /etc/cluster/conf/slurmversion ]; then 
 rm -f /etc/cluster/conf/slurmversion
 rm -f /etc/cluster/conf/slurminstallurl
 fi
@@ -144,6 +126,12 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Dec 17 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-6
+- Fixed warning from uninstall script
+
+* Mon Dec 17 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-5
+- Removed dependencies, as it was impossible to update.
+
 * Mon Dec 17 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-4
 - Added repo for slurm 2.5
 
