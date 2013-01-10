@@ -12,7 +12,15 @@ if [ -f /mnt/conf/cgroup.conf ] ; then
  cp /mnt/conf/cgroup.conf /etc/slurm/
 fi
 
+if [ -f /mnt/conf/gres.conf ]; then
+ cp /mnt/conf/gres.conf /etc/slurm/
+fi
+if [ -f /mnt/nodes/$HOSTNAME/gres.conf ]; then
+ cp /mnt/nodes/$HOSTNAME/gres.conf /etc/slurm
+fi
+
 chkconfig slurm on
+chkconfig munge on
 
 cat << EOF > /etc/pam.d/slurm
 auth     required  pam_localuser.so

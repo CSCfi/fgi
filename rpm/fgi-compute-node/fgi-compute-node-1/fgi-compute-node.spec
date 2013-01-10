@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -40,6 +40,14 @@ Requires:	globus-gsi-sysconfig
 Requires:	globus-gssapi-error
 Requires:	globus-gsi-cert-utils
 Requires:	globus-ftp-client
+Requires:	fftw
+Requires:	gsl
+Requires:	libXpm
+Requires:	libtiff
+Requires:	cfitsio
+Requires:	graphviz-gd
+Requires:	dcap-libs
+Requires:	gfal2-all
 
 
 
@@ -79,5 +87,8 @@ rm -rf %{buildroot}
 %changelog
 * Thu Oct 11 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 1-1
 - First version to go with cluster-tools 0.26-1.
+
+* Wed Jan 9 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-3
+- Added packages needed for root on cvmfs + gfal.
 
 
