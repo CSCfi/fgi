@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -17,6 +17,7 @@ Requires:	xerces-c
 Requires:	python-sqlite2
 Requires:	numpy
 Requires:	scipy
+Requires:	blas
 Requires:	atlas
 Requires:	hdf5-openmpi
 Requires:	netcdf
@@ -85,6 +86,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 5 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-4
+- Added blas
+
 * Thu Oct 11 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 1-1
 - First version to go with cluster-tools 0.26-1.
 
