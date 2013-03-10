@@ -50,9 +50,27 @@ if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	sleep 2
 	# stop slurm just in case
 	service slurm stop
+	sleep 2
 	/sbin/reboot 
 	exit
 fi
+if [ "$REASON" = "shutdown" -a "$STATE" = "IDLE+DRAIN" ]; then
+	if [ -n "$DEBUG" ]; then echo Shutting down; fi
+	scontrol update NodeName=$HOSTNAME state=DOWN reason=shutteddown
+	sleep 2
+	# stop slurm just in case
+	service slurm stop
+	sleep 2
+	/sbin/shutdown -h now
+	exit
+fi
+if [ "$REASON" = "shutteddown" ]; then
+	if [ "$STATE" = "DOWN+DRAIN" -o "$STATE" = "IDLE+DRAIN" ]; then
+		if [ -n "$DEBUG" ]; then echo Resuming after shutdown; fi
+		scontrol update NodeName=$HOSTNAME state=RESUME
+	fi
+fi
+
 if [ -n "$DEBUG" ]; then echo Checking for RTC; fi
 if [ ! -c /dev/rtc0 ]; then
 	scontrol update NodeName=$HOSTNAME state=DOWN reason=no_rtc_present

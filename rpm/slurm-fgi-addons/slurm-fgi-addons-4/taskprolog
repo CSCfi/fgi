@@ -1,27 +1,34 @@
 #!/bin/bash
+
+TMPLOCATION=`grep ^TmpFs /etc/slurm/slurm.conf| cut -d = -f 2`
+
+if [ X"$TMPLOCATION" = "X" ]; then
+	TMPLOCATION="/tmp"
+fi
+
 function addlock () {
  mktemp --tmpdir="$1" slurmlock.XXX
 }
 
-if [ ! -d "/tmp/slurm-$SLURM_JOBID" ] ; then
- mkdir /tmp/slurm-$SLURM_JOBID
+if [ ! -d "$TMPLOCATION/slurm-$SLURM_JOBID" ] ; then
+ mkdir $TMPLOCATION/slurm-$SLURM_JOBID
  if [ $? -ne 0 ] ; then
-  echo "export TMPDIR=/tmp/"
-  echo "export TMP=/tmp/"
-  echo "export TEMPDIR=/tmp/"
-  echo "export TEMP=/tmp/"
+  echo "export TMPDIR=$TMPLOCATION/"
+  echo "export TMP=$TMPLOCATION/"
+  echo "export TEMPDIR=$TMPLOCATION/"
+  echo "export TEMP=$TMPLOCATION/"
  else
-  echo "export TMPDIR=/tmp/slurm-$SLURM_JOBID/"
-  echo "export TMP=/tmp/slurm-$SLURM_JOBID/"
-  echo "export TEMPDIR=/tmp/slurm-$SLURM_JOBID/"
-  echo "export TEMP=/tmp/slurm-$SLURM_JOBID/"
-  addlock "/tmp/slurm-$SLURM_JOBID/"
+  echo "export TMPDIR=$TMPLOCATION/slurm-$SLURM_JOBID/"
+  echo "export TMP=$TMPLOCATION/slurm-$SLURM_JOBID/"
+  echo "export TEMPDIR=$TMPLOCATION/slurm-$SLURM_JOBID/"
+  echo "export TEMP=$TMPLOCATION/slurm-$SLURM_JOBID/"
+  addlock "$TMPLOCATION/slurm-$SLURM_JOBID/"
  fi
 else
- echo "export TMPDIR=/tmp/slurm-$SLURM_JOBID/"
- echo "export TEMPDIR=/tmp/slurm-$SLURM_JOBID/"
- echo "export TMP=/tmp/slurm-$SLURM_JOBID/"
- echo "export TEMP=/tmp/slurm-$SLURM_JOBID/"
- addlock "/tmp/slurm-$SLURM_JOBID/"
+ echo "export TMPDIR=$TMPLOCATION/slurm-$SLURM_JOBID/"
+ echo "export TEMPDIR=$TMPLOCATION/slurm-$SLURM_JOBID/"
+ echo "export TMP=$TMPLOCATION/slurm-$SLURM_JOBID/"
+ echo "export TEMP=$TMPLOCATION/slurm-$SLURM_JOBID/"
+ addlock "$TMPLOCATION/slurm-$SLURM_JOBID/"
 fi
 

@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	3%{?dist}
+Release:	5%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -52,6 +52,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Mar 10 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-5
+- Fixed prolog/epilog to fetch TmpFs from slurm.conf instead of assuming /tmp. Triton broke this assumption.
+
+* Wed Jan 16 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-4
+- Added a mode=drain reason=shutdown state to the healthcheck.
+
 * Thu Nov 8 2012 Ulf Tigerstedt <tigerste@csc.fi> 4-3 
 - Small bugfix: healthcheck script now exits after rebooting the machine
 
