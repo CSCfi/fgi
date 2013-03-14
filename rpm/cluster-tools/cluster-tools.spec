@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.27
+Version: 0.28
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 12 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.28-1
+  - Added reinstall-fast, to match the new slurm-fgi-addons.
+
 * Tue Nov 6 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.27-1
   - Added gres.conf handling
 

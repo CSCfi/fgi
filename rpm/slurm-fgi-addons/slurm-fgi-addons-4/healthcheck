@@ -54,6 +54,14 @@ if [ "$REASON" = "reboot" -a "$STATE" = "IDLE+DRAIN" ]; then
 	/sbin/reboot 
 	exit
 fi
+if [ "$REASON" = "fastreboot" -a "$STATE" = "IDLE+DRAIN" ]; then
+	if [ -n "$DEBUG" ]; then echo Rebooting quickly; fi
+	scontrol update NodeName=$HOSTNAME state=DOWN reason=rebooting
+	sleep 2
+	# Reboot, possibly damaging the filesystems. This is only usable for reinstalls.
+	/sbin/reboot -f
+	exit
+fi
 if [ "$REASON" = "shutdown" -a "$STATE" = "IDLE+DRAIN" ]; then
 	if [ -n "$DEBUG" ]; then echo Shutting down; fi
 	scontrol update NodeName=$HOSTNAME state=DOWN reason=shutteddown
