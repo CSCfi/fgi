@@ -1,6 +1,6 @@
 Name:		fgi-release6
 Version:	2	
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Release files for FGI repository
 
 Group:		Applications/Communication
@@ -47,6 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed May 22 2013 Ulf Tigerstedt <tigerste@csc.fi> 2-4
+- Added dcache repo
 * Tue Sep  4 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-3
 - Noted that gpgcheck was gpgecheck, so it has probably never worked.
 * Wed Feb 29 2012 Ulf Tigerstedt <tigerste@csc.fi> 2-1
