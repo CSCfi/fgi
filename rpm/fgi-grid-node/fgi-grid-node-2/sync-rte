@@ -12,9 +12,14 @@ ls /cvmfs/fgi.csc.fi/ &>/dev/null
 
 if [ $? -ne 0 ] ; then
  echo "Could not find cvmfs mount"
+ exit 1;
 fi
 
 cd $cvmfsdir/current
+if [ $? -ne 0 ] ; then
+ echo "Error changing directory to cvmfs"
+ exit 1;
+fi
 
 for f in `find . -type f` ; do 
  d=`dirname $f`
