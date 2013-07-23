@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	5%{?dist}
+Release:	7%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -50,6 +50,11 @@ Requires:	cfitsio
 Requires:	graphviz-gd
 Requires:	dcap-libs
 Requires:	gfal2-all
+Requires:	mpfr
+Requires:	libmpc
+Requires:	gmp
+Requires:	libtool-ltdl
+
 
 
 
@@ -87,6 +92,12 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jul 23 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-7
+- Added libtool-ltdl for iRODS icommands
+
+* Mon Mar 25 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-6
+- Added libraries for gcc 4.8
+
 * Tue Feb 5 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-4
 - Added blas
 
