@@ -50,6 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/healthcheck-df.pl
 /usr/bin/taskprolog
 /usr/bin/epilog
+%attr(755,root,root)
 /etc/slurm/healthcheck/nvidia-lib-check.sh
 %doc
 
