@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -32,7 +32,10 @@ scripts
 rm -rf $RPM_BUILD_ROOT
 #make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin
+mkdir -p $RPM_BUILD_ROOT/etc/slurm/healthcheck
 cp slurm healthcheck healthcheck-df.pl healthcheck-nfs taskprolog epilog $RPM_BUILD_ROOT/usr/bin 
+cp nvidia-lib-check.sh  $RPM_BUILD_ROOT/etc/slurm/healthcheck
+
 
 
 %clean
@@ -47,11 +50,15 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/healthcheck-df.pl
 /usr/bin/taskprolog
 /usr/bin/epilog
+/etc/slurm/healthcheck/nvidia-lib-check.sh
 %doc
 
 
 
 %changelog
+* Wed Jul 24 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-6
+- Added nvidia-lib-check.sh that reboots GPGPU nodes if the nvidia libs get updated.
+
 * Sun Mar 10 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-5
 - Fixed prolog/epilog to fetch TmpFs from slurm.conf instead of assuming /tmp. Triton broke this assumption.
 
