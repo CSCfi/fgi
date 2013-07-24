@@ -3,4 +3,5 @@ slurm-perlapi
 slurm-plugins
 slurm-lua
 slurm
-slurm-version-fgislurm24
+slurm-version-fgislurm25
+slurm-pam_slurm
