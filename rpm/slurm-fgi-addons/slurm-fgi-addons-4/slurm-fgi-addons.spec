@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -57,6 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jul 24 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-7
+- Fixed permissions of nvidia-lib-check.sh
+
 * Wed Jul 24 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-6
 - Added nvidia-lib-check.sh that reboots GPGPU nodes if the nvidia libs get updated.
 
