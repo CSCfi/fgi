@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	7%{?dist}
+Release:	8%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -57,50 +57,50 @@ Selects SLURM 2.6.x
 
 %post fgislurm23
 if [ -d /etc/cluster ]; then
-	cp /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
-	cp /usr/lib/slurm-version/slurminstallurl23 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
+	cp -f /usr/lib/slurm-version/slurminstallurl23 /etc/cluster/conf/slurminstallurl
 fi
 
 %post fgislurm24
 if [ -d /etc/cluster ]; then
-	cp /usr/lib/slurm-version/slurminstallurl24 /etc/cluster/conf/slurminstallurl
-	cp /usr/lib/slurm-version/slurm24 /etc/cluster/conf/slurmversion
+	cp -f /usr/lib/slurm-version/slurminstallurl24 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm24 /etc/cluster/conf/slurmversion
 fi
 
 %post fgislurm25
 if [ -d /etc/cluster ]; then
-	cp /usr/lib/slurm-version/slurminstallurl25 /etc/cluster/conf/slurminstallurl
-	cp /usr/lib/slurm-version/slurm25 /etc/cluster/conf/slurmversion
+	cp -f /usr/lib/slurm-version/slurminstallurl25 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm25 /etc/cluster/conf/slurmversion
 fi
 
 %post fgislurm26
 if [ -d /etc/cluster ]; then
-	cp /usr/lib/slurm-version/slurminstallurl26 /etc/cluster/conf/slurminstallurl
-	cp /usr/lib/slurm-version/slurm26 /etc/cluster/conf/slurmversion
+	cp -f /usr/lib/slurm-version/slurminstallurl26 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm26 /etc/cluster/conf/slurmversion
 fi
 
 %preun fgislurm23
 if [ -f /etc/cluster/conf/slurmversion ]; then 
-rm -f /etc/cluster/conf/slurmversion
-rm -f /etc/cluster/conf/slurminstallurl
+#rm -f /etc/cluster/conf/slurmversion
+#rm -f /etc/cluster/conf/slurminstallurl
 fi
 
 
 %preun fgislurm24
 if [ -f /etc/cluster/conf/slurmversion ]; then 
-rm -f /etc/cluster/conf/slurmversion
-rm -f /etc/cluster/conf/slurminstallurl
+#rm -f /etc/cluster/conf/slurmversion
+#rm -f /etc/cluster/conf/slurminstallurl
 fi
 
 %preun fgislurm25
 if [ -f /etc/cluster/conf/slurmversion ]; then 
-rm -f /etc/cluster/conf/slurmversion
-rm -f /etc/cluster/conf/slurminstallurl
+#rm -f /etc/cluster/conf/slurmversion
+#rm -f /etc/cluster/conf/slurminstallurl
 fi
 %preun fgislurm26
 if [ -f /etc/cluster/conf/slurmversion ]; then 
-rm -f /etc/cluster/conf/slurmversion
-rm -f /etc/cluster/conf/slurminstallurl
+#rm -f /etc/cluster/conf/slurmversion
+#rm -f /etc/cluster/conf/slurminstallurl
 fi
 
 
