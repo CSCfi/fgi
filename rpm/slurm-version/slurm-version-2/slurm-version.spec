@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	8%{?dist}
+Release:	9%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -80,28 +80,28 @@ if [ -d /etc/cluster ]; then
 fi
 
 %preun fgislurm23
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+#if [ -f /etc/cluster/conf/slurmversion ]; then 
 #rm -f /etc/cluster/conf/slurmversion
 #rm -f /etc/cluster/conf/slurminstallurl
-fi
+#fi
 
 
 %preun fgislurm24
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+#if [ -f /etc/cluster/conf/slurmversion ]; then 
 #rm -f /etc/cluster/conf/slurmversion
 #rm -f /etc/cluster/conf/slurminstallurl
-fi
+#fi
 
 %preun fgislurm25
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+#if [ -f /etc/cluster/conf/slurmversion ]; then 
 #rm -f /etc/cluster/conf/slurmversion
 #rm -f /etc/cluster/conf/slurminstallurl
-fi
+#fi
 %preun fgislurm26
-if [ -f /etc/cluster/conf/slurmversion ]; then 
+#if [ -f /etc/cluster/conf/slurmversion ]; then 
 #rm -f /etc/cluster/conf/slurmversion
 #rm -f /etc/cluster/conf/slurminstallurl
-fi
+#fi
 
 
 %install
@@ -154,6 +154,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Aug 20 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-8
+- Fixed if-fi problem
+
 * Wed Jul 24 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-7
 - Added package for SLURM 2.6
 
