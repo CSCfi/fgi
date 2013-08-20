@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	7%{?dist}
+Release:	8%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -54,6 +54,7 @@ Requires:	mpfr
 Requires:	libmpc
 Requires:	gmp
 Requires:	libtool-ltdl
+Requires:	atlas-sse3
 
 
 
@@ -92,6 +93,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Aug 20 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-8
+- Added atlas-sse3
+
 * Tue Jul 23 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-7
 - Added libtool-ltdl for iRODS icommands
 
