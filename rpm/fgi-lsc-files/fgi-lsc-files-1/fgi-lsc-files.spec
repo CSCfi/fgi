@@ -1,7 +1,7 @@
 Name:		fgi-lsc-files
 Version:	1
-Release:	1%{?dist}
-Summary:	L.lsc files needed by VOMS, packaged for FGI
+Release:	2%{?dist}
+Summary:	Lsc files needed by VOMS, packaged for FGI
 
 Group:		Applications/Grid	
 License:	GPL
@@ -50,7 +50,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 09 2013 Ulf Tigerstedt <tigerste@csc.fi> 1-2
+- New voms server at BNL added for Atlas
 * Sat Feb 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-1
 - First version. Supported VOs are alice,atlas,bio.ndgf.org,
   cms,cscstaff,csctraining,customer.csc.fi,dteam,fgi.csc.fi,
   ops,ops.ndgf.org
+
