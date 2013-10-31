@@ -1,6 +1,6 @@
 Name:		fgi-lsc-files
 Version:	1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Lsc files needed by VOMS, packaged for FGI
 
 Group:		Applications/Grid	
@@ -50,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct 31 2013 Ulf Tigerstedt <tigerste@csc.fi> 1-3
+- Added ipv6.hepix.org VO
 * Wed Oct 09 2013 Ulf Tigerstedt <tigerste@csc.fi> 1-2
 - New voms server at BNL added for Atlas
 * Sat Feb 11 2012 Ulf Tigerstedt <tigerste@csc.fi> 1-1
