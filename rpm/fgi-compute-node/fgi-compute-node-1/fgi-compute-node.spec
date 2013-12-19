@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	8%{?dist}
+Release:	9%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -55,6 +55,7 @@ Requires:	libmpc
 Requires:	gmp
 Requires:	libtool-ltdl
 Requires:	atlas-sse3
+Requires:	zlib-devel
 
 
 
@@ -93,6 +94,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Dec 19 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-9
+- Added zlib-devel 
+
 * Tue Aug 20 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-8
 - Added atlas-sse3
 
