@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -55,6 +55,15 @@ Conflicts: slurm-version-fgislurm25
 %description fgislurm26
 Selects SLURM 2.6.x
 
+%package fgislurm1312
+Summary: Selects SLURM 13.12
+Conflicts: slurm-version-fgislurm24
+Conflicts: slurm-version-fgislurm25
+Conflicts: slurm-version-fgislurm26
+
+%description fgislurm1312
+Selects SLURM 13.12
+
 %post fgislurm23
 if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
@@ -78,30 +87,11 @@ if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurminstallurl26 /etc/cluster/conf/slurminstallurl
 	cp -f /usr/lib/slurm-version/slurm26 /etc/cluster/conf/slurmversion
 fi
-
-%preun fgislurm23
-#if [ -f /etc/cluster/conf/slurmversion ]; then 
-#rm -f /etc/cluster/conf/slurmversion
-#rm -f /etc/cluster/conf/slurminstallurl
-#fi
-
-
-%preun fgislurm24
-#if [ -f /etc/cluster/conf/slurmversion ]; then 
-#rm -f /etc/cluster/conf/slurmversion
-#rm -f /etc/cluster/conf/slurminstallurl
-#fi
-
-%preun fgislurm25
-#if [ -f /etc/cluster/conf/slurmversion ]; then 
-#rm -f /etc/cluster/conf/slurmversion
-#rm -f /etc/cluster/conf/slurminstallurl
-#fi
-%preun fgislurm26
-#if [ -f /etc/cluster/conf/slurmversion ]; then 
-#rm -f /etc/cluster/conf/slurmversion
-#rm -f /etc/cluster/conf/slurminstallurl
-#fi
+%post fgislurm1312
+if [ -d /etc/cluster ]; then
+	cp -f /usr/lib/slurm-version/slurminstallurl1312 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm1312 /etc/cluster/conf/slurmversion
+fi
 
 
 %install
@@ -113,11 +103,13 @@ cp slurm23 slurminstallurl23 %{buildroot}/usr/lib/slurm-version/
 cp slurm24 slurminstallurl24 %{buildroot}/usr/lib/slurm-version/
 cp slurm25 slurminstallurl25 %{buildroot}/usr/lib/slurm-version/
 cp slurm26 slurminstallurl26 %{buildroot}/usr/lib/slurm-version/
+cp slurm1312 slurminstallurl1312 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm25.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm26.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm1312.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -151,9 +143,20 @@ rm -rf %{buildroot}
 /etc/yum.repos.d/fgislurm26.repo
 %doc
 
+%files fgislurm1312
+%defattr(-,root,root,-)
+/usr/lib/slurm-version/slurm1312
+/usr/lib/slurm-version/slurminstallurl1312
+/etc/yum.repos.d/fgislurm1312.repo
+%doc
+
 
 
 %changelog
+* Fri Dec 20 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-9
+- Cleanup of specfile
+- Added support for the upcoming slurm 13.12 version
+
 * Tue Aug 20 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-8
 - Fixed if-fi problem
 
