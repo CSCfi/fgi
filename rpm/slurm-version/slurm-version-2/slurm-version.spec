@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	10%{?dist}
+Release:	11%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -55,13 +55,13 @@ Conflicts: slurm-version-fgislurm25
 %description fgislurm26
 Selects SLURM 2.6.x
 
-%package fgislurm1312
+%package fgislurm1403
 Summary: Selects SLURM 13.12
 Conflicts: slurm-version-fgislurm24
 Conflicts: slurm-version-fgislurm25
 Conflicts: slurm-version-fgislurm26
 
-%description fgislurm1312
+%description fgislurm1403
 Selects SLURM 13.12
 
 %post fgislurm23
@@ -87,10 +87,10 @@ if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurminstallurl26 /etc/cluster/conf/slurminstallurl
 	cp -f /usr/lib/slurm-version/slurm26 /etc/cluster/conf/slurmversion
 fi
-%post fgislurm1312
+%post fgislurm1403
 if [ -d /etc/cluster ]; then
-	cp -f /usr/lib/slurm-version/slurminstallurl1312 /etc/cluster/conf/slurminstallurl
-	cp -f /usr/lib/slurm-version/slurm1312 /etc/cluster/conf/slurmversion
+	cp -f /usr/lib/slurm-version/slurminstallurl1403 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm1403 /etc/cluster/conf/slurmversion
 fi
 
 
@@ -103,13 +103,13 @@ cp slurm23 slurminstallurl23 %{buildroot}/usr/lib/slurm-version/
 cp slurm24 slurminstallurl24 %{buildroot}/usr/lib/slurm-version/
 cp slurm25 slurminstallurl25 %{buildroot}/usr/lib/slurm-version/
 cp slurm26 slurminstallurl26 %{buildroot}/usr/lib/slurm-version/
-cp slurm1312 slurminstallurl1312 %{buildroot}/usr/lib/slurm-version/
+cp slurm1403 slurminstallurl1403 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm25.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm26.repo %{buildroot}/etc/yum.repos.d/
-cp fgislurm1312.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm1403.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -143,16 +143,19 @@ rm -rf %{buildroot}
 /etc/yum.repos.d/fgislurm26.repo
 %doc
 
-%files fgislurm1312
+%files fgislurm1403
 %defattr(-,root,root,-)
-/usr/lib/slurm-version/slurm1312
-/usr/lib/slurm-version/slurminstallurl1312
-/etc/yum.repos.d/fgislurm1312.repo
+/usr/lib/slurm-version/slurm1403
+/usr/lib/slurm-version/slurminstallurl1403
+/etc/yum.repos.d/fgislurm1403.repo
 %doc
 
 
 
 %changelog
+* Mon Dec 30 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-11
+- 13.12 got renamed 14.03.
+
 * Fri Dec 20 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-9
 - Cleanup of specfile
 - Added support for the upcoming slurm 13.12 version
