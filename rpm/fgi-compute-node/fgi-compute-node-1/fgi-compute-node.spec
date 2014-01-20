@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -56,6 +56,8 @@ Requires:	gmp
 Requires:	libtool-ltdl
 Requires:	atlas-sse3
 Requires:	zlib-devel
+Requires:	java-1.6.0-openjdk
+Requires:	java-1.7.0-openjdk
 
 
 
@@ -94,6 +96,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 20 2014 Ulf tigerstedt <ulf.tigerstedt@csc.fi> 1-10
+* Added OpenJDK java 1.6 and 1.7
+
 * Thu Dec 19 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-9
 - Added zlib-devel 
 
