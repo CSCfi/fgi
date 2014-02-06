@@ -22,6 +22,10 @@ fi
 # Available parameters:
 # NodeName=ae5 Arch=x86_64 CoresPerSocket=6 CPUAlloc=0 CPUErr=0 CPUTot=12 Features=(null) Gres=(null) OS=Linux RealMemory=23000 Sockets=2 State=IDLE ThreadsPerCore=1 TmpDisk=0 Weight=1 BootTime=2012-01-31T17:10:45 SlurmdStartTime=2012-01-31T17:11:23 Reason=(null)
 
+# Fixing bug where slurm 2.6 no longer prints REASON every time
+# Ulf Tigerstedt 6.2.2014
+REASON="(null)"
+
 for a in $STATELINE; do
 	LABEL=`echo $a | cut -d = -f 1`
 	PARAMETER=`echo $a | cut -d = -f 2`
