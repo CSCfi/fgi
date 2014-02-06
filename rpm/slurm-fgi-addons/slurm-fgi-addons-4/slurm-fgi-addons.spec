@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	8%{?dist}
+Release:	9%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -50,12 +50,16 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/healthcheck-df.pl
 /usr/bin/taskprolog
 /usr/bin/epilog
-%attr(755,root,root) /etc/slurm/healthcheck/nvidia-lib-check.sh
+/etc/slurm/healthcheck/nvidia-lib-check.sh
 %doc
 
 
 
 %changelog
+* Thu Feb 6 2014 Ulf Tigerstedt <tigerste@csc.fi> 4-9
+- Fixed nvidia-lib-check.sh
+- Fixed a bug in healthcheck that made it not work with SLURM 2.6
+
 * Wed Jul 24 2013 Ulf Tigerstedt <tigerste@csc.fi> 4-8
 - Fixed permissions of nvidia-lib-check.sh again..
 
