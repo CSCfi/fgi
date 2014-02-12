@@ -1,6 +1,6 @@
 Name:		cvmfs-repofiles-fgi
 Version:	4
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Files to enable the fgi.csc.fi CVMFS repository
 
 Group:		none	
@@ -67,6 +67,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 12 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 4-4
+- Made cvmfs.fgi the firstline server (stratum 1) with idris at the back (stratum 0).
+- Added more space to the cache.
+
 * Wed Oct 23 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 4-3
 - Switch to using idris.fgi instead
 
