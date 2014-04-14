@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	11%{?dist}
+Release:	12%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -56,7 +56,7 @@ Conflicts: slurm-version-fgislurm25
 Selects SLURM 2.6.x
 
 %package fgislurm1403
-Summary: Selects SLURM 13.12
+Summary: Selects SLURM 14.03
 Conflicts: slurm-version-fgislurm24
 Conflicts: slurm-version-fgislurm25
 Conflicts: slurm-version-fgislurm26
@@ -153,6 +153,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Apr 14 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-12
+- Fixed description for 14.03.
+
 * Mon Dec 30 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-11
 - 13.12 got renamed 14.03.
 
