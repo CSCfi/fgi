@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -56,6 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 11 2014 Ulf Tigerstedt <tigerste@csc.fi> 4-10
+- Added more randomness to the mktemp in taskprolog for the task-lock.
+
 * Thu Feb 6 2014 Ulf Tigerstedt <tigerste@csc.fi> 4-9
 - Fixed nvidia-lib-check.sh
 - Fixed a bug in healthcheck that made it not work with SLURM 2.6

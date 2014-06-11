@@ -7,7 +7,7 @@ if [ X"$TMPLOCATION" = "X" ]; then
 fi
 
 function addlock () {
- mktemp --tmpdir="$1" slurmlock.XXX
+ mktemp --tmpdir="$1" slurmlock.XXXXXXX
 }
 
 if [ ! -d "$TMPLOCATION/slurm-$SLURM_JOBID" ] ; then
