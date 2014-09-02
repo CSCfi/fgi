@@ -22,7 +22,10 @@ fi
 # Available parameters:
 # NodeName=ae5 Arch=x86_64 CoresPerSocket=6 CPUAlloc=0 CPUErr=0 CPUTot=12 Features=(null) Gres=(null) OS=Linux RealMemory=23000 Sockets=2 State=IDLE ThreadsPerCore=1 TmpDisk=0 Weight=1 BootTime=2012-01-31T17:10:45 SlurmdStartTime=2012-01-31T17:11:23 Reason=(null)
 
-REASON=`echo $STATELINE | perl -p -e 's/.*Reason=(.*?)(\s*\w+=.*)?$/$1/'`
+REASON=`echo $STATELINE | perl -n -e 'if (/.*Reason=(.*?)(\s*\w+=.*)?$/) {print $1}'`
+if [ -z "$REASON" ]; then
+	REASON="(null)"
+fi
 STATE=`echo $STATELINE | perl -p -e 's/.*State=(.*?)(\s*\w+=.*)?$/$1/'`
 
 if [ -n "$DEBUG" ]; then echo Slurm thinks $HOSTNAME has STATE=$STATE and REASON=$REASON; fi
