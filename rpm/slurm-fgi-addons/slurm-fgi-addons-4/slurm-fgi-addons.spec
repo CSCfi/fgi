@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -56,6 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 5 2014 Ulf Tigerstedt <tigerste@csc.fi> 4-13
+- Fix to a previous fix. Reason= was broken by version 12.
+
 * Wed Jun 11 2014 Ulf Tigerstedt <tigerste@csc.fi> 4-10
 - Added more randomness to the mktemp in taskprolog for the task-lock.
 
