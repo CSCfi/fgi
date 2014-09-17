@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -62,7 +62,16 @@ Conflicts: slurm-version-fgislurm25
 Conflicts: slurm-version-fgislurm26
 
 %description fgislurm1403
-Selects SLURM 13.12
+Selects SLURM 14.03 
+
+%package fgislurm1411
+Summary: Selects SLURM 14.03
+Conflicts: slurm-version-fgislurm24
+Conflicts: slurm-version-fgislurm25
+Conflicts: slurm-version-fgislurm26
+
+%description fgislurm1411
+Selects SLURM 14.11
 
 %post fgislurm23
 if [ -d /etc/cluster ]; then
@@ -92,6 +101,11 @@ if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurminstallurl1403 /etc/cluster/conf/slurminstallurl
 	cp -f /usr/lib/slurm-version/slurm1403 /etc/cluster/conf/slurmversion
 fi
+%post fgislurm1411
+if [ -d /etc/cluster ]; then
+	cp -f /usr/lib/slurm-version/slurminstallurl1411 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm1411 /etc/cluster/conf/slurmversion
+fi
 
 
 %install
@@ -104,12 +118,14 @@ cp slurm24 slurminstallurl24 %{buildroot}/usr/lib/slurm-version/
 cp slurm25 slurminstallurl25 %{buildroot}/usr/lib/slurm-version/
 cp slurm26 slurminstallurl26 %{buildroot}/usr/lib/slurm-version/
 cp slurm1403 slurminstallurl1403 %{buildroot}/usr/lib/slurm-version/
+cp slurm1411 slurminstallurl1411 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm25.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm26.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm1403.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm1411.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -150,9 +166,20 @@ rm -rf %{buildroot}
 /etc/yum.repos.d/fgislurm1403.repo
 %doc
 
+%files fgislurm1411
+%defattr(-,root,root,-)
+/usr/lib/slurm-version/slurm1411
+/usr/lib/slurm-version/slurminstallurl1411
+/etc/yum.repos.d/fgislurm1411.repo
+%doc
+
+
 
 
 %changelog
+* Wed Sep 17 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-13
+- Added info for slurm release 14.11
+
 * Mon Apr 14 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-12
 - Fixed description for 14.03.
 
