@@ -1,6 +1,6 @@
 Name:		fgi-release6
 Version:	2	
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	Release files for FGI repository
 
 Group:		Applications/Communication
@@ -47,6 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct 30 2014 Ulf Tigerstedt <tigerste@csc.fi> 2-6
+- Changed pulse to idris.
 * Wed Dec 23 2013 Ulf Tigerstedt <tigerste@csc.fi> 2-5
 - Forgot to add baseurl= in front of the dcache repo url
 * Wed May 22 2013 Ulf Tigerstedt <tigerste@csc.fi> 2-4
