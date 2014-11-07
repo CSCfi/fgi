@@ -1,7 +1,7 @@
 [fgi]
 name=FGI
 baseurl=http://idris.fgi.csc.fi/fgirepo6/
-#gpgkey=http://pulse.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
+#gpgkey=http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
 gpgcheck=1
 enabled=1
@@ -9,7 +9,7 @@ enabled=1
 [fgi-ea]
 name=FGI early adopters
 baseurl=http://idris.fgi.csc.fi/fgirepo6-ea/
-#gpgkey=http://pulse.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
+#gpgkey=http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
 gpgcheck=1
 enabled=0

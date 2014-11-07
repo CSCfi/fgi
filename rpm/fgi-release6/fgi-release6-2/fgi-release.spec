@@ -47,8 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Oct 30 2014 Ulf Tigerstedt <tigerste@csc.fi> 2-6
-- Changed pulse to idris.
+* Fri Nov 7 2014 Ulf Tigerstedt <tigerste@csc.fi> 2-6
+- Idris is the new host for the reposes.
 * Wed Dec 23 2013 Ulf Tigerstedt <tigerste@csc.fi> 2-5
 - Forgot to add baseurl= in front of the dcache repo url
 * Wed May 22 2013 Ulf Tigerstedt <tigerste@csc.fi> 2-4
