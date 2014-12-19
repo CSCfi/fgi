@@ -1,6 +1,6 @@
 Name:		fgi-release6
 Version:	2	
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	Release files for FGI repository
 
 Group:		Applications/Communication
@@ -47,6 +47,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Dec 19 2014 Ulf Tigerstedt <tigerste@csc.fi> 2-7
+- Making sure idris is the new host.
 * Fri Nov 7 2014 Ulf Tigerstedt <tigerste@csc.fi> 2-6
 - Idris is the new host for the reposes.
 * Wed Dec 23 2013 Ulf Tigerstedt <tigerste@csc.fi> 2-5
