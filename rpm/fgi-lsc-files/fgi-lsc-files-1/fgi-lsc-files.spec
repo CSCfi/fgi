@@ -1,6 +1,6 @@
 Name:		fgi-lsc-files
 Version:	1
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	Lsc files needed by VOMS, packaged for FGI
 
 Group:		Applications/Grid	
@@ -50,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jan 16 2015 Ulf Tigerstedt <tigerste@csc.fi> 1-7
+- Removed old voms-servers from CERN VOs
 * Tue Sep 2 2014 Ulf Tigerstedt <tigerste@csc.fi> 1-6
 - Fixed alice, atlas and cms with the new CERN voms servers
 * Wed Apr 10 2014 Ulf Tigerstedt <tigerste@csc.fi> 1-5
