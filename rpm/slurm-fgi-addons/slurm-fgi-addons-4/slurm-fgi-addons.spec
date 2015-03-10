@@ -1,6 +1,6 @@
 Name:		slurm-fgi-addons
 Version:	4
-Release:	14%{?dist}
+Release:	15%{?dist}
 Summary:	Scripts for SLURM, needed by the FGI clusters
 
 Group:		Some/Group
@@ -56,6 +56,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 10 2015 Ulf Tigerstedt <tigerste@csc.fi> 4-15
+- Updated nvidia lib check with new return code 
 * Thu Jan 15 2015 Ulf Tigerstedt <tigerste@csc.fi> 4-14
 - Updated slurm command to latest from upstream
 

@@ -7,7 +7,11 @@ HOSTNAME=`hostname -s`
 if [ -c /dev/nvidiactl ]; then 
 	if [ -x /usr/bin/nvidia-smi ]; then 
 		/usr/bin/nvidia-smi > /dev/null
-		if [ $? -eq 255 ]; then
+		RETVAL=$?
+		if [ $RETVAL -eq 255 ]; then
+			scontrol update nodename=$HOSTNAME state=drain reason=reboot
+		fi
+		if [ $RETVAL -eq 17 ]; then
 			scontrol update nodename=$HOSTNAME state=drain reason=reboot
 		fi
 	fi
