@@ -1,6 +1,6 @@
 Name:		cvmfs-repofiles-fgi
 Version:	4
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	Files to enable the fgi.csc.fi CVMFS repository
 
 Group:		none	
@@ -11,7 +11,7 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildArch: 	noarch
 
 #BuildRequires: 	
-Requires:	cvmfs,cvmfs-keys, autofs
+Requires:	cvmfs,cvmfs-config-default, autofs
 
 %description
 Package containing the config files to enable the
@@ -67,6 +67,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 1 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 4-5
+- cvmfs-keys is gone, long live cvmfs-default-config 
+
 * Wed Feb 12 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 4-4
 - Made cvmfs.fgi the firstline server (stratum 1) with idris at the back (stratum 0).
 - Added more space to the cache.
