@@ -100,10 +100,8 @@ rm -rf %{buildroot}
 - Removed globus rls
 * Tue May 27 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-11
 - Added libxc for new GPAW
-
 * Mon Jan 20 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-10
 - Added OpenJDK java 1.6 and 1.7
-
 * Thu Dec 19 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-9
 - Added zlib-devel 
 
