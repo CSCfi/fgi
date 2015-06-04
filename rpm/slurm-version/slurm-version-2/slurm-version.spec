@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	14%{?dist}
+Release:	15%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -199,8 +199,10 @@ rm -rf %{buildroot}
 %doc
 
 
-
 %changelog
+* Thu Jun 4 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-15
+- Bumping version to fix problem while distributing
+
 * Thu Jun 4 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-14
 - Fixed pulse -> idris 
 - Added 15.08 repofiles
