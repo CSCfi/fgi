@@ -1,11 +1,11 @@
 Name:		slurm-version
 Version:	2
-Release:	13%{?dist}
+Release:	14%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
 License:	GPL
-URL:		http://pulse.fgi.csc.fi/
+URL:		http://idris.fgi.csc.fi/
 Source0:	slurm-version-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
@@ -73,6 +73,17 @@ Conflicts: slurm-version-fgislurm26
 %description fgislurm1411
 Selects SLURM 14.11
 
+%package fgislurm1508
+Summary: Selects SLURM 15.08
+Conflicts: slurm-version-fgislurm24
+Conflicts: slurm-version-fgislurm25
+Conflicts: slurm-version-fgislurm26
+Conflicts: slurm-version-fgislurm1403
+Conflicts: slurm-version-fgislurm1411
+
+%description fgislurm1508
+Selects SLURM 15.08
+
 %post fgislurm23
 if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
@@ -106,6 +117,11 @@ if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurminstallurl1411 /etc/cluster/conf/slurminstallurl
 	cp -f /usr/lib/slurm-version/slurm1411 /etc/cluster/conf/slurmversion
 fi
+%post fgislurm1508
+if [ -d /etc/cluster ]; then
+	cp -f /usr/lib/slurm-version/slurminstallurl1508 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm1508 /etc/cluster/conf/slurmversion
+fi
 
 
 %install
@@ -119,6 +135,7 @@ cp slurm25 slurminstallurl25 %{buildroot}/usr/lib/slurm-version/
 cp slurm26 slurminstallurl26 %{buildroot}/usr/lib/slurm-version/
 cp slurm1403 slurminstallurl1403 %{buildroot}/usr/lib/slurm-version/
 cp slurm1411 slurminstallurl1411 %{buildroot}/usr/lib/slurm-version/
+cp slurm1508 slurminstallurl1508 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
@@ -126,6 +143,7 @@ cp fgislurm25.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm26.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm1403.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm1411.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm1508.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -173,10 +191,20 @@ rm -rf %{buildroot}
 /etc/yum.repos.d/fgislurm1411.repo
 %doc
 
+%files fgislurm1508
+%defattr(-,root,root,-)
+/usr/lib/slurm-version/slurm1508
+/usr/lib/slurm-version/slurminstallurl1508
+/etc/yum.repos.d/fgislurm1508.repo
+%doc
 
 
 
 %changelog
+* Thu Jun 4 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-14
+- Fixed pulse -> idris 
+- Added 15.08 repofiles
+
 * Wed Sep 17 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-13
 - Added info for slurm release 14.11
 
