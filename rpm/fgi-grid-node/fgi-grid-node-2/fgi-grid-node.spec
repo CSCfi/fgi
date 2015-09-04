@@ -1,6 +1,6 @@
 Name:		fgi-grid-node
 Version:	2	
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	Helper scripts needed on FGI grid nodes
 
 Group:		Other	
@@ -49,6 +49,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 4 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 2-5
+- Commented out jura cronjob
 * Wed Jun 12 2013 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 2-4
 - Bugfix for sync-rte: Exit on errors
 * Thu Aug 23 2012 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 2-3
