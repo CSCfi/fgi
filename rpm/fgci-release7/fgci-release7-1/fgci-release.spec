@@ -6,7 +6,7 @@ Summary:	Release files for FGCI repository for CentOS7
 Group:		Applications/Communication
 License:	GPL
 #URL:		
-Source0:	fgi-release7-%{version}.tar.gz
+Source0:	fgci-release7-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildArch:	noarch
 
