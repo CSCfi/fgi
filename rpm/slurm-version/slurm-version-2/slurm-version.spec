@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -200,6 +200,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Sep 25 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-16
+- Fixed bug in 1508 yum repo file
+
 * Thu Jun 4 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-15
 - Bumping version to fix problem while distributing
 
