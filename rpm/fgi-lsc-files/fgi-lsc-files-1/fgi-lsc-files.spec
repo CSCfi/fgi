@@ -50,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri 26 Feb 2016 Ulf Tigerstedt <tigerste@csc.fi> 1-9
+* Fri Feb 26 2016 Ulf Tigerstedt <tigerste@csc.fi> 1-9
 - Updated voms.fgi.csc.fi to Nordugrid CA 2015
 * Wed Jul 29 2015 Ulf Tigerstedt <tigerste@csc.fi> 1-8
 - Really removed the old voms-servers this time.
