@@ -1,0 +1,28 @@
+#!/bin/bash
+
+TMPLOCATION=`grep ^TmpFs /etc/slurm/slurm.conf| cut -d = -f 2`
+
+if [ X"$TMPLOCATION" = "X" ]; then
+        TMPLOCATION="/tmp"
+fi
+
+
+
+if [ -d "$TMPLOCATION/slurm-$SLURM_JOBID" ] ; then
+ # Check if there are locks left
+ lock=`ls $TMPLOCATION/slurm-$SLURM_JOBID/slurmlock.* 2>/dev/null |head -n1`
+ if [ "x$lock" != "x" ] ; then
+  if [ -f "$lock" ] ; then
+   #if there are, remove one of them
+   rm -f "$lock"
+   #if no more locks are left, remove the directory
+   lock2=`ls $TMPLOCATION/slurm-$SLURM_JOBID/slurmlock.* 2>/dev/null |head -n1`
+   if [ "x$lock2" == "x" ] ; then
+    rm -rf $TMPLOCATION/slurm-$SLURM_JOBID
+   fi
+  fi
+ else
+  rm -rf $TMPLOCATION/slurm-$SLURM_JOBID
+ fi
+fi
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+# SLURM health check suite
+# Ulf.Tigerstedt@csc.fi 2012
+
+# Check if the files in a directory are listable.
+ls -l $1 > /dev/null
+
