@@ -1,6 +1,6 @@
 Name:		fgi-lsc-files
 Version:	1
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Lsc files needed by VOMS, packaged for FGI/FGCI
 
 Group:		Applications/Grid	
