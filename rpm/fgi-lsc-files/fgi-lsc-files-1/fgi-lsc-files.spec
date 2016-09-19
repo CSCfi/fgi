@@ -1,6 +1,6 @@
 Name:		fgi-lsc-files
 Version:	1
-Release:	10%{?dist}
+Release:	11%{?dist}
 Summary:	Lsc files needed by VOMS, packaged for FGI/FGCI
 
 Group:		Applications/Grid	
@@ -50,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Sep 19 2016 Ulf Tigerstedt <tigerste@csc.fi> 1-11
+- Fixed CA for ops.ndgf.org voms server
 * Thu Jun 30 2016 Luís Alves <luis.alves@csc.fi> 1-10
 - Updated etc/grid-security/vomsdir/dteam/voms.hellasgrid.gr.lsc and etc/grid-security/vomsdir/dteam/voms2.hellasgrid.gr.lsc to have latest CA DN changes. 
 * Fri Feb 26 2016 Ulf Tigerstedt <tigerste@csc.fi> 1-9
