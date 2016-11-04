@@ -85,7 +85,7 @@ Conflicts: slurm-version-fgislurm1411
 Selects SLURM 15.08
 
 
-%package fgislurmd1605
+%package fgislurm1605
 Summary: Selects SLURM 15.08
 Conflicts: slurm-version-fgislurm24
 Conflicts: slurm-version-fgislurm25
@@ -155,7 +155,7 @@ cp slurm26 slurminstallurl26 %{buildroot}/usr/lib/slurm-version/
 cp slurm1403 slurminstallurl1403 %{buildroot}/usr/lib/slurm-version/
 cp slurm1411 slurminstallurl1411 %{buildroot}/usr/lib/slurm-version/
 cp slurm1508 slurminstallurl1508 %{buildroot}/usr/lib/slurm-version/
-cp slurm1605 slurminstallurl1508 %{buildroot}/usr/lib/slurm-version/
+cp slurm1605 slurminstallurl1605 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
