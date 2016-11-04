@@ -1,6 +1,6 @@
 Name:		slurm-version
 Version:	2
-Release:	16%{?dist}
+Release:	17%{?dist}
 Summary:	Selects the correct SLURM version
 
 Group:		none
@@ -84,6 +84,20 @@ Conflicts: slurm-version-fgislurm1411
 %description fgislurm1508
 Selects SLURM 15.08
 
+
+%package fgislurmd1605
+Summary: Selects SLURM 15.08
+Conflicts: slurm-version-fgislurm24
+Conflicts: slurm-version-fgislurm25
+Conflicts: slurm-version-fgislurm26
+Conflicts: slurm-version-fgislurm1403
+Conflicts: slurm-version-fgislurm1411
+Conflicts: slurm-version-fgislurm1508
+
+%description fgislurm1605
+Selects SLURM 16.05
+
+
 %post fgislurm23
 if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurm23 /etc/cluster/conf/slurmversion
@@ -122,6 +136,11 @@ if [ -d /etc/cluster ]; then
 	cp -f /usr/lib/slurm-version/slurminstallurl1508 /etc/cluster/conf/slurminstallurl
 	cp -f /usr/lib/slurm-version/slurm1508 /etc/cluster/conf/slurmversion
 fi
+%post fgislurm1605
+if [ -d /etc/cluster ]; then
+	cp -f /usr/lib/slurm-version/slurminstallurl1605 /etc/cluster/conf/slurminstallurl
+	cp -f /usr/lib/slurm-version/slurm1605 /etc/cluster/conf/slurmversion
+fi
 
 
 %install
@@ -136,6 +155,7 @@ cp slurm26 slurminstallurl26 %{buildroot}/usr/lib/slurm-version/
 cp slurm1403 slurminstallurl1403 %{buildroot}/usr/lib/slurm-version/
 cp slurm1411 slurminstallurl1411 %{buildroot}/usr/lib/slurm-version/
 cp slurm1508 slurminstallurl1508 %{buildroot}/usr/lib/slurm-version/
+cp slurm1605 slurminstallurl1508 %{buildroot}/usr/lib/slurm-version/
 mkdir -p %{buildroot}/etc/yum.repos.d/
 cp fgislurm23.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm24.repo %{buildroot}/etc/yum.repos.d/
@@ -144,6 +164,7 @@ cp fgislurm26.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm1403.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm1411.repo %{buildroot}/etc/yum.repos.d/
 cp fgislurm1508.repo %{buildroot}/etc/yum.repos.d/
+cp fgislurm1605.repo %{buildroot}/etc/yum.repos.d/
 
 %clean
 rm -rf %{buildroot}
@@ -198,8 +219,18 @@ rm -rf %{buildroot}
 /etc/yum.repos.d/fgislurm1508.repo
 %doc
 
+%files fgislurm1605
+%defattr(-,root,root,-)
+/usr/lib/slurm-version/slurm1605
+/usr/lib/slurm-version/slurminstallurl1605
+/etc/yum.repos.d/fgislurm1605.repo
+%doc
+
 
 %changelog
+* Fri Nov 4 2016 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-17
+- Added 16.05 repo
+
 * Fri Sep 25 2015 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> - 2-16
 - Fixed bug in 1508 yum repo file
 
