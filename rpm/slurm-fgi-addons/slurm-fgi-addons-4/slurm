@@ -16,13 +16,13 @@ else
     user_vars=$HOME/.config/slurmvars
 fi
 
-# these can be overridden in ~/.slurmvars
+# these can be overridden in ~/.config/slurmvars
 fmt_quick="%9P %.4C %.5D %.7m %.8f %.10q %.10T %r"
 fmt_user="%18i %9P %14j %.11M %.16S %.8T %R"
 fmt_short="%8Q %9P %.8u [ %.4C x %5D %7m : %8f ] %.11l %.8T %r"
 fmt_shorter="%9P %.8u [ %.4C x %5D %7m : %8f & %6q ] %.11l %.8T %r"
 fmt_full="%Q %i %P %j %u %C %D %m %f %q %h %t %M %l %R"
-fmt_s_parts="%10P %.11l %.15F %10f %N"
+fmt_s_parts="%10P %.11l %.15F %10f %15G %N"
 fmt_s_nodes="%.5D %.10T %.4c %.7m %10f %N"
 fmt_s_prio="%.8u %.10Y %.10F %.10J %.10A %.10Q %.12P"
 fmt_s_prio_all="%.8u %.12i %.10Y %.10F %.10J %.10A %.10Q %.12P"
@@ -49,11 +49,16 @@ cmd_hist="sacct -s ca,cd,f,to,nf,s -Pno"
 cmd_nodes="sinfo -Neo"
 cmd_parts="sinfo -o"
 cmd_prio="sprio -o"
-cmd_dead="sinfo -R"
+cmd_dead="sinfo -R -o '%20E %6t %N'"
 cmd_top="squeue -hao"
+cmd_features="sinfo -o '%50N %18F %9f %30G'"
 merge="/usr/bin/uniq -c"
 clean="/usr/bin/column -t"
 prune="/bin/grep -v '\ 0\ \ '"
+
+if [ -z "$COLUMNS" ]; then
+    COLUMNS=$(tput cols)
+fi
 
 function usage {
     self=`basename $0`
@@ -87,6 +92,7 @@ Show nodes and resources in the cluster:
  $self cpus <partition>  cores available to partition, allocated and free
  $self cpus jobs         cores/memory reserved by running jobs
  $self cpus queue        cores/memory required by pending jobs
+ $self features          List features and GRES
 
 EOF
 
@@ -148,6 +154,9 @@ function commands {
 	    else
 		cmd="$cmd_queue_job '$fmt_full' | $clean"
 	    fi
+	    ;;
+	features)
+	    cmd="$cmd_features"
 	    ;;
 	prio)
 	    case $2 in
