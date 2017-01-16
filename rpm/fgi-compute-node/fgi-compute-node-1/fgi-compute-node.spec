@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -55,9 +55,11 @@ Requires:	gmp
 Requires:	libtool-ltdl
 Requires:	atlas-sse3
 Requires:	zlib-devel
-Requires:	java-1.6.0-openjdk
+#Requires:	java-1.6.0-openjdk
 Requires:	java-1.7.0-openjdk
+Requires:	java-1.8.0-openjdk
 Requires:	libxc
+Requires:	zsh
 
 
 
@@ -96,6 +98,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 16 2017 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-13
+- Added zsh and java8
+- Removed java1.6
 * Tue Oct 7 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-12
 - Removed globus rls
 * Tue May 27 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-11
