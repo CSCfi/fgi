@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	13%{?dist}
+Release:	14%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -98,7 +98,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Mon Jan 16 2017 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-13
+* Mon Jan 16 2017 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-14
 - Added zsh and java8
 - Removed java1.6
 * Tue Oct 7 2014 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-12
