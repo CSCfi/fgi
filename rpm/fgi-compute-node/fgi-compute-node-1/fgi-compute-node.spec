@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -60,6 +60,42 @@ Requires:	java-1.7.0-openjdk
 Requires:	java-1.8.0-openjdk
 Requires:	libxc
 Requires:	zsh
+Requires:	coreutils
+Requires:	bash
+Requires:	tcsh
+Requires:	perl
+Requires:	tcl
+Requires:	tk
+Requires:	readline
+Requires:	openssl
+Requires:	ncurses
+Requires:	e2fsprogs
+Requires:	krb5-libs
+Requires:	freetype
+Requires:	compat-readline5
+Requires:	ncurses-libs
+Requires:	perl-libs
+Requires:	perl-ExtUtils-Embed
+Requires:	fontconfig
+Requires:	compat-libstdc++-33
+Requires:	libidn
+Requires:	libX11
+Requires:	libXmu
+Requires:	libSM
+Requires:	libICE
+Requires:	libXcursor
+Requires:	libXext
+Requires:	libXrandr
+Requires:	libXft
+Requires:	mesa-libGLU
+Requires:	mesa-libGL
+Requires:	e2fsprogs-libs
+Requires:	libXi
+Requires:	libXinerama
+Requires:	libXft
+Requires:	libXrender
+Requires:	libXpm
+Requires:	libcom_err
 
 
 
@@ -98,6 +134,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 23 2017 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-16
+- Probably last release
+- Added all CMS requirements
 * Mon Jan 16 2017 Ulf Tigerstedt <ulf.tigerstedt@csc.fi> 1-14
 - Added zsh and java8
 - Removed java1.6
