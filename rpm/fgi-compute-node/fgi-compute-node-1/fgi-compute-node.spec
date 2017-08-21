@@ -1,6 +1,6 @@
 Name:		fgi-compute-node
 Version:	1
-Release:	16%{?dist}
+Release:	17%{?dist}
 Summary:	Metapackage for required software on FGI compute nodes
 BuildArch:	noarch
 
@@ -15,7 +15,7 @@ Requires:	openmpi
 Requires:	openmpi-devel
 #Requires:	compat-openmpi
 Requires:	xerces-c
-Requires:	python-sqlite2
+#Requires:	python-sqlite2
 Requires:	numpy
 #Requires:	scipy
 Requires:	blas
