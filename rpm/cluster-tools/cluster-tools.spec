@@ -41,7 +41,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Sept 1 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.29-1
+* Fri Sep 1 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.29-1
   - cvmfs got picky about config variables.
 
 * Tue Mar 12 2013 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.28-1
