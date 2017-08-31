@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.28
+Version: 0.29
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
