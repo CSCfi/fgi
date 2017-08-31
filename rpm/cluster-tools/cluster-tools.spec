@@ -41,7 +41,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue Mar 12 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.28-1
+* Fri Sept 1 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.29-1
+  - cvmfs got picky about config variables.
+
+* Tue Mar 12 2013 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.28-1
   - Added reinstall-fast, to match the new slurm-fgi-addons.
 
 * Tue Nov 6 2012 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.27-1
