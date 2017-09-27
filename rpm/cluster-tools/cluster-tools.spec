@@ -1,5 +1,5 @@
 Name: cluster-tools
-Version: 0.29
+Version: 0.31
 Release:	1%{?dist}
 Source: %{name}-%{version}.tar.gz
 Summary: Admin tools for FGI clusters
@@ -41,6 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 13 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.30-1 
+  - removed python-sqlite2 from FGI default packages
 * Fri Sep 1 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.29-1
   - cvmfs got picky about config variables.
 
