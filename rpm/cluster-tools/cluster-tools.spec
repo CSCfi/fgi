@@ -41,6 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 27 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.31-1
+  - wrong IP for the squid proxy in the default file.
 * Wed Sep 13 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.30-1 
   - removed python-sqlite2 from FGI default packages
 * Fri Sep 1 2017 Ulf Tigerstedt <ulf.tigerstedt at, csc.fi> 0.29-1
