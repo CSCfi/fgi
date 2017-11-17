@@ -1,0 +1,21 @@
+#!/bin/bash
+if [ ! -d "/tmp/slurm-$SLURM_JOBID" ] ; then
+ mkdir /tmp/slurm-$SLURM_JOBID
+ if [ $? -ne 0 ] ; then
+  echo "export TMPDIR=/tmp/"
+  echo "export TMP=/tmp/"
+  echo "export TEMPDIR=/tmp/"
+  echo "export TEMP=/tmp/"
+ else
+  echo "export TMPDIR=/tmp/slurm-$SLURM_JOBID/"
+  echo "export TMP=/tmp/slurm-$SLURM_JOBID/"
+  echo "export TEMPDIR=/tmp/slurm-$SLURM_JOBID/"
+  echo "export TEMP=/tmp/slurm-$SLURM_JOBID/"
+ fi
+else
+ echo "export TMPDIR=/tmp/slurm-$SLURM_JOBID/"
+ echo "export TEMPDIR=/tmp/slurm-$SLURM_JOBID/"
+ echo "export TMP=/tmp/slurm-$SLURM_JOBID/"
+ echo "export TEMP=/tmp/slurm-$SLURM_JOBID/"
+fi
+

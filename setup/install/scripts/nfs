@@ -1,0 +1,11 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+echo "$SCRIPT: Copying nfs exports file"
+if [ ! -f /etc/exports.fgibak ] ; then
+ cp /etc/exports /etc/exports.fgibak
+fi
+$CURRDIR/replace_cp $CURRDIR/../template/exports /etc/exports
+exportfs -a
+
+echo "$SCRIPT: Done" 

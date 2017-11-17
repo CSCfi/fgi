@@ -1,0 +1,11 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+CLUSTER_CONF_DIR=$CURRDIR/../conf/
+
+echo "$SCRIPT: Copying over network infomation to cluster directory"
+cp $CLUSTER_CONF_DIR/cluster.conf $CLUSTER_CONF_DIR/default-packages /etc/cluster/conf
+
+echo "$SCRIPT: Creating cluster var directory"
+mkdir /var/lib/cluster/ &>/dev/null
+echo "$SCRIPT: Done"

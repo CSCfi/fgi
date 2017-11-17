@@ -1,0 +1,29 @@
+modules {
+  module {
+    name = "arcsanity"
+    language = "python"
+    # The following params are examples only
+    #  They are not actually used by the temp module
+    param sessiondir {
+      value = '/export/home/sessiondir'
+    }
+  }
+}
+
+collection_group {
+  collect_every = 30
+  time_threshold = 50
+  metric {
+    name = "ur_count"
+    value_threshold = 1
+  }
+  metric {
+    name = "sessiondir_count"
+    value_threshold = 1
+  }
+  #metric {
+  #  name = "jobstatusfiles"
+  #  value_threshold = 1
+  #}
+}
+

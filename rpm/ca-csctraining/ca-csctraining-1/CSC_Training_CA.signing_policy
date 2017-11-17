@@ -1,0 +1,4 @@
+# EACL NorduGrid CA
+access_id_CA  X509   '/C=FI/O=CSC/OU=CEgroup/CN=CSC training CA/emailAddress=grid-support@csc.fi'
+pos_rights    globus CA:sign
+cond_subjects globus '"/C=FI/*"'

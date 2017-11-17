@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ x"$1" != "x" ] && [ x"$2" != "x" ] ; then
+ CURRDIR=`dirname $0`
+ source $CURRDIR/../conf/cluster.conf
+ SUBNET=`echo $SUBNET | sed -e "s/\.[0-9]*.[0-9]*$//"`
+ REVERSESUBNET=`echo $SUBNET | sed "s/^\([0-9]*\)\.\([0-9]*\)/\2.\1/" `
+ IB_SUBNET=`echo $IB_SUBNET | sed -e "s/\.[0-9]*.[0-9]*$//"`
+ IB_REVERSESUBNET=`echo $IB_SUBNET | sed "s/^\([0-9]*\)\.\([0-9]*\)/\2.\1/" `
+ ILO_SUBNET=`echo $ILO_SUBNET | sed -e "s/\.[0-9]*.[0-9]*$//"`
+ ILO_REVERSESUBNET=`echo $ILO_SUBNET | sed "s/^\([0-9]*\)\.\([0-9]*\)/\2.\1/" `
+ GATEWAY=$LOGINNODEIP
+
+ cat $1 |sed -e "s/__SUBNET__/$SUBNET/g" -e "s/__REVERSESUBNET__/$REVERSESUBNET/g" -e "s/__IB_SUBNET__/$IB_SUBNET/g" -e "s/__IB_REVERSESUBNET__/$IB_REVERSESUBNET/g" -e "s/__ILO_SUBNET__/$ILO_SUBNET/g" -e "s/__ILO_REVERSESUBNET__/$ILO_REVERSESUBNET/g" -e "s/__GATEWAY__/$GATEWAY/g" -e "s/__INSTALLNODE__/$INSTALLNODEIP/g" -e "s/__CLUSTERNAME__/$CLUSTERNAME/g" -e "s#__OS_REPOURL__#$OS_REPOURL#g" -e "s#__OS_SECURITY_REPOURL__#$OS_SECURITY_REPOURL#g" -e "s#__FGI_REPOURL__#$FGI_REPOURL#g" -e "s#__EPEL_REPOURL__#$EPEL_REPOURL#g" -e "s#__LOCAL_REPOURL__#$LOCAL_REPOURL#g" > $2
+fi

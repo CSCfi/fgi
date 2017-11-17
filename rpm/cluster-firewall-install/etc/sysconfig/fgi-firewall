@@ -1,0 +1,142 @@
+# This file defines FGI install node  default firewall rules.                                                                
+# Loosely based on a firewall script used internally at CSC.                                                                        
+#                                                                                                                                   
+# Local administrators should modify file /etc/sysconfig/fgi-firewall-local
+# to enable ssh and http access (and possibly others) from their own                                                                
+# networks.                                                                                                                         
+#                                                                                                                                   
+# Author: Kalle Happonen (kalle.happonen@csc.fi)                                                                                      
+#                                                                                                                                   
+# $Id: rc.firewall.tmpl,v 1.2 2006/09/25 14:10:13 root Exp $                                                                        
+#                                                                                                                                   
+# Changelog:                                                                                                                        
+#                                                                                                                                   
+# 2011-09-15 First version based on the old M-grid firewall scripts                                                                 
+
+ext_int="eth0"
+comp_int="eth1"
+
+
+# Use variables rather than raw interface names 
+
+# Relevant networks
+comp_net="10.0.0.0/8"
+csc_workstation_net_1=193.166.1.0/24
+csc_workstation_net_2=193.166.2.0/24
+csc_test_net=193.166.3.0/24         
+csc_wlan_net=193.166.6.0/24         
+csc_meta_net=193.166.7.0/24         
+csc_giis=193.166.0.138                 
+csc_ganglia=193.166.0.200
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+echo -e "Reconfiguring iptables..."
+
+# Flush rules, delete extra chains and set default policies
+iptables --flush                                           
+iptables -t nat --flush                                    
+iptables --delete-chain                                    
+iptables -P INPUT DROP                                     
+iptables -P FORWARD DROP                                   
+iptables -P OUTPUT ACCEPT                                  
+
+# Create a new chain LOG_AND_DROP which logs and drops a packet with
+# reasonable log rate settings. We'll REJECT before DROP to allow   
+# telnet etc. to detect that the connection is not allowed          
+log_rate="-m limit --limit 1/second --limit-burst 10"               
+reject_rate="-m limit --limit 10/second --limit-burst 100"          
+iptables -N LOG_AND_DROP                                            
+#iptables -A LOG_AND_DROP -j LOG ${log_rate} --log-prefix="DROP "    
+iptables -A LOG_AND_DROP -p tcp -m tcp -j REJECT ${reject_rate} --reject-with tcp-reset
+iptables -A LOG_AND_DROP \! -p tcp -j REJECT ${reject_rate}                            
+iptables -A LOG_AND_DROP -j DROP                                                       
+
+# Allow loopback
+iptables -A INPUT -i lo -j ACCEPT
+
+# Filter out ICMP Timestamp Requests.  Nessus warns about these, and 
+# they can be used to gather data for spoofing, among other things.  
+iptables -A INPUT -p icmp --icmp-type timestamp-request -j LOG_AND_DROP
+
+# Same goes for address mask requests
+iptables -A INPUT -p icmp --icmp-type address-mask-request -j LOG_AND_DROP
+
+# Read in local settings, if any..
+if [ -f /etc/sysconfig/fgi-firewall-local ]; then
+  echo "Applying local rules from fgi-firewall-local."
+  . /etc/sysconfig/fgi-firewall-local
+else
+  echo "/etc/sysconfig/fgi-firewall-local not found, using rules from the main script only."
+fi
+
+
+# Block all bootp requests from going outside the cluster (to be sure)
+iptables -A OUTPUT -o $ext_int -p udp -m udp --sport bootps -j LOG_AND_DROP
+
+# Outgoing connections (with state) valid
+iptables -A INPUT -i $ext_int -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow bootp requests from compute network (without ip range check)
+iptables -A INPUT -i $comp_int -p udp -m udp --dport bootps -j ACCEPT
+
+# Allow everything in the cluster internal networks for the appropriate interfaces
+iptables -A INPUT -i $comp_int -s $comp_net -j ACCEPT                             
+
+# Allow incoming ping from the whole world (with a rate limit to block ping floods)
+iptables -A INPUT -p icmp --icmp-type ping -j ACCEPT -m limit --limit 10/second    
+
+# Allow ssh from CSC workstation network
+iptables -A INPUT -i $ext_int -s ${csc_workstation_net_1} -p tcp -m tcp --dport ssh -j ACCEPT
+iptables -A INPUT -i $ext_int -s ${csc_workstation_net_2} -p tcp -m tcp --dport ssh -j ACCEPT
+
+# Allow web access from CSC workstation network
+iptables -A INPUT -i $ext_int -s ${csc_workstation_net_1} -p tcp -m tcp --dport www -j ACCEPT
+iptables -A INPUT -i $ext_int -s ${csc_workstation_net_2} -p tcp -m tcp --dport www -j ACCEPT
+iptables -A INPUT -i $ext_int -s ${csc_workstation_net_1} -p tcp -m tcp --dport https -j ACCEPT
+iptables -A INPUT -i $ext_int -s ${csc_workstation_net_2} -p tcp -m tcp --dport https -j ACCEPT
+
+# Allow gangliga access from CSC ganglia host
+iptables -A INPUT -i $ext_int -s ${csc_ganglia} -p tcp -m tcp --dport 8649 -j ACCEPT
+
+# Silently drop packets without logging for some often crowded (e.g. Windows 
+# related) ports, bootp and dhcp requests and multicast addresses            
+iptables -A INPUT -i $ext_int -p tcp --dport 22 -j DROP                      
+iptables -A INPUT -i $ext_int -p udp --dport 22 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 67 -j DROP                      
+iptables -A INPUT -i $ext_int -p udp --dport 67 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 68 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 68 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 111 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 111 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 135 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 135 -j DROP
+iptables -A INPUT -p udp -m udp --dport 137 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 137 -j DROP
+iptables -A INPUT -p udp -m udp --dport 138 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 138 -j DROP
+iptables -A INPUT -p udp -m udp --dport 139 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 139 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 445 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 445 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 546 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 546 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 547 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 547 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 1433 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 1433 -j DROP
+iptables -A INPUT -i $ext_int -p tcp --dport 1434 -j DROP
+iptables -A INPUT -i $ext_int -p udp --dport 1434 -j DROP
+
+iptables -A INPUT -i $ext_int -d 224.0.0.0/4 -j DROP
+iptables -A INPUT -i $ext_int -d 240.0.0.0/4 -j DROP
+
+# Everything else is rejected and logged
+iptables -A INPUT -j LOG_AND_DROP
+iptables -A FORWARD -j LOG_AND_DROP
+
+echo "done."
+echo ""
+echo "Please remember to update the firewall rules (for the next boot) with command:"
+echo "service iptables save"
+

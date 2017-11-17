@@ -1,0 +1,7 @@
+#!/bin/bash
+# Sleep a while to not bomb the SGAS server
+# This has been superseeded by arc jura
+# Tiggi 2015.9.4 
+#sleep `expr $RANDOM \% 360`
+#/usr/libexec/arc/arc-ur-registrant
+

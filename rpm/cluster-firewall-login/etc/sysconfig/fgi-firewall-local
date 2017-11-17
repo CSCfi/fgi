@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# If the main firewall script interface definitions are wrong, please enter the correct
+# ones here, so you don't lock yourself out of the cluster
+#ext_int="eth2"
+#comp_int="eth1"
+#ib_int="ib0"
+
+# This is a default value so that you are not locked out of your own cluster
+# Please comment out this line and add new lines below
+iptables -A INPUT -i $ext_int -p tcp --dport ssh -j ACCEPT
+
+# This should be an IP range from where your users are allowed to log in
+#iptables -A INPUT -i $ext_int -s MY_UNIVESRSITY_IP_RANGE -p tcp --dport ssh -j ACCEPT

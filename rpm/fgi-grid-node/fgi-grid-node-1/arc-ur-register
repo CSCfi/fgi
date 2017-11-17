@@ -1,0 +1,5 @@
+#!/bin/bash
+# Sleep a while to not bomb the SGAS server
+sleep `expr $RANDOM \% 100`
+/usr/libexec/arc/arc-ur-registrant
+

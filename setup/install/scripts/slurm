@@ -1,0 +1,29 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+
+id slurm &>/dev/null
+if [ $? -ne 0 ] ; then
+ echo "$SCRIPT: Adding SLURM user"
+ adduser -M slurm
+fi
+
+if [ ! -e /var/log/slurm ] ; then
+ echo "$SCRIPT: Creating SLURM log dir"
+ mkdir /var/log/slurm
+ chown slurm:slurm /var/log/slurm
+fi
+
+if [ ! -e /etc/munge/munge.key ] ; then
+ echo "$SCRIPT: Creating munge key for SLURM"
+ create-munge-key
+ cp /etc/munge/munge.key /etc/cluster/conf
+fi
+
+if [ ! -e /etc/cluster/conf/slurm.conf ] ; then
+ echo "$SCRIPT: Copying SLURM configuration template"
+ cp $CURRDIR/../template/slurm.conf.tmpl /etc/cluster/conf/slurm.conf
+ cp $CURRDIR/../template/slurmdbd.conf /etc/cluster/conf/
+ ln -s /etc/cluster/conf/slurm.conf /etc/slurm/slurm.conf
+fi
+ 

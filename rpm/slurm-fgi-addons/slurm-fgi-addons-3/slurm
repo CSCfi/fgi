@@ -1,0 +1,241 @@
+#!/bin/bash -i
+#
+# Frontend wrapper for the most often needed but
+# un{usable,readable,informative} SLURM commands.
+# tapio.leipala@aalto.fi
+
+# format variables for customizing output
+user_vars=$HOME/.slurmvars
+
+# these can be overridden in ~/.slurmvars
+fmt_quick="%9P %.4C %.5D %.7m %.8f %.10T %r"
+fmt_user="%8i %9P %8j %.11M %.16S %.8T %.3Cx%2D %R"
+fmt_short="%8Q %9P %.8u [ %.4C x %5D %7m : %8f ] %.11l %.8T %r"
+fmt_shorter="%9P %.8u [ %.4C x %5D %7m : %8f ] %.11l %.8T %r"
+fmt_full="%8Q %.8i %9P %8j %8u [ %.3C %.4D %.7m %.8f ] %.5h %.2t %.11M %.11l %R"
+fmt_s_parts="%10P %.11l %.15F %N"
+fmt_s_nodes="%.5D %.10T %.14R %.4c %.7m %8f %N"
+fmt_a_qos="Format=Name,Priority,GrpCPUs,MaxWall,Flags"
+if [ -r $user_vars ]; then source $user_vars; fi
+
+fmt_a_hist="jobid,jobname,start,maxvmsize,maxrss,totalcpu,elapsed,ntasks,alloccpus,nnodes,exitcode,state"
+
+cmd_watch="/usr/bin/watch -n 15 --no-title"
+cmd_queue_size="/usr/bin/squeue -S T,P,u,m,C -o"
+cmd_queue_prio="/usr/bin/squeue -S T,P,p -o"
+cmd_queue_job="/usr/bin/squeue -S T,P,-i -o"
+cmd_jobs="/usr/bin/scontrol show job"
+cmd_share="/usr/bin/sshare -al"
+cmd_qos="/usr/bin/sacctmgr show qos"
+cmd_hist="/usr/bin/sacct -s ca,cd,f,to -Pno"
+cmd_nodes="/usr/bin/sinfo -Neo"
+cmd_parts="/usr/bin/sinfo -o"
+cmd_dead="/usr/bin/sinfo -R"
+merge="/usr/bin/uniq -c"
+clean="/usr/bin/column -t"
+prune="/bin/grep -v ' 0 '"
+
+function usage {
+    self=`basename $0`
+    cat <<EOF
+
+Show or watch job queue:
+ $self [watch] queue     show own jobs
+ $self [watch] q <user>  show user's jobs
+ $self [watch] quick     show quick overview of own jobs
+ $self [watch] shorter   entire queue; compact and count similar jobs
+ $self [watch] short     entire queue; compact and count identical jobs
+ $self [watch] full      show everything
+ $self [w] <q|qq|ss|s|f> shorthands for above!
+
+Show detailed information about jobs:
+ $self j|job <jobid>
+
+Show usage and fair-share values from accounting database:
+ $self h|history <time>  show jobs finished since, e.g. "1day" (default)
+ $self shares
+
+Show nodes and resources in the cluster:
+ $self p|partitions      all partitions
+ $self n|nodes           all cluster nodes
+ $self c|cpus            total cpu cores in use
+ $self cpus <partition>  cores available to partition, allocated and free
+ $self cpus jobs         cores/memory reserved by running jobs
+ $self cpus queue        cores/memory required by pending jobs
+
+Examples:
+ $self q
+ $self watch q
+ $self w ss
+ $self cpus
+ $self history 3hours
+
+EOF
+
+if [ "$USER" = "root" ]; then
+    cat <<EOF
+Admin commands:
+ $self history 30days -u user
+ $self history 1hour -a -r parallel
+ $self dead
+ $self qos
+EOF
+fi
+}
+
+function commands {
+    case $1 in 
+	w|watch)
+	    watch=true
+	    shift
+	    commands "$@"
+	    ;;
+	q|queue)
+	    if [ "$2" ]; then
+		cmd="$cmd_queue_job '$fmt_user' -u $2"
+	    else
+		cmd="$cmd_queue_job '$fmt_user' -u $USER"
+	    fi
+	    ;;
+	qq|quick)
+	    if [ "$2" ]; then
+		cmd="$cmd_queue_size '$fmt_quick' -u $2 | $merge | $clean"
+	    else
+		cmd="$cmd_queue_size '$fmt_quick' -u $USER | $merge | $clean"
+	    fi
+	    ;;
+	s|short)
+	    header=true
+	    if [ "$2" ]; then
+              cmd="$cmd_queue_prio '$fmt_short' -p $2 | $merge"
+	    else
+              cmd="$cmd_queue_prio '$fmt_short' | $merge"
+	    fi
+	    ;;
+	ss|shorter)
+	    header=true
+	    if [ "$2" ]; then
+	      cmd="$cmd_queue_size '$fmt_shorter' -p $2 | $merge"
+	    else
+	      cmd="$cmd_queue_size '$fmt_shorter' | $merge"
+	    fi
+	    ;;
+	f|full)
+	    if [ "$2" ]; then
+		cmd="$cmd_queue_job '$fmt_full' -p $2"
+	    else
+		cmd="$cmd_queue_job '$fmt_full'"
+	    fi
+	    ;;
+	shares)
+	    cmd="$cmd_share | $prune"
+	    ;;	    
+	qos)
+	    cmd="$cmd_qos $fmt_a_qos"
+	    ;;	    
+	h|history)
+	    shift
+	    jobacct "$@"
+	    ;;	    
+	dead)
+	    cmd="$cmd_dead"
+	    ;;	    
+	j|job)
+	    shift
+	    cmd="$cmd_jobs $@"
+	    ;;	    
+	n|nodes)
+	    cmd="$cmd_nodes '$fmt_s_nodes'"
+	    ;;	    
+	p|partitions)
+	    cmd="$cmd_parts '$fmt_s_parts'"
+	    ;;	    
+	c|cpus)
+	    shift
+	    case $1 in
+		q|queue)
+		    rescount PENDING
+		    ;;
+		j|jobs)
+		    rescount RUNNING
+		    ;;
+		*)
+		    corealloc "$@"
+		    ;;
+	    esac
+	    exit 0
+	    ;;
+	*)
+	    usage
+	    ;;
+    esac
+}
+
+function jobacct {
+    if [ "$COLUMNS" -lt 120 ]; then
+	echo -n "Warning: output will not fit."
+	printf "%$((${COLUMNS}-29))s\n\n" "drag here to widen terminal->"
+    fi
+    if [ "$1" ]; then
+	datespec="$1"
+	shift
+    else
+	datespec="1days"
+    fi
+    date=$(date -d "-$datespec" '+%Y-%m-%dT%H:%M')
+    echo "JobID          JobName    Start             MaxVMem  MaxRes\
+     TotalCPU     Elapsed Tasks CPUs Nodes ExitCode State"
+    eval "$cmd_hist $fmt_a_hist -S $date $@" | awk 'BEGIN{FS="|"}
+            {printf "%-14s %-10.10s %-16.16s %8.8s %7.7s %12s %11s %5s %4i %5i %8s %-9.9s\n",
+              ($1~/batch/) ? "└─batch" : ($1~/\.[0-9]/)?"  "$1:""$1,
+              ($1~/batch/) ? "*" : $2, $3,
+              ($4>0) ? ($4~/G/)?
+                sprintf("%7.0fM",gensub(/G/,"",1,$4)*1024):
+                sprintf("%7.0fM",gensub(/K/,"",1,$4)/1024) : "-",
+              ($5>0) ? ($5~/G/)?
+                sprintf("%6.0fM",gensub(/G/,"",1,$5)*1024):
+                sprintf("%6.0fM",gensub(/K/,"",1,$5)/1024) : "-",
+              $6,$7, ($8>0)?$8:"none",$9,$10, $11,$12 }'
+}
+
+function corealloc {
+    if [ ! "$1" ]; then show="*"; fi
+    echo "Partition  Nodes  Cores  Alloc  Free"
+    for part in "$show" "$@"; do
+	if [ "$part" = "*" ]; then
+	    nodespec=$(sinfo -hro '%N')
+	    nodes=$(sinfo -hro '%D')
+	else
+	    nodespec=$(sinfo -hro '%N' -p "$part")
+	    nodes=$(sinfo -hro '%D' -p "$part")
+	fi
+	if [ ! "$nodes" ]; then
+	    continue 1
+	fi
+	let c=$(scontrol show node $nodespec | \
+	    awk 'BEGIN{RS=" ";FS="="} /CPUTot/{i+=$2} END{print i}')
+	let a=$(scontrol show node $nodespec | \
+	    awk 'BEGIN{RS=" ";FS="="} /CPUAlloc/{i+=$2} END{print i}')
+	let f=$c-$a
+	printf "%-10s %5i  %5i  %5i %5i\n" "$part" "$nodes" $c $a $f
+    done
+}
+
+function rescount {
+    echo "Partition    Cores   Memory   AvgSize"
+    eval "$cmd_queue_job '%P %C %D %m' -h -t $1" | awk \
+	'{c[$1]+=$2;m[$1]+=$2*$4}END{for(p in c){printf\
+           "%-10s %7i %7.0fG %8iM\n",p,c[p],m[p]/1024,m[p]/c[p]}}'
+}
+
+
+commands "$@"
+
+if [ "$watch" ]; then
+    if [ "$header" ]; then
+	cmd="$cmd_parts '$fmt_s_parts'; echo; $cmd"
+    fi
+    $cmd_watch "$cmd"
+else
+    eval $cmd
+fi

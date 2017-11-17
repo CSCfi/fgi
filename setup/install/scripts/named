@@ -1,0 +1,12 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+echo "$SCRIPT: adding to named conf file"
+if [ ! -f /etc/named.conf.fgibak ] ; then
+ cp /etc/named.conf /etc/named.conf.fgibak
+fi
+$CURRDIR/replace_cp $CURRDIR/../template/named.conf /etc/named.conf
+
+/usr/libexec/cluster/update-named-conf
+service named restart
+echo "$SCRIPT: Done" 

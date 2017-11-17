@@ -1,0 +1,46 @@
+#!/bin/bash
+cvmfsdir=/cvmfs/fgi.csc.fi/runtimes/sl6/
+
+#get the RTE dir
+rtedir=`grep ^runtimedir /etc/arc.conf |cut -f2 -d '=' | sed -e "s/\"//g"  2>/dev/null`
+if [ $? -ne 0 ] ; then
+ echo "Could not find the runtimedir setting in /etc/arc.conf"
+fi
+
+#Check availability of cvmfs with ls, so it mounts it it is not already
+ls /cvmfs/fgi.csc.fi/ &>/dev/null
+
+if [ $? -ne 0 ] ; then
+ echo "Could not find cvmfs mount"
+ exit 1;
+fi
+
+cd $cvmfsdir/current
+if [ $? -ne 0 ] ; then
+ echo "Error changing directory to cvmfs"
+ exit 1;
+fi
+
+for f in `find . -type f` ; do 
+ d=`dirname $f`
+ if [ ! -e "$rtedir/$f" ] ; then
+  if [ ! -d "$rtedir"/"$d" ] ; then
+   mkdir -p  "$rtedir/$d" 
+  fi
+  cp "$f" "$rtedir/$d"
+ fi
+ # Bugfix: update RTE if a newer one has been published in cvmfs.
+ if [ "$f" -nt "$rtedir/$d" ]; then
+	cp "$f" "$rtedir/$d"
+ fi
+
+done
+
+
+cd $cvmfsdir/deleted
+
+for f in `find . -type f` ; do 
+ if [ -e "$rtedir/$f" ] ; then
+  rm "$rtedir/$f"
+ fi
+done

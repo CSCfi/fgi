@@ -1,0 +1,11 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+echo "$SCRIPT: Copying dhcpd conf file"
+if [ ! -f /etc/dhcp/dhcpd.conf.fgibak ] ; then
+ cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.fgibak
+fi
+$CURRDIR/replace_cp $CURRDIR/../template/dhcpd.conf /etc/dhcp/dhcpd.conf
+touch /var/lib/cluster/dhcpd.include
+service dhcpd restart
+echo "$SCRIPT: Done" 

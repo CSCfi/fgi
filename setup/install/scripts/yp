@@ -1,0 +1,28 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+source $CURRDIR/../conf/cluster.conf
+
+grep NISDOMAIN /etc/sysconfig/network &>/dev/null
+if [ $? -ne 0 ] ; then
+ echo "$SCRIPT: Adding NIS domain to networking"
+ echo -n "NISDOMAIN=" >> /etc/sysconfig/network
+ echo $CLUSTERNAME  >> /etc/sysconfig/network
+fi
+
+echo "$SCRIPT: Adding cron job to update NIS data"
+cp $CURRDIR/../template/yp.cron /etc/cron.hourly
+
+echo "$SCRIPT: Copying NIS config files"
+cp $CURRDIR/../template/Makefile /var/yp
+cp $CURRDIR/../template/nicknames /var/yp
+cp $CURRDIR/../template/securenets /var/yp
+
+# Run ypinit
+echo "$SCRIPT: Running ypinit to initialize NIS"
+echo "" > /tmp/yptmp
+/usr/lib64/yp/ypinit -m  < /tmp/yptmp
+
+service ypserv restart
+
+echo "$SCRIPT: Done"

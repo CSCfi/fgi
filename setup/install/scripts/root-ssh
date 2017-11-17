@@ -1,0 +1,36 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+echo "$SCRIPT: Creating root ssh keys, and adding authorized keys to node installation"
+if [ ! -e $HOME/.ssh ] ; then
+ #If there's no ssh directory, create it
+ mkdir $HOME/.ssh
+
+ if [ $? -ne 0 ] ; then
+  echo "$SCRIPT: Could not create ssh keys. Please contact your local admin" >&2
+  exit 1
+ fi
+
+ chmod 700 $HOME/.ssh
+fi
+
+if [ ! -f $HOME/.ssh/id_rsa ] ; then
+ #Create the user SSH keys if they're missing
+ ssh-keygen -t rsa  -f $HOME/.ssh/id_rsa -N ""
+
+ if [ $? -ne 0 ] ; then
+  echo "$SCRIPT: Could not create ssh keys. Please contact your local admin" >&2
+  exit 1
+ fi
+
+ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+ chmod 644 $HOME/.ssh/authorized_keys
+fi
+
+cp $HOME/.ssh/id_rsa.pub /etc/cluster/conf/authorized_keys
+if [ $? -ne 0 ] ; then
+ echo "$SCRIPT: Could not copy ssh keys to /etc/cluster/conf" >&2
+ exit 1
+fi
+
+echo "$SCRIPT: Done"
+

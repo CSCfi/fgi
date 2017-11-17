@@ -1,0 +1,10 @@
+#!/bin/bash
+SCRIPT=`basename $0`
+CURRDIR=`dirname $0`
+echo "$SCRIPT: Copying tftp conf file"
+if [ ! -f /etc/xinetd.d/tftp.fgibak ] ; then
+ cp /etc/xinetd.d/tftp /etc/xinetd.d/tftp.fgibak
+fi
+cp $CURRDIR/../template/tftp /etc/xinetd.d/tftp
+
+echo "$SCRIPT: Done" 

@@ -1,0 +1,7 @@
+##############################################################################
+#NAMESPACES-VERSION: 1.0
+#
+#
+TO Issuer "/C=FI/O=CSC/OU=CEgroup/CN=CSC training CA/emailAddress=grid-support@csc.fi" \
+  PERMIT Subject "/C=FI/.*"
+

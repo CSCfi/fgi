@@ -1,0 +1,7 @@
+[fgislurm1403]
+name=fgislurm1403
+baseurl=http://pulse.fgi.csc.fi/sl6/$basearch/fgislurm1403
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgcheck=1
+enabled=1
+

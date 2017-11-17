@@ -1,0 +1,45 @@
+#!/bin/bash
+NODE_CONF_DIR=/etc/cluster/nodes
+
+for node in `ls $NODE_CONF_DIR` ; do
+
+ if [ ! -d $NODE_CONF_DIR/$node/ssh ] ; then
+  mkdir -p $NODE_CONF_DIR/$node/ssh
+
+  if [ $? -ne 0 ] ; then
+   echo "Error, could not create ssh key directory for node $node" >&2
+   exit 1
+  fi
+
+  chmod 700 $NODE_CONF_DIR/$node/ssh
+ fi
+
+ if [ ! -f $NODE_CONF_DIR/$node/ssh/ssh_host_dsa_key ] ; then
+  # create host keys
+
+  ssh-keygen -t dsa -f $NODE_CONF_DIR/$node/ssh/ssh_host_dsa_key -N ""
+  if [ $? -ne 0 ] ; then
+   echo "Error creating host key for node $node" >&2
+  fi
+
+  ssh-keygen -t rsa -f $NODE_CONF_DIR/$node/ssh/ssh_host_rsa_key -N ""
+  if [ $? -ne 0 ] ; then
+   echo "Error creating host key for node $node" >&2
+  fi
+ fi
+
+ if [ -f $NODE_CONF_DIR/$node/ssh/ssh_host_rsa_key.pub ] ; then
+  #Check if ssh host key is in the global known hosts file
+  pubkey=`cat $NODE_CONF_DIR/$node/ssh/ssh_host_rsa_key.pub |cut -f1-2 -d " "`
+  grep "$node $pubkey" /etc/ssh/ssh_known_hosts &>/dev/null
+  if [ $? -ne 0 ] ; then
+   echo "$node $pubkey" >> /etc/ssh/ssh_known_hosts
+  fi
+  grep "$nodei-ib $pubkey" /etc/ssh/ssh_known_hosts &>/dev/null
+  if [ $? -ne 0 ] ; then
+   echo "$node-ib $pubkey" >> /etc/ssh/ssh_known_hosts
+  fi
+ fi
+
+done
+

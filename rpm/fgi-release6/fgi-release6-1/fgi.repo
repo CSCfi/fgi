@@ -1,0 +1,8 @@
+[fgi]
+name=fgi
+baseurl=http://pulse.fgi.csc.fi/fgirepo6/
+#gpgkey=http://pulse.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgecheck=1
+enabled=1
+

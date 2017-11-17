@@ -1,0 +1,7 @@
+[fgislurm1508]
+name=fgislurm1508
+baseurl=http://idris.fgi.csc.fi/sl6/$basearch/fgislurm1508
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgcheck=1
+enabled=1
+

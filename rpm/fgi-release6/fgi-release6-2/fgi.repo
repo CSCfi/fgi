@@ -1,0 +1,30 @@
+[fgi]
+name=FGI
+baseurl=http://idris.fgi.csc.fi/fgirepo6/
+#gpgkey=http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgcheck=1
+enabled=1
+
+[fgi-ea]
+name=FGI early adopters
+baseurl=http://idris.fgi.csc.fi/fgirepo6-ea/
+#gpgkey=http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgcheck=1
+enabled=0
+
+[fgi-source]
+name=FGI source repo
+baseurl=http://idris.fgi.csc.fi/fgirepo6-source/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgcheck=1
+enabled=0
+
+[fgi-dcache]
+name=FGI dcache distribution point
+baseurl=http://idris.fgi.csc.fi/dcache/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2
+gpgcheck=0
+enabled=0
+

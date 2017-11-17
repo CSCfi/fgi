@@ -1,0 +1,7 @@
+#!/bin/bash
+for a in ca*; do
+	if [ -d $a ]; then 
+		echo tarring $a
+		tar --exclude-from=../excludes -zcf $a.tar.gz  $a
+	fi
+done
